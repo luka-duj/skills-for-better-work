@@ -8,6 +8,7 @@ Use this reference for the requester conversation. The goal is not to complete a
 - Challenge the proposed solution without treating the requester as the problem.
 - Explain briefly why a question matters when it may feel like resistance.
 - Ask one primary question at a time. Use one immediate follow-up only when the answer contains a material ambiguity.
+- During discovery rounds, do not output JSON, a draft decision packet, schema fragments, or the full handoff brief.
 - Prefer a recent incident, observable workflow, document, or number over a general opinion.
 - Accept `I do not know`. Turn it into an evidence task rather than pressing for a guess.
 
@@ -22,12 +23,14 @@ Cover these slots adaptively; do not recite them as a questionnaire:
 5. **Necessity:** What obligation or useful outcome requires the process? What would happen if it stopped or were radically reduced?
 6. **Ownership and constraints:** Who owns the outcome and current process? What deadlines, policies, systems, data, security needs, budgets, or commitments constrain the decision?
 
-After triage, return a short initial diagnosis before asking deeper questions:
+After triage, give a short prose-only diagnosis before asking deeper questions:
 
 - current readiness;
 - strongest supported problem statement;
 - leading direction or `insufficient-evidence`;
 - the next two or three questions most likely to change that direction.
+
+This diagnosis is conversational guidance, not a decision packet. Continue asking one primary question per turn. Produce JSON only after every material question has been answered, converted into an evidence task, or explicitly deferred.
 
 ## Process necessity test
 

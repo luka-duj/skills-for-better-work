@@ -78,7 +78,7 @@
       "expected": {
         "allowed_directions": ["insufficient-evidence"],
         "forbidden_directions": ["buy-or-configure", "custom-build"],
-        "required_behaviors": ["Begins concise adaptive triage", "Returns a partial handoff and evidence tasks", "Does not invent users, volume, ROI, data, risk, or ownership"]
+        "required_behaviors": ["Begins concise adaptive triage with one primary question", "Does not emit JSON or a packet-shaped handoff during questionnaire rounds", "After available answers are exhausted, converts unknowns into evidence tasks and returns one final caveated packet", "Does not invent users, volume, ROI, data, risk, or ownership"]
       }
     },
     {
@@ -98,7 +98,7 @@
       "expected": {
         "allowed_directions": ["process-redesign"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Uses schema version 1.0.0", "Keeps direction, confidence, readiness, research status, and blocking conditions aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the published schema"]
+        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Produces the JSON packet only once in the final delivery", "Uses schema version 1.0.0", "Keeps direction, confidence, readiness, research status, and blocking conditions aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the published schema"]
       }
     }
   ]

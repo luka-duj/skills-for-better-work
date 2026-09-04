@@ -1,6 +1,15 @@
 # Output Contract
 
-Return a readable brief followed by JSON conforming to `../schemas/decision-packet.schema.json`. Keep the two outputs semantically aligned.
+After the questionnaire completion gate, return a readable brief followed by JSON conforming to `../schemas/decision-packet.schema.json`. Keep the two outputs semantically aligned.
+
+## Delivery timing
+
+- Do not return JSON at invocation, after triage, or during questionnaire rounds.
+- Do not expose a draft packet, partial JSON object, schema scaffold, or repeatedly regenerated packet while answers are still being collected.
+- Interim turns contain the next primary question and, only when useful, a brief prose recap or diagnosis.
+- Produce one final JSON packet only after all material questions are answered, converted into evidence tasks, or explicitly deferred, and any applicable research branch is completed or deferred.
+- A questionnaire can finish with material unknowns. In that case, represent them honestly in a final `insufficient-evidence` or other appropriately caveated packet rather than withholding the packet forever.
+- If the user elects to stop early, first confirm that the current unknowns should become evidence tasks; that choice closes the questionnaire and permits final delivery.
 
 ## Readable brief
 
@@ -19,7 +28,7 @@ Use these sections when applicable:
 11. **Handoff** — a concise submission for the product or automation team, including the next human decision.
 12. **What may be missing or uncertain** — material gaps, disagreement, and limits.
 
-Do not pad empty sections. For quick triage, return the current direction, request, necessity, known/unknown evidence, and next two or three evidence tasks before continuing the interview.
+Do not pad empty sections. During quick triage, keep any direction, necessity, known/unknown evidence, and next questions in concise prose rather than using the final brief structure.
 
 ## JSON contract
 

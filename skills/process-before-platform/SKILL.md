@@ -12,7 +12,15 @@ Help the stakeholder improve the decision before polishing the request. Use a st
 1. Tell the user not to share confidential company, customer, employee, security, architecture, credential, contract, or non-public vendor information. Work with sanitized context.
 2. Read [adaptive discovery](references/adaptive-discovery.md) and [the output contract](references/output-contract.md).
 3. Inspect user-provided files or notes when permitted. Preserve source conflicts instead of smoothing them over.
-4. Ask one primary question at a time. Begin with quick triage, return an initial diagnosis, and deepen only where the answer can change the direction, evidence, risk, or handoff.
+4. Ask one primary question at a time. Begin with quick triage, give only a concise prose diagnosis when useful, and deepen only where the answer can change the direction, evidence, risk, or handoff.
+
+## Interaction phases
+
+1. **Questionnaire.** Run adaptive discovery one question at a time. During this phase, ask the next relevant question and use brief prose recaps only when they help the user correct or answer it. Do not emit JSON, a draft packet, schema fragments, or the full decision-and-handoff brief at the beginning or between rounds.
+2. **Completion gate.** Treat the adaptive questionnaire as complete only when every material line of inquiry has either been answered, supported by provided evidence, marked unknown or unavailable and converted into an evidence task, or explicitly deferred. Complete or explicitly defer any applicable vendor-research branch. Do not keep asking questions that cannot change the current direction or next decision.
+3. **Final delivery.** State that the questionnaire is complete, then return the readable decision-and-handoff brief followed by the single final JSON packet. Generate the packet once per completed run, not after each answer.
+
+If the user pauses before the completion gate, provide a short prose-only status or list of outstanding questions when useful. If the user asks for JSON early, explain that the packet is produced when the questionnaire ends and ask whether they want to end the questionnaire with the current unknowns converted into evidence tasks.
 
 ## Decision flow
 
@@ -26,7 +34,7 @@ Help the stakeholder improve the decision before polishing the request. Use a st
 
 ## Adaptive stopping rules
 
-- Stop at a partial handoff when material evidence is missing. Do not manufacture a complete specification.
+- When material evidence is missing and the requester has no more answers available, convert the gaps into evidence tasks and close the questionnaire with an appropriately incomplete final direction. Do not manufacture a complete specification.
 - Continue to option assessment when the problem, affected work, process purpose, and material constraints are clear enough to compare paths.
 - Produce a handoff-ready recommendation only when the evidence supports both the direction and the immediate next step.
 - Use `co-evolve-through-experiment` only when the process cannot reasonably be stabilized without testing a capability. Bound the users, job, duration, evidence, owner, guardrails, fallback, and stop/adapt/expand decision.
@@ -47,7 +55,7 @@ When `$deep-research` is available, hand off the complete brief and reconcile it
 
 ## Deliver
 
-Return both outputs defined in [the output contract](references/output-contract.md):
+Only after the completion gate, return both outputs defined in [the output contract](references/output-contract.md):
 
 1. a readable decision and handoff brief;
 2. a JSON decision packet that conforms to [schema version 1.0.0](schemas/decision-packet.schema.json).

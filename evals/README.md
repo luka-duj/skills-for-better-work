@@ -7,10 +7,12 @@ The fixtures in `cases.json` test decisions, safety boundaries, and output invar
 1. Start a clean Codex conversation with the skill installed.
 2. Invoke `$process-before-platform` explicitly with the fixture input.
 3. Answer follow-up questions only with facts present in the fixture. Use `I do not know` for everything else.
-4. Save the final readable brief and JSON outside the repository or under ignored `evals/runs/`.
-5. Check the observed direction against `allowed_directions` and `forbidden_directions`.
-6. Review every `required_behavior` and record pass, fail, or not assessed with the output evidence.
-7. Validate the JSON decision packet with `python scripts/validate.py --packet <path>`.
+4. Check every intermediate turn: it may contain a concise prose recap, but it must not contain JSON, a draft packet, or the full handoff brief.
+5. Confirm that the skill emits the JSON packet only once, after the adaptive questionnaire is complete or explicitly closed.
+6. Save the final readable brief and JSON outside the repository or under ignored `evals/runs/`.
+7. Check the observed direction against `allowed_directions` and `forbidden_directions`.
+8. Review every `required_behavior` and record pass, fail, or not assessed with the output evidence.
+9. Validate the JSON decision packet with `python scripts/validate.py --packet <path>`.
 
 Treat a failure as evidence about the skill. Prefer a narrow correction and add a fixture only when it protects a materially different behavior.
 

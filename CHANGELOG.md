@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1-alpha — 2026-09-04
+
+- Changed the interaction contract so questionnaire rounds are prose-only.
+- The readable handoff and JSON decision packet are now generated once, after the adaptive questionnaire is complete or explicitly closed with remaining unknowns converted into evidence tasks.
+
 ## 0.1.0-alpha — 2026-09-04
 
 - Added the explicit-only `process-before-platform` Codex skill.

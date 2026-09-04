@@ -28,7 +28,7 @@ Use $process-before-platform to evaluate this internal tooling request:
 [Paste a sanitized request or describe the situation.]
 ```
 
-The default result contains:
+The skill runs an adaptive questionnaire first. It asks one primary question per round and does not emit JSON while answers are still being collected. Once the questionnaire is complete—or the requester explicitly closes it with remaining unknowns recorded as evidence tasks—the final result contains:
 
 - a readable decision and handoff brief;
 - a versioned JSON decision packet;
@@ -36,6 +36,8 @@ The default result contains:
 - a comparison of credible process and technology options;
 - an ownership and total-cost view where inputs support it;
 - a current direction, confidence, caveats, and blocking conditions.
+
+The JSON packet is generated once at the end of the completed questionnaire, not at invocation or after every answer.
 
 See the [synthetic approval-portal walkthrough](skills/process-before-platform/examples/synthetic-approval-portal/README.md) for a complete example.
 

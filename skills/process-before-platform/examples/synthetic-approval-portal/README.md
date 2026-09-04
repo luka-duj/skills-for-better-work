@@ -8,6 +8,8 @@ This example is invented. It is not derived from a real company, customer, syste
 
 ## Quick-triage result
 
+This is a prose-only checkpoint during the questionnaire. No JSON packet is produced at this stage.
+
 - The approval outcome appears necessary, but the exact obligation and approval policy are unclear.
 - Inconsistent request definitions, routes, and ownership would be encoded into any portal built now.
 - The leading direction is `process-redesign`, not custom development.
@@ -18,6 +20,8 @@ This example is invented. It is not derived from a real company, customer, syste
 The request contains evidence of a coordination problem, but not evidence that custom software is the appropriate answer. A portal cannot decide which requests exist, which approvals are mandatory, which exceptions are legitimate, or who owns changes to those rules.
 
 ## Decision and handoff brief
+
+The following brief and its machine-readable companion are produced only after the adaptive questionnaire is complete and remaining unknowns have been converted into evidence tasks.
 
 ### Current direction
 
