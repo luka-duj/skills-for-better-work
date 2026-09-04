@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-09-04T12:00:00Z",
+  "readiness": "discovery-needed",
+  "request": {
+    "scope": "internal-process-tooling",
+    "summary": "Create a custom portal for approval requests currently handled through inconsistent email and chat flows.",
+    "desired_outcome": "Create a traceable request-to-decision flow with consistent inputs and visible status across four departments.",
+    "affected_people": ["Requesters in four departments", "Approvers", "Future process owner", "Support team"],
+    "proposed_solution": "Custom approval portal"
+  },
+  "process_findings": {
+    "necessity": "unclear",
+    "necessity_basis": [
+      {
+        "statement": "Some approval outcome appears necessary, but the basis for each approval route was not supplied.",
+        "source": "Synthetic requester statement",
+        "confidence": "medium"
+      }
+    ],
+    "actors": ["Department requester", "Approver"],
+    "normal_path": ["Requester sends a request through email or chat", "An approver reviews through an inconsistent route", "Status is followed up manually"],
+    "exceptions": ["Approval paths vary by request and department, but legitimate exception types are unknown"],
+    "simplification_opportunities": ["Reduce duplicate intake channels", "Remove approval steps that lack a confirmed policy or control purpose"],
+    "standardization_needs": ["Request categories", "Required information", "Approval rules", "Status definitions", "Exception ownership"],
+    "current_owner": null,
+    "coevolution_justification": null
+  },
+  "evidence": {
+    "facts": [
+      { "statement": "Requests arrive through email and chat.", "source": "Synthetic requester statement", "confidence": "high" },
+      { "statement": "Different templates and approval routes are used.", "source": "Synthetic requester statement", "confidence": "high" },
+      { "statement": "Four departments submit an estimated 20–40 requests per month.", "source": "Synthetic requester estimate", "confidence": "medium" },
+      { "statement": "No owner for the end-to-end process was named.", "source": "Synthetic requester statement", "confidence": "high" }
+    ],
+    "interpretations": [
+      { "statement": "Building now would encode disputed or undocumented approval rules.", "source": "Interpretation of supplied process state", "confidence": "medium" }
+    ],
+    "assumptions": [
+      { "statement": "A portal would reduce lost status and inconsistent submissions.", "source": "Proposed-solution rationale", "confidence": "low" }
+    ],
+    "constraints": [
+      { "statement": "The solution must support work across four departments.", "source": "Synthetic requester statement", "confidence": "high" }
+    ],
+    "contradictions": [],
+    "unknowns": [
+      { "question": "Which approval outcomes and routes are mandatory?", "why_it_matters": "Unnecessary approvals should not be standardized or automated." },
+      { "question": "Can the existing work-management suite support the minimum process?", "why_it_matters": "Existing capability may avoid procurement or custom ownership." },
+      { "question": "Who will own the process and any future solution?", "why_it_matters": "Rules, exceptions, support, and changes need an accountable owner." }
+    ]
+  },
+  "evidence_tasks": [
+    {
+      "priority": 1,
+      "question": "Which approvals are mandatory and who owns the policy?",
+      "why_it_matters": "This determines which parts of the process are necessary.",
+      "action": "Review the governing policy or control with its accountable owner.",
+      "owner": null,
+      "completion_evidence": "A named owner and source-backed list of mandatory approval outcomes.",
+      "affected_directions": ["eliminate-or-stop", "process-redesign", "use-existing-capability", "custom-build"]
+    },
+    {
+      "priority": 2,
+      "question": "What is the minimum stable approval model?",
+      "why_it_matters": "A tool needs shared request categories, inputs, routes, and exception rules.",
+      "action": "Map recent synthetic or sanitized cases into a normal path and legitimate exception set.",
+      "owner": null,
+      "completion_evidence": "Agreed request categories, required fields, approval rules, status definitions, and exception owners.",
+      "affected_directions": ["process-redesign", "use-existing-capability", "integrate-or-automate", "custom-build"]
+    },
+    {
+      "priority": 3,
+      "question": "Can the current work-management suite support the minimum model?",
+      "why_it_matters": "An owned capability may be faster and cheaper than buying or building.",
+      "action": "Configure a sanitized test flow using the minimum model and record fit and gaps.",
+      "owner": null,
+      "completion_evidence": "Capability test with supported requirements, gaps, workarounds, and ownership implications.",
+      "affected_directions": ["use-existing-capability", "buy-or-configure", "integrate-or-automate", "custom-build"]
+    },
+    {
+      "priority": 4,
+      "question": "Who will own operation and change after launch?",
+      "why_it_matters": "No technology option is sustainable without process, support, and lifecycle ownership.",
+      "action": "Assign or escalate ownership for process decisions, support, change, and technology lifecycle.",
+      "owner": null,
+      "completion_evidence": "Named accountable owners and an accepted support/change path.",
+      "affected_directions": ["use-existing-capability", "buy-or-configure", "integrate-or-automate", "custom-build"]
+    }
+  ],
+  "options": [
+    {
+      "direction": "process-redesign",
+      "status": "plausible",
+      "rationale": "The necessary outcome may be real, but request definitions, routes, exceptions, and ownership are unstable.",
+      "critical_conditions": [
+        {
+          "criterion_id": "ownership-support",
+          "status": "unresolved",
+          "evidence": "No end-to-end owner was named.",
+          "owner": null,
+          "consequence": "A reviewer must confirm who can standardize the process and accept changes."
+        }
+      ]
+    },
+    {
+      "direction": "use-existing-capability",
+      "status": "deferred",
+      "rationale": "The existing suite may fit, but the minimum process and capability test are missing.",
+      "critical_conditions": [
+        {
+          "criterion_id": "process-fit",
+          "status": "unresolved",
+          "evidence": "Required routes and exceptions are not defined.",
+          "owner": null,
+          "consequence": "Capability fit cannot be assessed responsibly."
+        }
+      ]
+    },
+    {
+      "direction": "custom-build",
+      "status": "rejected",
+      "rationale": "The differentiated capability, lifecycle owner, and total-cost inputs are absent.",
+      "critical_conditions": [
+        {
+          "criterion_id": "ownership-support",
+          "status": "fail",
+          "evidence": "No software lifecycle owner was identified.",
+          "owner": null,
+          "consequence": "Do not commit to a custom build at the current stage."
+        }
+      ]
+    }
+  ],
+  "scorecard": {
+    "criteria": [
+      { "id": "outcome-value", "label": "Necessary outcome and user value", "requester_weight": 5, "reviewer_weight": null, "weight_status": "requester-draft", "critical": false },
+      { "id": "process-fit", "label": "Process fit and exceptions", "requester_weight": 5, "reviewer_weight": null, "weight_status": "requester-draft", "critical": true },
+      { "id": "time-to-operation", "label": "Time to operation", "requester_weight": 3, "reviewer_weight": null, "weight_status": "requester-draft", "critical": false },
+      { "id": "lifetime-cost", "label": "Lifetime cost and internal capacity", "requester_weight": 4, "reviewer_weight": null, "weight_status": "requester-draft", "critical": false },
+      { "id": "ownership-support", "label": "Ownership and support", "requester_weight": 4, "reviewer_weight": null, "weight_status": "requester-draft", "critical": true }
+    ],
+    "option_scores": [
+      {
+        "direction": "process-redesign",
+        "scores": [
+          { "criterion_id": "outcome-value", "fit": 4, "confidence": "medium", "rationale": "The coordination problem is plausible, while the mandatory outcome is not fully established." },
+          { "criterion_id": "process-fit", "fit": 5, "confidence": "high", "rationale": "Process redesign directly addresses inconsistent definitions and routes." },
+          { "criterion_id": "time-to-operation", "fit": 4, "confidence": "medium", "rationale": "Clarifying the minimum model can begin without software delivery." },
+          { "criterion_id": "lifetime-cost", "fit": 4, "confidence": "medium", "rationale": "Process work avoids premature software lifecycle cost." },
+          { "criterion_id": "ownership-support", "fit": 3, "confidence": "low", "rationale": "The work can surface ownership, but no owner is currently named." }
+        ],
+        "weighted_score": 81.0,
+        "evidence_completeness": 100.0
+      },
+      {
+        "direction": "use-existing-capability",
+        "scores": [
+          { "criterion_id": "outcome-value", "fit": 4, "confidence": "medium", "rationale": "Forms and status may support the desired outcome." },
+          { "criterion_id": "process-fit", "fit": 3, "confidence": "low", "rationale": "Fit is mixed until routes and exceptions are defined." },
+          { "criterion_id": "time-to-operation", "fit": 4, "confidence": "low", "rationale": "An owned tool may be quick to configure, but it has not been tested." },
+          { "criterion_id": "lifetime-cost", "fit": 4, "confidence": "low", "rationale": "Existing ownership may reduce incremental cost, subject to confirmation." },
+          { "criterion_id": "ownership-support", "fit": null, "confidence": null, "rationale": "Not assessed because current tool and process ownership are unknown." }
+        ],
+        "weighted_score": 74.1,
+        "evidence_completeness": 81.0
+      },
+      {
+        "direction": "custom-build",
+        "scores": [
+          { "criterion_id": "outcome-value", "fit": 3, "confidence": "low", "rationale": "A portal might help, but custom capability is not tied to verified differentiated value." },
+          { "criterion_id": "process-fit", "fit": 2, "confidence": "medium", "rationale": "A build would encode unstable routes and definitions." },
+          { "criterion_id": "time-to-operation", "fit": 2, "confidence": "low", "rationale": "Development and operational setup add lead time." },
+          { "criterion_id": "lifetime-cost", "fit": null, "confidence": null, "rationale": "Not assessed because no cost horizon, rates, or operating model were supplied." },
+          { "criterion_id": "ownership-support", "fit": 1, "confidence": "high", "rationale": "No lifecycle owner was identified." }
+        ],
+        "weighted_score": 41.2,
+        "evidence_completeness": 81.0
+      }
+    ],
+    "ranking_status": "withheld",
+    "ranking_caveat": "Weights are requester drafts and critical policy, process-fit, and ownership evidence is unresolved."
+  },
+  "ownership": {
+    "estimate_status": "insufficient-inputs",
+    "currency": null,
+    "horizon_months": null,
+    "responsibilities": [
+      { "area": "Product and process decisions", "owner": null, "status": "unknown", "notes": "No end-to-end process owner was named." },
+      { "area": "Development and configuration", "owner": null, "status": "unknown", "notes": "No delivery team or capacity was supplied." },
+      { "area": "Security, privacy, and compliance", "owner": null, "status": "unknown", "notes": "Data and control requirements are unknown." },
+      { "area": "Integration and data", "owner": null, "status": "unknown", "notes": "Systems and sources of truth were not identified." },
+      { "area": "Quality and release acceptance", "owner": null, "status": "unknown", "notes": "Acceptance criteria are not defined." },
+      { "area": "Monitoring and incidents", "owner": null, "status": "unknown", "notes": "No operational model was supplied." },
+      { "area": "Support, training, and adoption", "owner": null, "status": "unknown", "notes": "No support or transition path was supplied." },
+      { "area": "Maintenance, upgrades, and retirement", "owner": null, "status": "unknown", "notes": "No lifecycle owner or exit path was supplied." }
+    ],
+    "cost_scenarios": []
+  },
+  "research": {
+    "status": "not-applicable",
+    "scope": null,
+    "limitations": ["Vendor research is premature until the minimum approval model and existing capability are assessed."],
+    "vendors": [],
+    "sources": [],
+    "demo_and_procurement_questions": []
+  },
+  "recommendation": {
+    "direction": "process-redesign",
+    "confidence": "medium",
+    "rationale": "The approval outcome may be necessary, but inconsistent definitions, routes, exceptions, and ownership would make a tool decision premature.",
+    "caveats": ["The monthly volume is an estimate.", "The mandatory approval basis has not been supplied.", "Existing capability has not been tested."],
+    "blocking_conditions": ["No confirmed process or policy owner.", "No agreed minimum request and approval model.", "No assessment of the existing work-management capability."],
+    "next_decision": "Confirm the minimum approval model and then decide whether the existing suite is sufficient for a bounded trial.",
+    "human_owner": null
+  },
+  "handoff": {
+    "recipient": "product-or-automation-team",
+    "submission_ready": false,
+    "brief_markdown": "The approval outcome appears necessary, but the current process is not stable enough for a responsible custom-build decision. Confirm mandatory approvals and ownership, define the minimum request and exception model, and test the existing work-management suite. Then compare process-only, existing-capability, integration, buy, and custom paths using reviewer-confirmed priorities."
+  }
+}

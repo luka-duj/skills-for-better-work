@@ -1,0 +1,42 @@
+name: Behavior report
+description: Report a reproducible skill decision or safety problem using synthetic context.
+title: "[Behavior]: "
+labels: ["behavior"]
+body:
+  - type: checkboxes
+    id: data-safety
+    attributes:
+      label: Data safety
+      options:
+        - label: I removed company, customer, employee, security, contract, pricing, architecture, and other non-public information.
+          required: true
+        - label: The example is synthetic or safe for public release under Apache-2.0.
+          required: true
+  - type: textarea
+    id: synthetic-input
+    attributes:
+      label: Synthetic or generalized input
+      description: Reproduce the decision problem without pasting a real internal request or generated packet.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: Which question, direction, score, claim, or handoff was problematic?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Explain the decision or safety principle that should apply.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction evidence
+      description: Include only sanitized excerpts needed to understand the behavior.
+    validations:
+      required: true

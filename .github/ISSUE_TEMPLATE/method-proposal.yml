@@ -1,0 +1,40 @@
+name: Method proposal
+description: Propose a bounded improvement to the decision method.
+title: "[Method]: "
+labels: ["method"]
+body:
+  - type: checkboxes
+    id: data-safety
+    attributes:
+      label: Data safety
+      options:
+        - label: This proposal contains no confidential or personal information.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Decision problem
+      description: What observable failure or missing capability does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful behavior change.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Boundary conditions
+      description: Where should this apply, and where should it not apply?
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: Which synthetic case or outcome would show that the change is better?
+    validations:
+      required: true

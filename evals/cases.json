@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0.0",
+  "cases": [
+    {
+      "id": "unnecessary-process",
+      "title": "Retired report is still manually approved",
+      "input": "A team asks for an automation that prepares and routes a weekly report for approval. The report supported a governance meeting that was discontinued last year. No current policy, customer, decision, or control uses it, and the report is not read elsewhere.",
+      "expected": {
+        "allowed_directions": ["eliminate-or-stop"],
+        "forbidden_directions": ["buy-or-configure", "custom-build"],
+        "required_behaviors": ["Tests whether the reporting process is still necessary", "Does not automate the retired ritual", "Names the human owner who can stop the process", "States that eliminate-or-stop means eliminating the process rather than merely stopping the proposed change"]
+      }
+    },
+    {
+      "id": "unstable-necessary-process",
+      "title": "Necessary case review has disputed rules",
+      "input": "A regulated case review must continue, but five teams use different definitions, approval routes, and exception rules. The requester wants a portal before the policy owners agree on the minimum process.",
+      "expected": {
+        "allowed_directions": ["process-redesign"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Preserves the regulatory obligation", "Separates mandatory controls from inconsistent local practice", "Creates evidence tasks for policy ownership and exception rules"]
+      }
+    },
+    {
+      "id": "existing-capability",
+      "title": "Owned suite already supports the stable workflow",
+      "input": "A stable equipment-request process uses one form, one approval rule, and one service owner. The organization already licenses a work-management suite whose documented form, approval, access, and audit features meet the stated requirements after a small configuration test.",
+      "expected": {
+        "allowed_directions": ["use-existing-capability"],
+        "forbidden_directions": ["buy-or-configure", "custom-build"],
+        "required_behaviors": ["Considers the owned capability before procurement", "Includes configuration, adoption, and support ownership", "Does not invent extra differentiation"]
+      }
+    },
+    {
+      "id": "commodity-buy-candidate",
+      "title": "Standard room-booking capability needs market research",
+      "input": "A multi-office company has a stable room-booking policy, clear identity and calendar integrations, named facilities ownership, and documented security and residency constraints. Its current tools cannot meet accessibility and cross-office booking requirements. The capability is common in the market and no custom differentiation is required.",
+      "expected": {
+        "allowed_directions": ["buy-or-configure"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Prepares a scoped vendor-research brief", "Asks for explicit confirmation before Deep Research unless already requested", "Requires cited current evidence and tailored demo questions"]
+      }
+    },
+    {
+      "id": "custom-build-candidate",
+      "title": "Stable differentiated internal decision workflow",
+      "input": "A specialist operations team has a documented, stable decision workflow tied to a proprietary operating model. Three existing products and the current suite were assessed against the requirements and failed material exception and integration needs. A product owner, engineering team, support owner, security reviewer, budget range, and retirement owner are named.",
+      "expected": {
+        "allowed_directions": ["custom-build"],
+        "forbidden_directions": ["insufficient-evidence"],
+        "required_behaviors": ["Recognizes supported differentiation", "Still exposes full lifecycle ownership", "Treats the direction as a candidate rather than architecture or budget approval", "Keeps missing requester weights and aggregate scorecard results null rather than inventing priorities"]
+      }
+    },
+    {
+      "id": "process-tool-coevolution",
+      "title": "Interaction must be tested to learn the new process",
+      "input": "A small service team is testing a new assisted triage practice. The correct handoff rules depend on how users interact with real-time suggestions and cannot be learned credibly from static workshops. The team can run a reversible test with six trained users, synthetic data, a manual fallback, named owner, quality guardrails, and a stop decision after the test.",
+      "expected": {
+        "allowed_directions": ["co-evolve-through-experiment"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Allows a justified exception to process-first", "Keeps the experiment bounded and reversible", "Does not describe the experiment as production evidence"]
+      }
+    },
+    {
+      "id": "leadership-urgency",
+      "title": "Executive deadline without problem evidence",
+      "input": "A leader wants a custom workflow application demonstrated in four weeks and says the budget is available. The requester cannot identify the affected users, current process, baseline problem, owner after launch, or reason existing tools are insufficient.",
+      "expected": {
+        "allowed_directions": ["insufficient-evidence", "process-redesign"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Treats urgency and budget as context rather than proof", "Creates evidence tasks instead of guessing", "Does not manufacture a confident timeline"]
+      }
+    },
+    {
+      "id": "missing-evidence",
+      "title": "One-sentence automation request",
+      "input": "Automate our onboarding process with AI.",
+      "expected": {
+        "allowed_directions": ["insufficient-evidence"],
+        "forbidden_directions": ["buy-or-configure", "custom-build"],
+        "required_behaviors": ["Begins concise adaptive triage", "Returns a partial handoff and evidence tasks", "Does not invent users, volume, ROI, data, risk, or ownership"]
+      }
+    },
+    {
+      "id": "vendor-claim-discipline",
+      "title": "Preferred vendor makes broad marketing claims",
+      "input": "A requester prefers Vendor Example because its homepage says it is secure, compliant, easy to integrate, and the market leader. No security documentation, pricing, API limits, residency terms, implementation evidence, or workflow test has been reviewed.",
+      "expected": {
+        "allowed_directions": ["insufficient-evidence", "buy-or-configure"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Labels marketing as a vendor claim", "Seeks official and disconfirming evidence", "Does not give high confidence for operational fit", "Returns unresolved demo and procurement questions"]
+      }
+    },
+    {
+      "id": "output-consistency",
+      "title": "Readable and machine-readable outputs agree",
+      "input": "Use the synthetic approval-portal request in the skill example and return the full brief and JSON decision packet.",
+      "expected": {
+        "allowed_directions": ["process-redesign"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Uses schema version 1.0.0", "Keeps direction, confidence, readiness, research status, and blocking conditions aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the published schema"]
+      }
+    }
+  ]
+}

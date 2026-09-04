@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Process Before Platform</title>
+  <rect width="128" height="128" rx="18" fill="#061F19"/>
+  <path d="M24 37H62L78 53H104M24 64H104M24 91H50L66 75H104" fill="none" stroke="#77896B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="37" r="7" fill="#D7E985"/><circle cx="24" cy="64" r="7" fill="#D7E985"/><circle cx="24" cy="91" r="7" fill="#D7E985"/>
+  <circle cx="104" cy="53" r="7" fill="#F2EFE6"/><circle cx="104" cy="64" r="7" fill="#F2EFE6"/><circle cx="104" cy="75" r="7" fill="#F2EFE6"/>
+</svg>

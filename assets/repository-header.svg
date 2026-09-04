@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title description">
+  <title id="title">Skills for Better Work</title>
+  <desc id="description">Practical open-source skills for better decisions, on a deep-green background with an ordered network motif.</desc>
+  <rect width="1200" height="320" fill="#061F19"/>
+  <path d="M0 272H1200" stroke="#77896B" stroke-opacity="0.35"/>
+  <text x="72" y="78" fill="#D7E985" font-family="'IBM Plex Mono', monospace" font-size="18" letter-spacing="3">OPEN SKILL COLLECTION</text>
+  <text x="72" y="154" fill="#F2EFE6" font-family="'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif" font-size="54" font-weight="600">Skills for Better Work</text>
+  <text x="72" y="205" fill="#F2EFE6" fill-opacity="0.78" font-family="'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif" font-size="25">Practical AI judgment, packaged for use.</text>
+  <g fill="none" stroke="#77896B" stroke-width="2" stroke-opacity="0.65">
+    <path d="M824 70L918 118L1012 82L1100 144L1012 216L904 198L824 246"/>
+    <path d="M824 70L824 246M918 118L904 198M1012 82L1012 216M1100 144L1012 216"/>
+  </g>
+  <g fill="#D7E985">
+    <circle cx="824" cy="70" r="7"/><circle cx="918" cy="118" r="7"/><circle cx="1012" cy="82" r="7"/>
+    <circle cx="1100" cy="144" r="7"/><circle cx="1012" cy="216" r="7"/><circle cx="904" cy="198" r="7"/><circle cx="824" cy="246" r="7"/>
+  </g>
+</svg>

@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luka-duj/skills-for-better-work/blob/main/skills/process-before-platform/schemas/decision-packet.schema.json",
+  "title": "Process Before Platform Decision Packet",
+  "description": "Versioned output contract for an internal process-tooling decision assessment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "readiness",
+    "request",
+    "process_findings",
+    "evidence",
+    "evidence_tasks",
+    "options",
+    "scorecard",
+    "ownership",
+    "research",
+    "recommendation",
+    "handoff"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "readiness": {
+      "type": "string",
+      "enum": ["triage", "discovery-needed", "assessment-ready", "handoff-ready"]
+    },
+    "request": { "$ref": "#/$defs/request" },
+    "process_findings": { "$ref": "#/$defs/processFindings" },
+    "evidence": { "$ref": "#/$defs/evidenceRegister" },
+    "evidence_tasks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceTask" }
+    },
+    "options": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/option" }
+    },
+    "scorecard": { "$ref": "#/$defs/scorecard" },
+    "ownership": { "$ref": "#/$defs/ownership" },
+    "research": { "$ref": "#/$defs/research" },
+    "recommendation": { "$ref": "#/$defs/recommendation" },
+    "handoff": { "$ref": "#/$defs/handoff" }
+  },
+  "$defs": {
+    "direction": {
+      "type": "string",
+      "enum": [
+        "eliminate-or-stop",
+        "process-redesign",
+        "use-existing-capability",
+        "buy-or-configure",
+        "integrate-or-automate",
+        "custom-build",
+        "co-evolve-through-experiment",
+        "insufficient-evidence"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "source", "confidence"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 1 },
+        "source": { "type": ["string", "null"] },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "summary", "desired_outcome", "affected_people", "proposed_solution"],
+      "properties": {
+        "scope": { "const": "internal-process-tooling" },
+        "summary": { "type": "string", "minLength": 1 },
+        "desired_outcome": { "type": "string", "minLength": 1 },
+        "affected_people": { "type": "array", "items": { "type": "string" } },
+        "proposed_solution": { "type": ["string", "null"] }
+      }
+    },
+    "processFindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "necessity",
+        "necessity_basis",
+        "actors",
+        "normal_path",
+        "exceptions",
+        "simplification_opportunities",
+        "standardization_needs",
+        "current_owner",
+        "coevolution_justification"
+      ],
+      "properties": {
+        "necessity": { "type": "string", "enum": ["supported", "unsupported", "unclear"] },
+        "necessity_basis": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "actors": { "type": "array", "items": { "type": "string" } },
+        "normal_path": { "type": "array", "items": { "type": "string" } },
+        "exceptions": { "type": "array", "items": { "type": "string" } },
+        "simplification_opportunities": { "type": "array", "items": { "type": "string" } },
+        "standardization_needs": { "type": "array", "items": { "type": "string" } },
+        "current_owner": { "type": ["string", "null"] },
+        "coevolution_justification": { "type": ["string", "null"] }
+      }
+    },
+    "evidenceRegister": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facts", "interpretations", "assumptions", "constraints", "contradictions", "unknowns"],
+      "properties": {
+        "facts": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "interpretations": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "assumptions": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "constraints": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "contradictions": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question", "why_it_matters"],
+            "properties": {
+              "question": { "type": "string", "minLength": 1 },
+              "why_it_matters": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "evidenceTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["priority", "question", "why_it_matters", "action", "owner", "completion_evidence", "affected_directions"],
+      "properties": {
+        "priority": { "type": "integer", "minimum": 1 },
+        "question": { "type": "string", "minLength": 1 },
+        "why_it_matters": { "type": "string", "minLength": 1 },
+        "action": { "type": "string", "minLength": 1 },
+        "owner": { "type": ["string", "null"] },
+        "completion_evidence": { "type": "string", "minLength": 1 },
+        "affected_directions": { "type": "array", "items": { "$ref": "#/$defs/direction" } }
+      }
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["direction", "status", "rationale", "critical_conditions"],
+      "properties": {
+        "direction": { "$ref": "#/$defs/direction" },
+        "status": { "type": "string", "enum": ["plausible", "deferred", "rejected"] },
+        "rationale": { "type": "string", "minLength": 1 },
+        "critical_conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["criterion_id", "status", "evidence", "owner", "consequence"],
+            "properties": {
+              "criterion_id": { "type": "string", "minLength": 1 },
+              "status": { "type": "string", "enum": ["pass", "fail", "unresolved"] },
+              "evidence": { "type": "string" },
+              "owner": { "type": ["string", "null"] },
+              "consequence": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "requester_weight", "reviewer_weight", "weight_status", "critical"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "requester_weight": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+        "reviewer_weight": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+        "weight_status": { "type": "string", "enum": ["unassigned", "requester-draft", "reviewer-confirmed", "reviewer-revised"] },
+        "critical": { "type": "boolean" }
+      }
+    },
+    "optionScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["direction", "scores", "weighted_score", "evidence_completeness"],
+      "properties": {
+        "direction": { "$ref": "#/$defs/direction" },
+        "scores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["criterion_id", "fit", "confidence", "rationale"],
+            "properties": {
+              "criterion_id": { "type": "string", "minLength": 1 },
+              "fit": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+              "confidence": { "type": ["string", "null"], "enum": ["low", "medium", "high", null] },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "weighted_score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "evidence_completeness": { "type": ["number", "null"], "minimum": 0, "maximum": 100 }
+      }
+    },
+    "scorecard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "option_scores", "ranking_status", "ranking_caveat"],
+      "properties": {
+        "criteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/criterion" } },
+        "option_scores": { "type": "array", "items": { "$ref": "#/$defs/optionScore" } },
+        "ranking_status": { "type": "string", "enum": ["available", "withheld"] },
+        "ranking_caveat": { "type": ["string", "null"] }
+      }
+    },
+    "responsibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["area", "owner", "status", "notes"],
+      "properties": {
+        "area": { "type": "string", "minLength": 1 },
+        "owner": { "type": ["string", "null"] },
+        "status": { "type": "string", "enum": ["owned", "shared", "unknown", "not-applicable"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "costScenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario", "amount", "basis", "confidence"],
+      "properties": {
+        "scenario": { "type": "string", "enum": ["low", "base", "high"] },
+        "amount": { "type": ["number", "null"], "minimum": 0 },
+        "basis": { "type": "string" },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimate_status", "currency", "horizon_months", "responsibilities", "cost_scenarios"],
+      "properties": {
+        "estimate_status": { "type": "string", "enum": ["not-needed", "insufficient-inputs", "estimated"] },
+        "currency": { "type": ["string", "null"] },
+        "horizon_months": { "type": ["integer", "null"], "minimum": 1 },
+        "responsibilities": { "type": "array", "items": { "$ref": "#/$defs/responsibility" } },
+        "cost_scenarios": { "type": "array", "items": { "$ref": "#/$defs/costScenario" } }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "publisher", "url", "accessed_at", "claim", "confidence"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "accessed_at": { "type": "string", "format": "date" },
+        "claim": { "type": "string", "minLength": 1 },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "vendor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "reason", "unresolved_questions"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["shortlisted", "excluded", "deferred"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "unresolved_questions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "scope", "limitations", "vendors", "sources", "demo_and_procurement_questions"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not-applicable", "brief-ready", "awaiting-confirmation", "in-progress", "completed", "not-run", "reduced-depth"]
+        },
+        "scope": { "type": ["string", "null"] },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "vendors": { "type": "array", "items": { "$ref": "#/$defs/vendor" } },
+        "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+        "demo_and_procurement_questions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["direction", "confidence", "rationale", "caveats", "blocking_conditions", "next_decision", "human_owner"],
+      "properties": {
+        "direction": { "$ref": "#/$defs/direction" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "rationale": { "type": "string", "minLength": 1 },
+        "caveats": { "type": "array", "items": { "type": "string" } },
+        "blocking_conditions": { "type": "array", "items": { "type": "string" } },
+        "next_decision": { "type": "string", "minLength": 1 },
+        "human_owner": { "type": ["string", "null"] }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recipient", "submission_ready", "brief_markdown"],
+      "properties": {
+        "recipient": { "const": "product-or-automation-team" },
+        "submission_ready": { "type": "boolean" },
+        "brief_markdown": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">Process Before Platform</title>
+  <desc id="description">Three inconsistent process paths become one clear route.</desc>
+  <rect width="512" height="512" rx="64" fill="#061F19"/>
+  <path d="M90 146H244L310 212H422M90 256H422M90 366H198L264 300H422" fill="none" stroke="#77896B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="90" cy="146" r="27" fill="#D7E985"/><circle cx="90" cy="256" r="27" fill="#D7E985"/><circle cx="90" cy="366" r="27" fill="#D7E985"/>
+  <circle cx="422" cy="212" r="27" fill="#F2EFE6"/><circle cx="422" cy="256" r="27" fill="#F2EFE6"/><circle cx="422" cy="300" r="27" fill="#F2EFE6"/>
+</svg>
