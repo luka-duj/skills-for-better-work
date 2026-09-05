@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "cases": [
     {
       "id": "unnecessary-process",
@@ -98,7 +98,7 @@
       "expected": {
         "allowed_directions": ["process-redesign"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Writes sibling Markdown and JSON artifacts only once in the final delivery", "Uses schema version 2.0.0", "Keeps initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the active schema"]
+        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Writes sibling Markdown and JSON artifacts only once in the final delivery", "Uses schema version 2.1.0", "Embeds the exact BPMN-style Mermaid source in Markdown and JSON when the process map passes the evidence gate", "Keeps initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the active schema"]
       }
     },
     {
@@ -108,7 +108,7 @@
       "expected": {
         "allowed_directions": ["process-redesign", "integrate-or-automate", "co-evolve-through-experiment", "insufficient-evidence"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Maps the manual trigger-to-completion workflow rather than calling it merely manual", "Inventories the inbox, internal database, public guidance, and procedure space with their uses and information", "Separates codified guidance from person-held knowledge and records ownership or freshness gaps", "Tests initiative fit and the complete solution ladder", "Creates portable Markdown and JSON artifacts with target-system mapping left not requested", "Does not create a remote ticket"]
+        "required_behaviors": ["Maps the manual trigger-to-completion workflow rather than calling it merely manual", "Inventories the inbox, internal database, public guidance, and procedure space with their uses and information", "Separates codified guidance from person-held knowledge and records ownership or freshness gaps", "Generates a BPMN-style Mermaid swimlane diagram only if the trigger, completion, actors, ordered steps, systems, handoffs, and exceptions are mapped", "Otherwise records insufficient diagram evidence and related evidence tasks instead of guessing the flow", "Tests initiative fit and the complete solution ladder", "Creates portable Markdown and JSON artifacts with target-system mapping left not requested", "Does not create a remote ticket"]
       }
     }
   ]

@@ -38,6 +38,26 @@ Map the process from trigger to completion at enough depth for another person to
 
 Do not summarize a multi-system workflow as merely `manual`.
 
+### Process diagram evidence gate
+
+Treat the current process as successfully mapped for diagramming only when all of the following are known from supplied evidence:
+
+- a trigger and completion condition;
+- at least two ordered steps with an actor and action;
+- every system referenced by a step is present in the systems inventory;
+- the material handoffs and exceptions have been captured, including an explicit empty set when none apply.
+
+When the gate passes, create a portable BPMN-style Mermaid swimlane diagram:
+
+- use `flowchart LR`, start and end events, one labeled `subgraph` per actor, task rectangles, and diamonds for material decisions;
+- give process steps stable node IDs `S1`, `S2`, and so on, matching `current_state.steps[].sequence`;
+- show the normal path and supported material exception or rework loops without inventing undocumented branches;
+- include the system or channel in each task label when known;
+- keep confidential record content and sensitive data values out of labels;
+- describe it as BPMN-style, not as standards-compliant BPMN 2.0 XML.
+
+When the gate does not pass, do not infer the missing flow. Set the diagram status to `insufficient-evidence`, leave the source empty, list the unmapped elements, and create evidence tasks for material gaps. Use `not-applicable` only when there is no current process to map, such as a supported eliminate-or-stop case.
+
 ### Existing systems and information
 
 For every material system, tool, spreadsheet, inbox, document store, database, or shadow tool, record:

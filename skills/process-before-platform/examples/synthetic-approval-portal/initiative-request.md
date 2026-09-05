@@ -40,6 +40,31 @@ Out of scope:
 
 Material handoffs occur between requester, coordinator, and approver. Department-specific routes, missing information, and alternate approvers create exceptions and rework. The tracker and the conversation can diverge. No end-to-end process owner is named.
 
+### BPMN-style current-process diagram
+
+```mermaid
+flowchart LR
+  start((Start))
+  subgraph requester_lane["Requester"]
+    S1["1. Submit approval request<br/>Email or team chat"]
+  end
+  subgraph coordinator_lane["Approval coordinator"]
+    S2["2. Interpret, route, and record status<br/>Shared tracker"]
+    G1{"Required information complete?"}
+    S4["4. Record outcome and close<br/>Shared tracker"]
+  end
+  subgraph approver_lane["Approver"]
+    S3["3. Review and decide<br/>Email or team chat"]
+  end
+  finish((End))
+  start --> S1 --> S2 --> G1
+  G1 -- Yes --> S3 --> S4 --> finish
+  G1 -- No --> S1
+  S3 -- More information needed --> S1
+```
+
+This is a BPMN-style Mermaid view, not BPMN 2.0 XML. It shows the supported normal flow and material rework loops. Department-specific approval routes and alternate-approver branches remain summarized because their rules are not yet confirmed.
+
 ## Existing systems and information sources
 
 | System | Current use | Information collected or retrieved | Source-of-truth role | Transfers and limitations |

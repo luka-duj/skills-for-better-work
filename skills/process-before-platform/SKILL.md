@@ -26,7 +26,7 @@ If the user pauses before the completion gate, provide a short prose-only status
 
 1. **Test initiative fit.** Decide whether this is an initiative candidate, standard change, duplicate or already solved request, discovery-needed request, reframe, or do-not-pursue case. Do not inflate narrow work into an initiative.
 2. **Test necessity.** Identify the obligation or outcome the process serves, who needs it, and what happens if it stops. Treat policy, habit, and stakeholder preference as different evidence.
-3. **Map the current state.** Capture the manual process from trigger to completion, actors, decisions, exceptions, handoffs, workarounds, and failure recovery. Inventory existing systems, what each is used for, information collected or retrieved from each, transfers and integrations, ownership, and sources of truth. Inventory codified, partially codified, conflicting, stale, inaccessible, and person-held knowledge.
+3. **Map the current state.** Capture the manual process from trigger to completion, actors, decisions, exceptions, handoffs, workarounds, and failure recovery. Inventory existing systems, what each is used for, information collected or retrieved from each, transfers and integrations, ownership, and sources of truth. Inventory codified, partially codified, conflicting, stale, inaccessible, and person-held knowledge. When the process map meets the evidence gate in `initiative-intake.md`, generate a BPMN-style Mermaid swimlane diagram; otherwise record why a trustworthy diagram cannot yet be produced.
 4. **Improve the work.** Find removable steps, unnecessary approvals, inconsistent definitions, variants, exceptions, handoffs, and missing ownership. Do not automate avoidable process debt.
 5. **Establish evidence and value.** Separate facts, interpretations, assumptions, constraints, proposed deadlines, and unknowns. Capture users, scope, outcomes, baseline, measures, reach, strategy linkage, urgency, budget status, dependencies, risks, adoption, and saved-time use only when supported. Convert material unknowns into evidence tasks with a useful action and owner when known.
 6. **Compare the full solution ladder.** This step is required. Read [solution ladder and scorecard](references/solution-ladder.md). Consider no action, eliminate, process redesign, existing capability, buy or configure, integrate or automate, custom build, and a bounded process-and-tool experiment.
@@ -60,7 +60,9 @@ When `$deep-research` is available, hand off the complete brief and reconcile it
 Only after the completion gate, create both outputs defined in [the output contract](references/output-contract.md):
 
 1. a ticket-ready Markdown initiative request;
-2. a vendor-neutral JSON initiative packet that conforms to [schema version 2.0.0](schemas/initiative-request.schema.json).
+2. a vendor-neutral JSON initiative packet that conforms to [schema version 2.1.0](schemas/initiative-request.schema.json).
+
+Embed a BPMN-style Mermaid diagram in the Markdown and store the exact source in `process_diagram.source` when the current process is mapped successfully. Do not claim BPMN 2.0 conformance or generate a diagram from guessed steps.
 
 Default to sibling files under `<current-project>/output/process-before-platform/` named `<YYYY-MM-DD>-<initiative-slug>.md` and `<YYYY-MM-DD>-<initiative-slug>.json`. If there is no clear writable project root, ask for a destination near the end. Never overwrite an existing artifact; add a time suffix when needed. Never create or modify a ticket, project, or remote system unless the user separately requests it.
 

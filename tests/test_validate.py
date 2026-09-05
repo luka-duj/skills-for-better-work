@@ -76,6 +76,51 @@ class RepositoryValidationTests(unittest.TestCase):
         with self.assertRaises(validator.ValidationError):
             validator.validate_packet_data(packet)
 
+    def test_successful_process_map_requires_mapped_diagram(self):
+        packet = copy.deepcopy(self.packet)
+        packet["process_diagram"].update(
+            {
+                "status": "insufficient-evidence",
+                "source": None,
+                "actors": [],
+                "mapped_step_sequences": [],
+                "unmapped_elements": ["Diagram omitted despite a complete map."],
+            }
+        )
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_mapped_diagram_must_cover_every_process_step(self):
+        packet = copy.deepcopy(self.packet)
+        packet["process_diagram"]["mapped_step_sequences"] = [1, 2, 3]
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_unmapped_diagram_cannot_contain_source(self):
+        packet = copy.deepcopy(self.packet)
+        packet["current_state"]["trigger"] = None
+        packet["process_diagram"]["evidence_gate"]["trigger_and_completion"] = False
+        packet["process_diagram"]["status"] = "insufficient-evidence"
+        packet["process_diagram"]["mapped_step_sequences"] = []
+        packet["process_diagram"]["actors"] = []
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_incomplete_map_can_record_no_diagram_without_guessing(self):
+        packet = copy.deepcopy(self.packet)
+        packet["current_state"]["trigger"] = None
+        packet["process_diagram"].update(
+            {
+                "status": "insufficient-evidence",
+                "source": None,
+                "actors": [],
+                "mapped_step_sequences": [],
+                "unmapped_elements": ["The process trigger is unknown."],
+            }
+        )
+        packet["process_diagram"]["evidence_gate"]["trigger_and_completion"] = False
+        validator.validate_packet_data(packet)
+
     def test_example_markdown_and_json_align(self):
         validator.validate_example_alignment()
 

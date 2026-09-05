@@ -14,7 +14,7 @@ Practical Codex skills that help people make better decisions about work, system
 
 Its default is simple: stabilize, simplify, and standardize the process before tooling. That default is not absolute. When evidence shows that a tool must enable a new process, the skill can recommend a bounded process-and-tool experiment.
 
-The skill asks whether the process and initiative are necessary, maps the manual workflow, inventories existing systems and information sources, exposes codified and person-held knowledge, separates evidence from assumptions, compares the required solution ladder, exposes lifetime ownership, and prepares a portable handoff for an initiative, product, automation, or business-analysis team.
+The skill asks whether the process and initiative are necessary, maps the manual workflow, produces a BPMN-style Mermaid swimlane diagram when that map is supported, inventories existing systems and information sources, exposes codified and person-held knowledge, separates evidence from assumptions, compares the required solution ladder, exposes lifetime ownership, and prepares a portable handoff for an initiative, product, automation, or business-analysis team.
 
 It does not approve initiatives, procurement, budgets, vendors, or architecture.
 
@@ -31,7 +31,8 @@ Use $process-before-platform to evaluate this internal tooling request:
 The skill runs an adaptive questionnaire first. It asks one primary question per round and does not emit JSON while answers are still being collected. Once the questionnaire is complete—or the requester explicitly closes it with remaining unknowns recorded as evidence tasks—it writes two sibling files under `<current-project>/output/process-before-platform/`:
 
 - a ticket-ready Markdown initiative request;
-- a vendor-neutral JSON initiative packet conforming to schema version 2.0.0;
+- a vendor-neutral JSON initiative packet conforming to schema version 2.1.0;
+- an evidence-gated BPMN-style Mermaid process diagram embedded in Markdown and preserved as source in JSON;
 - visible facts, assumptions, unknowns, and evidence tasks;
 - a comparison of credible process and technology options;
 - an ownership and total-cost view where inputs support it;
@@ -74,7 +75,7 @@ python scripts/validate.py
 python -m unittest discover -s tests
 ```
 
-The validator checks the skill package, links, JSON Schema subset, aligned synthetic Markdown and JSON initiative artifacts, required solution-ladder coverage, system references, score calculations, and evaluation fixture structure. Behavioral quality still requires forward-testing the skill against the cases in `evals/`.
+The validator checks the skill package, links, JSON Schema subset, aligned synthetic Markdown and JSON initiative artifacts, BPMN-style diagram evidence and step coverage, required solution-ladder coverage, system references, score calculations, and evaluation fixture structure. Behavioral quality still requires forward-testing the skill against the cases in `evals/`.
 
 ## Feedback
 

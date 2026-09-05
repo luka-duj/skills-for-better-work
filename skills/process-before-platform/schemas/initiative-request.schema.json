@@ -11,6 +11,7 @@
     "readiness",
     "initiative",
     "current_state",
+    "process_diagram",
     "target_state",
     "evidence",
     "evidence_tasks",
@@ -25,11 +26,12 @@
     "artifacts"
   ],
   "properties": {
-    "schema_version": { "const": "2.0.0" },
+    "schema_version": { "const": "2.1.0" },
     "generated_at": { "type": "string", "format": "date-time" },
     "readiness": { "type": "string", "enum": ["discovery-needed", "assessment-ready", "ticket-ready"] },
     "initiative": { "$ref": "#/$defs/initiative" },
     "current_state": { "$ref": "#/$defs/currentState" },
+    "process_diagram": { "$ref": "#/$defs/processDiagram" },
     "target_state": { "$ref": "#/$defs/targetState" },
     "evidence": { "$ref": "#/$defs/evidenceRegister" },
     "evidence_tasks": { "type": "array", "items": { "$ref": "#/$defs/evidenceTask" } },
@@ -212,6 +214,32 @@
         "information_sources": { "type": "array", "items": { "$ref": "#/$defs/informationSource" } },
         "knowledge_sources": { "type": "array", "items": { "$ref": "#/$defs/knowledgeSource" } },
         "data_flows": { "type": "array", "items": { "$ref": "#/$defs/dataFlow" } }
+      }
+    },
+    "processDiagram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notation", "evidence_gate", "source", "actors", "mapped_step_sequences", "unmapped_elements", "caveats"],
+      "properties": {
+        "status": { "type": "string", "enum": ["mapped", "insufficient-evidence", "not-applicable"] },
+        "notation": { "const": "mermaid-bpmn-style" },
+        "evidence_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["trigger_and_completion", "ordered_steps_and_actors", "systems_resolved", "handoffs_captured", "exceptions_captured"],
+          "properties": {
+            "trigger_and_completion": { "type": "boolean" },
+            "ordered_steps_and_actors": { "type": "boolean" },
+            "systems_resolved": { "type": "boolean" },
+            "handoffs_captured": { "type": "boolean" },
+            "exceptions_captured": { "type": "boolean" }
+          }
+        },
+        "source": { "type": ["string", "null"] },
+        "actors": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "mapped_step_sequences": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "uniqueItems": true },
+        "unmapped_elements": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "caveats": { "type": "array", "items": { "type": "string", "minLength": 1 } }
       }
     },
     "requirement": {

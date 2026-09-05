@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1-alpha — 2026-09-05
+
+- Added an evidence-gated BPMN-style Mermaid swimlane diagram to the final Markdown artifact, with the exact diagram source and coverage metadata in JSON.
+- Added explicit `mapped`, `insufficient-evidence`, and `not-applicable` diagram states so incomplete discovery produces evidence tasks rather than an invented flow.
+- Updated the active initiative-request schema to version 2.1.0 and added validation for actors, ordered-step coverage, start/end events, and Markdown/JSON diagram alignment.
+
 ## 0.2.0-alpha — 2026-09-05
 
 - Made initiative-intake readiness the primary outcome while retaining the required solution ladder and buy-versus-build assessment.

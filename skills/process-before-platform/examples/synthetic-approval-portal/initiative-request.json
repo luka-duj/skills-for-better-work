@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "generated_at": "2026-09-05T10:00:00Z",
   "readiness": "ticket-ready",
   "initiative": {
@@ -212,6 +212,22 @@
         "sensitivity": null
       }
     ]
+  },
+  "process_diagram": {
+    "status": "mapped",
+    "notation": "mermaid-bpmn-style",
+    "evidence_gate": {
+      "trigger_and_completion": true,
+      "ordered_steps_and_actors": true,
+      "systems_resolved": true,
+      "handoffs_captured": true,
+      "exceptions_captured": true
+    },
+    "source": "flowchart LR\n  start((Start))\n  subgraph requester_lane[\"Requester\"]\n    S1[\"1. Submit approval request<br/>Email or team chat\"]\n  end\n  subgraph coordinator_lane[\"Approval coordinator\"]\n    S2[\"2. Interpret, route, and record status<br/>Shared tracker\"]\n    G1{\"Required information complete?\"}\n    S4[\"4. Record outcome and close<br/>Shared tracker\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    S3[\"3. Review and decide<br/>Email or team chat\"]\n  end\n  finish((End))\n  start --> S1 --> S2 --> G1\n  G1 -- Yes --> S3 --> S4 --> finish\n  G1 -- No --> S1\n  S3 -- More information needed --> S1",
+    "actors": ["Requester", "Approval coordinator", "Approver"],
+    "mapped_step_sequences": [1, 2, 3, 4],
+    "unmapped_elements": ["Department-specific approval routes and alternate-approver branches are summarized because their rules are not yet confirmed."],
+    "caveats": ["This is a BPMN-style Mermaid view, not BPMN 2.0 XML.", "Only the supported normal flow and material rework loops are shown."]
   },
   "target_state": {
     "desired_outcome": "A traceable, consistently defined request-to-decision process that uses the simplest sustainable capability.",

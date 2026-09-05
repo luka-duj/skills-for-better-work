@@ -236,6 +236,42 @@ def validate_packet_data(packet: dict[str, Any], schema: dict[str, Any] | None =
     if step_sequences != list(range(1, len(step_sequences) + 1)):
         raise ValidationError("current-state process steps must use contiguous sequence numbers starting at 1")
 
+    current_state = packet["current_state"]
+    diagram = packet["process_diagram"]
+    gate = diagram["evidence_gate"]
+    if gate["trigger_and_completion"] and not (
+        current_state["trigger"] and current_state["completion_condition"]
+    ):
+        raise ValidationError("diagram evidence gate cannot pass trigger and completion when either is missing")
+    if gate["ordered_steps_and_actors"] and len(current_state["steps"]) < 2:
+        raise ValidationError("diagram evidence gate cannot pass ordered steps with fewer than two steps")
+    diagram_gate_passes = all(gate.values())
+    if diagram_gate_passes and diagram["status"] != "mapped":
+        raise ValidationError("a successfully mapped current process requires a mapped BPMN-style diagram")
+    if diagram["status"] == "mapped":
+        if not diagram_gate_passes:
+            raise ValidationError("a mapped process diagram requires a trigger, completion condition, and at least two steps")
+        if not isinstance(diagram["source"], str) or not diagram["source"].strip():
+            raise ValidationError("a mapped process diagram requires non-empty Mermaid source")
+        expected_actors = {step["actor"] for step in current_state["steps"]}
+        if set(diagram["actors"]) != expected_actors:
+            raise ValidationError("process diagram actors must cover the actors in current-state steps")
+        if diagram["mapped_step_sequences"] != step_sequences:
+            raise ValidationError("process diagram mapped sequences must match all current-state steps in order")
+        source = diagram["source"]
+        if "flowchart LR" not in source or "start((" not in source or "finish((" not in source:
+            raise ValidationError("mapped process diagram must contain a Mermaid flowchart with start and end events")
+        missing_nodes = [sequence for sequence in step_sequences if not re.search(rf"\bS{sequence}\s*[\[{{]", source)]
+        if missing_nodes:
+            raise ValidationError(f"process diagram is missing step nodes {missing_nodes!r}")
+    else:
+        if diagram["source"] is not None or diagram["mapped_step_sequences"]:
+            raise ValidationError("an unmapped process diagram must have null source and no mapped step sequences")
+        if diagram["actors"]:
+            raise ValidationError("an unmapped process diagram must not claim mapped actors")
+        if not diagram["unmapped_elements"] and not diagram["caveats"]:
+            raise ValidationError("an unmapped process diagram must explain the gap or non-applicability")
+
     artifacts = packet["artifacts"]
     markdown_path = Path(artifacts["markdown_path"])
     json_path = Path(artifacts["json_path"])
@@ -268,6 +304,11 @@ def validate_example_alignment() -> None:
     missing = [fragment for fragment in required_fragments if fragment.casefold() not in normalized_markdown]
     if missing:
         raise ValidationError(f"example Markdown is not aligned with JSON; missing {missing!r}")
+    diagram = packet["process_diagram"]
+    if diagram["status"] == "mapped":
+        diagram_block = f"```mermaid\n{diagram['source']}\n```"
+        if diagram_block not in markdown:
+            raise ValidationError("example Markdown must embed the exact Mermaid source stored in JSON")
     markdown_path = ROOT / packet["artifacts"]["markdown_path"]
     json_path = ROOT / packet["artifacts"]["json_path"]
     if markdown_path.resolve() != EXAMPLE_MARKDOWN.resolve() or json_path.resolve() != EXAMPLE_PACKET.resolve():
@@ -302,8 +343,8 @@ def validate_links() -> None:
 
 def validate_eval_cases() -> None:
     payload = load_json(EVAL_CASES)
-    if payload.get("schema_version") != "2.0.0":
-        raise ValidationError("evals/cases.json must use schema version 2.0.0")
+    if payload.get("schema_version") != "2.1.0":
+        raise ValidationError("evals/cases.json must use schema version 2.1.0")
     cases = payload.get("cases")
     if not isinstance(cases, list) or len(cases) != 11:
         raise ValidationError("evals/cases.json must contain the eleven approved alpha cases")
@@ -343,7 +384,7 @@ def main() -> int:
     except ValidationError as exc:
         print(f"Validation failed: {exc}", file=sys.stderr)
         return 1
-    print("Validation passed: skill, links, v2 initiative schema, aligned example artifacts, scorecard, and evaluation fixtures.")
+    print("Validation passed: skill, links, v2.1 initiative schema, aligned example artifacts and BPMN-style diagram, scorecard, and evaluation fixtures.")
     return 0
 
 

@@ -29,7 +29,7 @@ Use these sections when applicable:
 1. **Initiative summary and fit** — name, summary, classification, rationale, readiness, requester, business owner, areas, reach, type, and proposed solution.
 2. **Problem, necessity, and desired outcome** — keep the problem separate from the solution and show supporting evidence.
 3. **Scope** — in scope, out of scope, adjacent work, and target capabilities.
-4. **Current manual process** — trigger, completion, actors, ordered steps, decisions, information and knowledge used, handoffs, exceptions, rework, recovery, ownership, and pain points.
+4. **Current manual process** — trigger, completion, actors, ordered steps, decisions, information and knowledge used, handoffs, exceptions, rework, recovery, ownership, and pain points. When the process diagram evidence gate passes, embed the exact BPMN-style Mermaid source stored in the JSON packet. Otherwise state why no diagram was generated.
 5. **Existing systems and information sources** — purpose, users, inputs, outputs, information collected or retrieved, source-of-truth role, transfers, integrations, access, ownership, and limitations.
 6. **Knowledge landscape** — codified, partially codified, tribal, conflicting, stale, inaccessible, and missing knowledge with locations and owners.
 7. **Target state and requirements** — capabilities, supported functional and non-functional needs, human control, rollout, adoption, support, and fallback.
@@ -44,7 +44,7 @@ Do not pad empty sections. During quick triage, keep any direction, necessity, k
 
 ## JSON initiative packet
 
-- Set `schema_version` to `2.0.0`.
+- Set `schema_version` to `2.1.0`.
 - Use an ISO 8601 UTC timestamp in `generated_at`.
 - Use `readiness` to show how far the request has progressed:
   - `discovery-needed`
@@ -52,6 +52,7 @@ Do not pad empty sections. During quick triage, keep any direction, necessity, k
   - `ticket-ready`
 - Use one allowed initiative-fit classification and one allowed direction in `recommendation.direction`.
 - Populate `current_state.steps`, `current_state.systems`, `current_state.information_sources`, `current_state.knowledge_sources`, and `current_state.data_flows` at the depth supported by discovery. Use empty arrays only when nothing is known and create an evidence task when the gap is material.
+- Populate `process_diagram` for every packet and record each evidence-gate check explicitly. Use `status = mapped` only when every check in `evidence_gate` passes; then store the exact Mermaid block body in `source`, all mapped actor names in `actors`, and every mapped process-step sequence in `mapped_step_sequences`. For `insufficient-evidence` or `not-applicable`, keep `source` null and `mapped_step_sequences` empty, and explain the failed check, gap, or rationale in `unmapped_elements` and `caveats`.
 - Keep `target_state` separate from `current_state` and from the requester-proposed solution.
 - Keep the portable packet independent of any ticket vendor. Populate `handoff.target_system.field_mappings` only from known destination metadata.
 - Use `null` for an unassigned requester weight, unassessed fit, reviewer weight, aggregate score, completeness, currency, horizon, amount, owner, or source. Do not use zero as a substitute for unknown.
@@ -69,6 +70,8 @@ Before delivery:
 
 - the Markdown and JSON use the same initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision;
 - every current-state system, information source, knowledge source, and material process step appears consistently in both artifacts;
+- when `process_diagram.status` is `mapped`, its exact source appears in a Mermaid code block in Markdown, every current-state step has its matching `S<sequence>` node, and the listed actors and mapped sequences cover the process map;
+- when the diagram is not mapped, neither artifact presents an inferred diagram and both explain the material gap or non-applicability;
 - every numeric score has a rationale and confidence;
 - weighted scores and completeness use the formula in `solution-ladder.md`;
 - cost ranges contain only supplied or cited inputs;
