@@ -1,9 +1,9 @@
 interface:
   display_name: "Process Before Platform"
-  short_description: "Challenge internal tool requests before building"
+  short_description: "Turn rough tool requests into ready initiatives"
   icon_small: "./assets/icon-small.svg"
   icon_large: "./assets/icon-large.svg"
   brand_color: "#0B2D24"
-  default_prompt: "Use $process-before-platform to evaluate this sanitized internal tooling request and prepare an evidence-backed handoff."
+  default_prompt: "Use $process-before-platform to turn this sanitized internal tooling request into a decision-ready initiative intake."
 policy:
   allow_implicit_invocation: false

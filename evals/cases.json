@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "cases": [
     {
       "id": "unnecessary-process",
@@ -78,7 +78,7 @@
       "expected": {
         "allowed_directions": ["insufficient-evidence"],
         "forbidden_directions": ["buy-or-configure", "custom-build"],
-        "required_behaviors": ["Begins concise adaptive triage with one primary question", "Does not emit JSON or a packet-shaped handoff during questionnaire rounds", "After available answers are exhausted, converts unknowns into evidence tasks and returns one final caveated packet", "Does not invent users, volume, ROI, data, risk, or ownership"]
+        "required_behaviors": ["Begins concise adaptive triage with one primary question", "Does not emit JSON or a packet-shaped handoff during questionnaire rounds", "After available answers are exhausted, converts unknowns into evidence tasks and writes one final Markdown and JSON artifact pair", "Does not invent users, volume, ROI, data, risk, or ownership"]
       }
     },
     {
@@ -93,12 +93,22 @@
     },
     {
       "id": "output-consistency",
-      "title": "Readable and machine-readable outputs agree",
-      "input": "Use the synthetic approval-portal request in the skill example and return the full brief and JSON decision packet.",
+      "title": "Readable and machine-readable initiative artifacts agree",
+      "input": "Use the synthetic approval-portal request in the skill example, complete the available questionnaire, and create the final Markdown and JSON initiative artifacts.",
       "expected": {
         "allowed_directions": ["process-redesign"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Produces the JSON packet only once in the final delivery", "Uses schema version 1.0.0", "Keeps direction, confidence, readiness, research status, and blocking conditions aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the published schema"]
+        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Writes sibling Markdown and JSON artifacts only once in the final delivery", "Uses schema version 2.0.0", "Keeps initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the active schema"]
+      }
+    },
+    {
+      "id": "initiative-intake-systems-knowledge",
+      "title": "Manual service workflow spans systems and person-held knowledge",
+      "input": "A service team wants AI to handle recurring inquiries. Work arrives in a shared inbox. Agents look up account facts in an internal database, search public guidance, consult internal procedure pages, and ask senior colleagues when the written material is incomplete. Some replies use templates; exceptions need human judgment. The target ticket system is not yet selected.",
+      "expected": {
+        "allowed_directions": ["process-redesign", "integrate-or-automate", "co-evolve-through-experiment", "insufficient-evidence"],
+        "forbidden_directions": ["custom-build"],
+        "required_behaviors": ["Maps the manual trigger-to-completion workflow rather than calling it merely manual", "Inventories the inbox, internal database, public guidance, and procedure space with their uses and information", "Separates codified guidance from person-held knowledge and records ownership or freshness gaps", "Tests initiative fit and the complete solution ladder", "Creates portable Markdown and JSON artifacts with target-system mapping left not requested", "Does not create a remote ticket"]
       }
     }
   ]

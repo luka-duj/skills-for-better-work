@@ -1,6 +1,6 @@
 # Adaptive Discovery
 
-Use this reference for the requester conversation. The goal is not to complete a form. It is to find the smallest set of answers that can change the decision.
+Use this reference for the requester conversation. The goal is not to recite a form. It is to collect the smallest sufficient initiative context while making material gaps explicit.
 
 ## Conversation posture
 
@@ -11,17 +11,20 @@ Use this reference for the requester conversation. The goal is not to complete a
 - During discovery rounds, do not output JSON, a draft decision packet, schema fragments, or the full handoff brief.
 - Prefer a recent incident, observable workflow, document, or number over a general opinion.
 - Accept `I do not know`. Turn it into an evidence task rather than pressing for a guess.
+- Track the coverage map in `initiative-intake.md` internally. Do not repeatedly probe one branch while leaving current-state systems, information, knowledge, ownership, scope, value, or dependencies untouched.
+- Do not ask for information already supplied. Combine tightly related details into one answerable primary question when that reduces needless rounds.
 
 ## Quick triage
 
 Cover these slots adaptively; do not recite them as a questionnaire:
 
-1. **Outcome and people:** Who needs a better outcome, what should improve, and what would they notice?
-2. **Current work:** What happens today from trigger to completion, including tools, handoffs, waiting, rework, and workarounds?
-3. **Observed problem:** What has happened that shows the process is broken? Capture frequency, volume, delay, error, cost, risk, or user consequence only when known.
-4. **Proposed solution:** What has been requested, why does it appear attractive, and which assumption says it will solve the problem?
-5. **Necessity:** What obligation or useful outcome requires the process? What would happen if it stopped or were radically reduced?
-6. **Ownership and constraints:** Who owns the outcome and current process? What deadlines, policies, systems, data, security needs, budgets, or commitments constrain the decision?
+1. **Outcome and people:** Who needs a better outcome, what should improve, who owns it, and what would they notice?
+2. **Current work and systems:** What happens from trigger to completion, who acts, which systems and information sources they use, what is manual, and where waiting, rework, or workarounds occur?
+3. **Knowledge:** Which policies, procedures, articles, templates, or judgment guide the work; where do they live; and what remains person-held, disputed, stale, or uncodified?
+4. **Observed problem:** What shows the process is broken? Capture frequency, volume, delay, error, cost, risk, service, or user consequence only when known.
+5. **Proposed solution and scope:** What has been requested, why does it appear attractive, what is in or out of scope, and which assumption says it will solve the problem?
+6. **Necessity and initiative fit:** What obligation or useful outcome requires the process, what happens if it stops, and why does this need initiative-level rather than standard-change handling?
+7. **Value, priority, and constraints:** What baseline, measures, value hypothesis, saved-time use, reach, urgency, deadline, budget status, strategy link, dependencies, systems, data, security needs, or commitments constrain the decision?
 
 After triage, give a short prose-only diagnosis before asking deeper questions:
 
@@ -30,7 +33,22 @@ After triage, give a short prose-only diagnosis before asking deeper questions:
 - leading direction or `insufficient-evidence`;
 - the next two or three questions most likely to change that direction.
 
-This diagnosis is conversational guidance, not a decision packet. Continue asking one primary question per turn. Produce JSON only after every material question has been answered, converted into an evidence task, or explicitly deferred.
+This diagnosis is conversational guidance, not a decision packet. Continue asking one primary question per turn. Produce artifacts only after every material coverage area has been answered, converted into an evidence task, marked not applicable, or explicitly deferred.
+
+## Coverage-driven progression
+
+After triage, choose the next question from the weakest material coverage area. A typical order is:
+
+1. initiative fit, problem, necessity, and owner;
+2. current manual workflow;
+3. systems, information sources, data flows, and sources of truth;
+4. codified and person-held knowledge;
+5. scope, target outcome, users, requirements, and adoption;
+6. evidence, baseline, measures, value, urgency, budget, and strategy;
+7. dependencies, risks, and lifetime ownership;
+8. required solution ladder and requester weights.
+
+Change the order when earlier answers make another branch decision-critical. Before asking for scorecard weights, ensure the requester understands the initiative criteria being weighted and that the current workflow, systems, information, and knowledge landscape have been covered or explicitly left pending.
 
 ## Process necessity test
 

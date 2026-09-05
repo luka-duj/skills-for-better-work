@@ -24,7 +24,7 @@ It helps a requester work through five questions:
 4. Should we use something we already own, buy, configure, integrate, automate, build, or test process and technology together?
 5. Who will own security, infrastructure, quality, support, change, incidents, upgrades and retirement after the first release?
 
-The output is a readable handoff and a structured decision packet. Missing answers become evidence tasks. They do not become plausible-sounding assumptions.
+The output is a ticket-ready Markdown initiative request and a portable JSON packet. It documents the manual process, existing systems, information sources, and codified or person-held knowledge before completing the solution ladder. Missing answers become evidence tasks. They do not become plausible-sounding assumptions.
 
 The first walkthrough uses a completely synthetic request for a custom approval portal. The initial solution changes because the approval rules, exceptions and ownership are not stable enough to encode responsibly.
 

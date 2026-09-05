@@ -1,0 +1,393 @@
+{
+  "schema_version": "2.0.0",
+  "generated_at": "2026-09-05T10:00:00Z",
+  "readiness": "ticket-ready",
+  "initiative": {
+    "name": "Standardize internal approval requests before tooling",
+    "summary": "Four departments submit approval requests through email and team chat, while a coordinator manually records status in a shared tracker. Definitions, routes, exceptions, and ownership differ, causing lost status and rework. The request is to define a minimum approval model and test existing capability before selecting or building a portal.",
+    "fit": "discovery-needed",
+    "fit_rationale": "The cross-functional coordination problem is material enough for structured discovery, but the mandatory controls, business owner, minimum process, and existing-system fit are unresolved.",
+    "requester": "Operations requester",
+    "business_owner": null,
+    "business_areas": ["Operations", "Four submitting departments"],
+    "affected_people": ["Requesters", "Approval coordinator", "Approvers", "Process owner"],
+    "initiative_type": "process-optimization",
+    "reach": "cross-functional",
+    "strategy_alignment": [],
+    "proposed_solution": "Custom internal approval portal",
+    "scope_in": [
+      "Define the minimum request and approval model",
+      "Clarify mandatory approvals and legitimate exceptions",
+      "Assess the owned work-management suite against the minimum model",
+      "Recommend a process and technology direction"
+    ],
+    "scope_out": [
+      "Production software implementation",
+      "Architecture approval",
+      "Procurement approval",
+      "Organization-wide rollout"
+    ],
+    "related_work": []
+  },
+  "current_state": {
+    "process_purpose": "Route internal requests to the appropriate approver and preserve a traceable decision.",
+    "necessity": "unclear",
+    "necessity_basis": [
+      {
+        "statement": "Some approval outcome appears necessary, but the governing basis for each route has not been supplied.",
+        "source": "Synthetic requester statement",
+        "confidence": "medium"
+      }
+    ],
+    "trigger": "A requester needs an internal approval.",
+    "completion_condition": "An approver communicates a decision and the coordinator updates the tracker.",
+    "current_owner": null,
+    "steps": [
+      {
+        "sequence": 1,
+        "actor": "Requester",
+        "action": "Submits an approval request using a department-specific message or template.",
+        "system": "Email or team chat",
+        "information_used": ["Request description", "Department-specific supporting details"],
+        "knowledge_used": ["Local understanding of required information and approver"],
+        "manual": true,
+        "decision_or_rule": "The requester chooses a channel and format based on local practice.",
+        "pain_or_failure": "Requests arrive in inconsistent formats and channels."
+      },
+      {
+        "sequence": 2,
+        "actor": "Approval coordinator",
+        "action": "Interprets the request, identifies the route, and records its status.",
+        "system": "Shared tracker",
+        "information_used": ["Request message", "Department", "Requested decision", "Status"],
+        "knowledge_used": ["Approval policy pages", "Coordinator experience"],
+        "manual": true,
+        "decision_or_rule": "Routes vary by department and are not represented by one confirmed rule set.",
+        "pain_or_failure": "Status can be lost and routing requires person-held knowledge."
+      },
+      {
+        "sequence": 3,
+        "actor": "Approver",
+        "action": "Reviews the request and responds with a decision or follow-up question.",
+        "system": "Email or team chat",
+        "information_used": ["Original request", "Supporting details", "Approval criteria"],
+        "knowledge_used": ["Approval policy pages", "Approver judgment"],
+        "manual": true,
+        "decision_or_rule": "Mandatory criteria and exception rules differ or remain undocumented.",
+        "pain_or_failure": "Missing information creates loops and rework."
+      },
+      {
+        "sequence": 4,
+        "actor": "Approval coordinator",
+        "action": "Communicates or records the final outcome and closes the tracker entry.",
+        "system": "Shared tracker",
+        "information_used": ["Approval decision", "Decision status"],
+        "knowledge_used": [],
+        "manual": true,
+        "decision_or_rule": null,
+        "pain_or_failure": "The tracker and communication channel can diverge."
+      }
+    ],
+    "handoffs": [
+      "Requester to approval coordinator",
+      "Approval coordinator to approver",
+      "Approver to approval coordinator",
+      "Approval coordinator to requester"
+    ],
+    "exceptions": ["Department-specific routes", "Requests missing required information", "Requests needing a different or additional approver"],
+    "pain_points": [
+      {
+        "statement": "Requests use inconsistent templates and channels.",
+        "source": "Synthetic requester statement",
+        "confidence": "high"
+      },
+      {
+        "statement": "Approvers and requesters lose visibility of status.",
+        "source": "Synthetic requester statement",
+        "confidence": "high"
+      }
+    ],
+    "systems": [
+      {
+        "name": "Email or team chat",
+        "category": "Communication channels",
+        "purpose": "Submit requests, ask follow-up questions, and communicate decisions.",
+        "users": ["Requesters", "Approval coordinator", "Approvers"],
+        "owner": null,
+        "inputs": ["Request messages", "Supporting details", "Decision messages"],
+        "outputs": ["Approval requests", "Questions", "Decisions"],
+        "information_collected_or_retrieved": ["Request content", "Sender", "Recipients", "Message history", "Decision response"],
+        "source_of_truth_for": ["Original message history"],
+        "integrations": [],
+        "manual_transfers": ["The coordinator copies status and context into the shared tracker"],
+        "access_constraints": ["Visibility depends on channel membership and recipients"],
+        "current_limitations": ["No consistent intake structure", "Status is fragmented across conversations"]
+      },
+      {
+        "name": "Shared tracker",
+        "category": "Tracking tool",
+        "purpose": "Record request status and outcome.",
+        "users": ["Approval coordinator"],
+        "owner": null,
+        "inputs": ["Manually entered request and status details"],
+        "outputs": ["Current status view", "Closed-request record"],
+        "information_collected_or_retrieved": ["Request identifier", "Department", "Approver", "Status", "Outcome"],
+        "source_of_truth_for": ["Intended operational status"],
+        "integrations": [],
+        "manual_transfers": ["Updates are copied from email or chat"],
+        "access_constraints": [],
+        "current_limitations": ["Manual updates", "Can diverge from conversation state"]
+      },
+      {
+        "name": "Owned work-management suite",
+        "category": "Existing enterprise capability",
+        "purpose": "Potential forms, workflow, approval, access, and audit capability.",
+        "users": [],
+        "owner": null,
+        "inputs": [],
+        "outputs": [],
+        "information_collected_or_retrieved": [],
+        "source_of_truth_for": [],
+        "integrations": [],
+        "manual_transfers": [],
+        "access_constraints": [],
+        "current_limitations": ["Fit has not been assessed against a minimum approval model"]
+      }
+    ],
+    "information_sources": [
+      {
+        "name": "Approval request conversation",
+        "system": "Email or team chat",
+        "information": ["Request description", "Supporting details", "Questions", "Decision"],
+        "used_by": ["Approval coordinator", "Approvers"],
+        "used_when": "Throughout request interpretation and approval",
+        "authority": "source-of-truth",
+        "owner": null,
+        "access_constraints": ["May be visible only to message participants"]
+      },
+      {
+        "name": "Operational status record",
+        "system": "Shared tracker",
+        "information": ["Request status", "Approver", "Outcome"],
+        "used_by": ["Approval coordinator"],
+        "used_when": "For tracking and closure",
+        "authority": "unclear",
+        "owner": null,
+        "access_constraints": []
+      }
+    ],
+    "knowledge_sources": [
+      {
+        "name": "Department approval policy pages",
+        "location": "Department document spaces",
+        "codification": "partially-codified",
+        "content": ["Approval criteria", "Expected approvers", "Required supporting information"],
+        "used_by": ["Approval coordinator", "Approvers"],
+        "owner": null,
+        "freshness": null,
+        "review_practice": null,
+        "conflicts_or_gaps": ["No confirmed common minimum", "Ownership and currency are unknown"],
+        "access_constraints": []
+      },
+      {
+        "name": "Coordinator and approver judgment",
+        "location": null,
+        "codification": "tribal",
+        "content": ["How ambiguous requests are routed", "Which exceptions are accepted", "Who can substitute as approver"],
+        "used_by": ["Approval coordinator", "Approvers"],
+        "owner": null,
+        "freshness": null,
+        "review_practice": null,
+        "conflicts_or_gaps": ["Decisions depend on individual experience"],
+        "access_constraints": ["Not consistently transferable to new staff"]
+      }
+    ],
+    "data_flows": [
+      {
+        "from": "Email or team chat",
+        "to": "Shared tracker",
+        "information": ["Request summary", "Department", "Approver", "Status", "Outcome"],
+        "transfer": "manual",
+        "frequency": "For each request",
+        "sensitivity": null
+      }
+    ]
+  },
+  "target_state": {
+    "desired_outcome": "A traceable, consistently defined request-to-decision process that uses the simplest sustainable capability.",
+    "capabilities": ["Structured intake", "Rule-based routing", "Status visibility", "Exception handling", "Decision audit trail"],
+    "functional_requirements": [
+      { "statement": "Capture the minimum information required for each approved request category.", "priority": "must", "evidence": "Inconsistent templates are an observed problem." },
+      { "statement": "Route normal requests and legitimate exceptions to accountable approvers.", "priority": "must", "evidence": "Routes currently vary and depend on individual judgment." },
+      { "statement": "Show current status and final decision to authorized participants.", "priority": "must", "evidence": "Status visibility is an observed problem." }
+    ],
+    "nonfunctional_constraints": [
+      { "statement": "Access and audit requirements must be confirmed before implementation.", "priority": "unassessed", "evidence": null }
+    ],
+    "human_controls": ["A policy owner approves the minimum process and exception rules", "Authorized approvers retain decision accountability"],
+    "rollout_and_adoption": ["Test the minimum model with sanitized recent cases before configuring or building tooling"],
+    "support_and_fallback": ["Retain the current channels during any bounded trial until ownership and recovery are defined"],
+    "success_measures": [
+      { "name": "Requests with visible current status", "category": "service-health", "baseline": null, "target": null, "evidence_window": null, "owner": null },
+      { "name": "Requests requiring rework because required information is missing", "category": "user-or-job", "baseline": null, "target": null, "evidence_window": null, "owner": null },
+      { "name": "Time from request to decision", "category": "business", "baseline": null, "target": null, "evidence_window": null, "owner": null }
+    ]
+  },
+  "evidence": {
+    "facts": [
+      { "statement": "Four departments submit an estimated 20 to 40 requests per month.", "source": "Synthetic requester statement", "confidence": "medium" },
+      { "statement": "Requests arrive through email and team chat and use different templates and routes.", "source": "Synthetic requester statement", "confidence": "high" },
+      { "statement": "The organization owns a work-management suite that may have relevant capability, but it has not been assessed.", "source": "Synthetic requester statement", "confidence": "high" }
+    ],
+    "interpretations": [
+      { "statement": "Building a portal now would encode disputed or undocumented routing and exception rules.", "source": "Inference from the synthetic process map", "confidence": "medium" }
+    ],
+    "assumptions": [],
+    "constraints": [],
+    "contradictions": [],
+    "unknowns": [
+      { "question": "Which approval outcomes and controls are mandatory?", "why_it_matters": "This determines which process elements are necessary." },
+      { "question": "Who owns the end-to-end process?", "why_it_matters": "A tool cannot resolve or maintain rules without decision ownership." },
+      { "question": "Can the owned suite support the minimum process?", "why_it_matters": "Existing capability may avoid procurement or custom ownership." }
+    ]
+  },
+  "evidence_tasks": [
+    {
+      "priority": 1,
+      "question": "Which approval outcomes and controls are mandatory, and who owns them?",
+      "why_it_matters": "This establishes process necessity and decision authority.",
+      "action": "Review governing policies and recent cases with accountable control owners.",
+      "owner": null,
+      "completion_evidence": "Confirmed list of mandatory approvals, accountable owners, and removable local practices.",
+      "affected_sections": ["current_state.necessity", "initiative.business_owner", "target_state.functional_requirements"]
+    },
+    {
+      "priority": 2,
+      "question": "What is the minimum stable approval model?",
+      "why_it_matters": "Any configuration or build needs shared categories, inputs, routes, and exception rules.",
+      "action": "Map sanitized recent cases into a normal path and legitimate exception set.",
+      "owner": null,
+      "completion_evidence": "Approved minimum process map with categories, required data, routes, exceptions, and completion states.",
+      "affected_sections": ["current_state.steps", "target_state.capabilities", "options"]
+    },
+    {
+      "priority": 3,
+      "question": "Can the owned work-management suite support the minimum model?",
+      "why_it_matters": "Existing capability should be tested before procurement or custom development.",
+      "action": "Configure a sanitized trial and record supported requirements, gaps, workarounds, and ownership implications.",
+      "owner": null,
+      "completion_evidence": "Capability assessment against the approved minimum model.",
+      "affected_sections": ["current_state.systems", "options", "scorecard"]
+    }
+  ],
+  "value_and_priority": {
+    "outcome_types": ["reduce-costs", "reduce-risk", "improve-user-or-job-outcome", "improve-service-health"],
+    "outcome_description": "The request may reduce manual coordination and rework while improving status visibility and control. No monetary value or realized capacity use is yet supported.",
+    "saved_time_use": null,
+    "annual_value": { "status": "insufficient-inputs", "currency": null, "low": null, "base": null, "high": null, "basis": "No time-per-case, labor-rate, rework, delay-cost, or adoption inputs were supplied." },
+    "urgency": { "level": "unassessed", "rationale": "No hard deadline or immediate harm was supplied.", "deadline": null },
+    "budget": { "status": "unknown", "owner": null, "notes": "No approved budget or funding owner was supplied." }
+  },
+  "options": [
+    { "direction": "eliminate-or-stop", "status": "deferred", "rationale": "Some approval outcome appears necessary, but individual approvals may still be removable.", "critical_conditions": [] },
+    { "direction": "process-redesign", "status": "plausible", "rationale": "Definitions, routes, exceptions, knowledge, and ownership need a stable minimum before tooling.", "critical_conditions": [] },
+    { "direction": "use-existing-capability", "status": "plausible", "rationale": "The owned work-management suite may meet the need after the minimum process is defined.", "critical_conditions": [] },
+    { "direction": "buy-or-configure", "status": "deferred", "rationale": "Procurement is premature until existing capability and requirements are assessed.", "critical_conditions": [] },
+    { "direction": "integrate-or-automate", "status": "deferred", "rationale": "Bounded automation may fit stable steps after rules and sources of truth are confirmed.", "critical_conditions": [] },
+    { "direction": "custom-build", "status": "rejected", "rationale": "Differentiation, stable requirements, lifecycle ownership, and total-cost inputs are not established.", "critical_conditions": [
+      { "criterion_id": "ownership", "status": "unresolved", "evidence": "No end-to-end product, process, or operational owner is named.", "owner": null, "consequence": "Do not approve custom development." }
+    ] },
+    { "direction": "co-evolve-through-experiment", "status": "deferred", "rationale": "No evidence yet shows that technology is required to learn the process.", "critical_conditions": [] },
+    { "direction": "insufficient-evidence", "status": "rejected", "rationale": "Evidence is sufficient to lead with process redesign while preserving material unknowns as tasks.", "critical_conditions": [] }
+  ],
+  "scorecard": {
+    "criteria": [
+      { "id": "necessary-outcome", "label": "Necessary outcome and user value", "requester_weight": null, "reviewer_weight": null, "weight_status": "unassigned", "critical": true },
+      { "id": "process-fit", "label": "Process fit and exception handling", "requester_weight": null, "reviewer_weight": null, "weight_status": "unassigned", "critical": true },
+      { "id": "time-to-operation", "label": "Time to operation", "requester_weight": null, "reviewer_weight": null, "weight_status": "unassigned", "critical": false },
+      { "id": "lifetime-cost", "label": "Lifetime cost and internal capacity", "requester_weight": null, "reviewer_weight": null, "weight_status": "unassigned", "critical": false },
+      { "id": "ownership", "label": "Maintainability, support, and operational ownership", "requester_weight": null, "reviewer_weight": null, "weight_status": "unassigned", "critical": true }
+    ],
+    "option_scores": [
+      {
+        "direction": "process-redesign",
+        "scores": [
+          { "criterion_id": "necessary-outcome", "fit": 4, "confidence": "medium", "rationale": "It tests mandatory controls before preserving local practice." },
+          { "criterion_id": "process-fit", "fit": 5, "confidence": "high", "rationale": "It directly addresses inconsistent definitions, routes, exceptions, and knowledge." },
+          { "criterion_id": "time-to-operation", "fit": 4, "confidence": "medium", "rationale": "A minimum process can be tested before software delivery." },
+          { "criterion_id": "lifetime-cost", "fit": 4, "confidence": "medium", "rationale": "It avoids premature software ownership while requirements remain unstable." },
+          { "criterion_id": "ownership", "fit": 3, "confidence": "medium", "rationale": "The work exposes the missing owner but cannot assign one." }
+        ],
+        "weighted_score": null,
+        "evidence_completeness": null
+      },
+      {
+        "direction": "use-existing-capability",
+        "scores": [
+          { "criterion_id": "necessary-outcome", "fit": 4, "confidence": "medium", "rationale": "Relevant capability may exist, but the minimum process is not defined." },
+          { "criterion_id": "process-fit", "fit": 3, "confidence": "low", "rationale": "Fit cannot be established before categories and exceptions are agreed." },
+          { "criterion_id": "time-to-operation", "fit": 4, "confidence": "low", "rationale": "Configuration may be faster than a custom build, but no test exists." },
+          { "criterion_id": "lifetime-cost", "fit": 4, "confidence": "low", "rationale": "An owned suite may avoid new procurement, but configuration and support costs are unknown." },
+          { "criterion_id": "ownership", "fit": null, "confidence": null, "rationale": "Not assessed." }
+        ],
+        "weighted_score": null,
+        "evidence_completeness": null
+      }
+    ],
+    "ranking_status": "withheld",
+    "ranking_caveat": "Requester weights are unassigned and ownership and capability evidence remain unresolved."
+  },
+  "ownership": {
+    "estimate_status": "insufficient-inputs",
+    "currency": null,
+    "horizon_months": null,
+    "responsibilities": [
+      { "area": "Business and process decisions", "owner": null, "status": "unknown", "notes": "An accountable end-to-end owner is required." },
+      { "area": "Configuration or development", "owner": null, "status": "unknown", "notes": "Depends on the selected path." },
+      { "area": "Security, access, and audit", "owner": null, "status": "unknown", "notes": "Requirements are not yet supplied." },
+      { "area": "Integration and data quality", "owner": null, "status": "unknown", "notes": "Sources of truth and transfer ownership need confirmation." },
+      { "area": "QA, deployment, monitoring, incidents, and rollback", "owner": null, "status": "unknown", "notes": "Required for any technology path." },
+      { "area": "Support, training, documentation, adoption, upgrades, and retirement", "owner": null, "status": "unknown", "notes": "Required before a sustainable solution decision." }
+    ],
+    "cost_scenarios": []
+  },
+  "dependencies_and_risks": [
+    { "statement": "No accountable owner is confirmed for the end-to-end approval process.", "type": "team", "status": "unresolved", "owner": null, "consequence": "Rules and exceptions cannot be standardized or maintained.", "next_check": "Identify the person who can approve the minimum process." },
+    { "statement": "Policy pages and person-held judgment may conflict or be stale.", "type": "knowledge", "status": "unresolved", "owner": null, "consequence": "A tool could automate incorrect routing or controls.", "next_check": "Review current policies and recent exceptions with accountable owners." },
+    { "statement": "Existing work-management capability has not been tested.", "type": "system", "status": "unresolved", "owner": null, "consequence": "The team may procure or build functionality it already owns.", "next_check": "Run a sanitized configuration test after the minimum model is agreed." }
+  ],
+  "research": {
+    "status": "not-applicable",
+    "scope": null,
+    "limitations": ["Vendor research is premature until the minimum process and existing capability are assessed."],
+    "vendors": [],
+    "sources": [],
+    "demo_and_procurement_questions": []
+  },
+  "recommendation": {
+    "direction": "process-redesign",
+    "confidence": "medium",
+    "rationale": "Define the minimum approval model and its owner, then test the owned work-management suite before buying or building a portal.",
+    "caveats": ["Some approvals may still be removable.", "The current volume is an estimate.", "Existing capability is untested."],
+    "blocking_conditions": ["Do not approve custom development before rules, ownership, differentiation, lifecycle responsibilities, and total-cost inputs are established."],
+    "next_decision": "Assign the process owner and approve a short discovery to define the minimum model and test existing capability.",
+    "human_owner": null
+  },
+  "handoff": {
+    "recipient": "Initiative intake queue",
+    "submission_ready": true,
+    "suggested_request_type": "discovery",
+    "ticket_title": "Standardize internal approval requests before tooling",
+    "ticket_body_markdown": "Investigate and standardize the cross-functional approval-request process before selecting software. Requests currently arrive through email and team chat, a coordinator manually records status in a shared tracker, routes and exceptions vary, policy knowledge is only partly codified, and no end-to-end owner is named. Discovery should confirm mandatory controls, define the minimum request and approval model, identify accountable ownership, and test the owned work-management suite. Do not approve a custom portal until differentiation and full lifecycle ownership are evidenced.",
+    "missing_for_submission": ["Named business owner", "Confirmed strategy linkage", "Budget status", "Approved minimum process", "Existing-capability assessment"],
+    "next_workflow": "discovery",
+    "target_system": { "name": null, "issue_type": null, "project_or_queue": null, "mapping_status": "not-requested", "field_mappings": [] }
+  },
+  "artifacts": {
+    "basename": "initiative-request",
+    "directory": "skills/process-before-platform/examples/synthetic-approval-portal",
+    "markdown_path": "skills/process-before-platform/examples/synthetic-approval-portal/initiative-request.md",
+    "json_path": "skills/process-before-platform/examples/synthetic-approval-portal/initiative-request.json",
+    "overwrite_policy": "new-file-only"
+  }
+}

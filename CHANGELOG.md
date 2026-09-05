@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0-alpha — 2026-09-05
+
+- Made initiative-intake readiness the primary outcome while retaining the required solution ladder and buy-versus-build assessment.
+- Added structured discovery for the current manual process, systems, information sources, data flows, and codified or person-held knowledge.
+- Added vendor-neutral initiative-request JSON Schema version 2.0.0 and aligned Markdown and JSON example artifacts.
+- Added portable target-system field mappings and task-local, collision-safe artifact rules without automatic ticket creation.
+- Retained the v1 decision schema and example for alpha traceability; new runs use v2.
+
 ## 0.1.1-alpha — 2026-09-04
 
 - Changed the interaction contract so questionnaire rounds are prose-only.

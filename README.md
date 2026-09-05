@@ -10,11 +10,11 @@ Practical Codex skills that help people make better decisions about work, system
 
 ## First skill: Process Before Platform
 
-`process-before-platform` helps a stakeholder examine an internal tooling or automation request before a team commits to a solution.
+`process-before-platform` guides a stakeholder through structured initial discovery so an internal tooling or automation request reaches an initiative queue with enough context to understand, route, and assess it.
 
 Its default is simple: stabilize, simplify, and standardize the process before tooling. That default is not absolute. When evidence shows that a tool must enable a new process, the skill can recommend a bounded process-and-tool experiment.
 
-The skill asks whether the process is necessary, separates evidence from assumptions, compares the full solution ladder, exposes the lifetime ownership of custom software, and prepares a handoff for a product or automation team.
+The skill asks whether the process and initiative are necessary, maps the manual workflow, inventories existing systems and information sources, exposes codified and person-held knowledge, separates evidence from assumptions, compares the required solution ladder, exposes lifetime ownership, and prepares a portable handoff for an initiative, product, automation, or business-analysis team.
 
 It does not approve initiatives, procurement, budgets, vendors, or architecture.
 
@@ -28,16 +28,16 @@ Use $process-before-platform to evaluate this internal tooling request:
 [Paste a sanitized request or describe the situation.]
 ```
 
-The skill runs an adaptive questionnaire first. It asks one primary question per round and does not emit JSON while answers are still being collected. Once the questionnaire is complete—or the requester explicitly closes it with remaining unknowns recorded as evidence tasks—the final result contains:
+The skill runs an adaptive questionnaire first. It asks one primary question per round and does not emit JSON while answers are still being collected. Once the questionnaire is complete—or the requester explicitly closes it with remaining unknowns recorded as evidence tasks—it writes two sibling files under `<current-project>/output/process-before-platform/`:
 
-- a readable decision and handoff brief;
-- a versioned JSON decision packet;
+- a ticket-ready Markdown initiative request;
+- a vendor-neutral JSON initiative packet conforming to schema version 2.0.0;
 - visible facts, assumptions, unknowns, and evidence tasks;
 - a comparison of credible process and technology options;
 - an ownership and total-cost view where inputs support it;
 - a current direction, confidence, caveats, and blocking conditions.
 
-The JSON packet is generated once at the end of the completed questionnaire, not at invocation or after every answer.
+The artifacts are generated once at the end of the completed questionnaire, not at invocation or after every answer. Existing files are never overwritten. Target-system field mappings are included only when exact metadata is known, and the skill never creates the remote ticket without a separate explicit request.
 
 See the [synthetic approval-portal walkthrough](skills/process-before-platform/examples/synthetic-approval-portal/README.md) for a complete example.
 
@@ -74,11 +74,11 @@ python scripts/validate.py
 python -m unittest discover -s tests
 ```
 
-The validator checks the skill package, links, JSON Schema subset, synthetic decision packet, score calculations, and evaluation fixture structure. Behavioral quality still requires forward-testing the skill against the cases in `evals/`.
+The validator checks the skill package, links, JSON Schema subset, aligned synthetic Markdown and JSON initiative artifacts, required solution-ladder coverage, system references, score calculations, and evaluation fixture structure. Behavioral quality still requires forward-testing the skill against the cases in `evals/`.
 
 ## Feedback
 
-Use the issue templates for reproducible behavior problems and method proposals. Describe only synthetic or fully sanitized situations. Never paste a real internal request, generated decision packet, vendor document, or screenshot unless you have authority to make every detail public.
+Use the issue templates for reproducible behavior problems and method proposals. Describe only synthetic or fully sanitized situations. Never paste a real internal request, generated initiative packet, vendor document, or screenshot unless you have authority to make every detail public.
 
 GitHub Discussions and a private feedback channel are deliberately deferred until publication and demonstrated need.
 

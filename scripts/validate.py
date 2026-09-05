@@ -16,8 +16,9 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "skills" / "process-before-platform"
-SCHEMA_PATH = SKILL / "schemas" / "decision-packet.schema.json"
-EXAMPLE_PACKET = SKILL / "examples" / "synthetic-approval-portal" / "decision-packet.json"
+SCHEMA_PATH = SKILL / "schemas" / "initiative-request.schema.json"
+EXAMPLE_PACKET = SKILL / "examples" / "synthetic-approval-portal" / "initiative-request.json"
+EXAMPLE_MARKDOWN = SKILL / "examples" / "synthetic-approval-portal" / "initiative-request.md"
 EVAL_CASES = ROOT / "evals" / "cases.json"
 
 
@@ -202,11 +203,75 @@ def validate_scorecard(packet: dict[str, Any]) -> None:
 def validate_packet(path: Path) -> None:
     schema = load_json(SCHEMA_PATH)
     packet = load_json(path)
+    validate_packet_data(packet, schema)
+
+
+def validate_packet_data(packet: dict[str, Any], schema: dict[str, Any] | None = None) -> None:
+    schema = schema or load_json(SCHEMA_PATH)
     validate_instance(packet, schema, schema)
     validate_scorecard(packet)
-    directions = {item["direction"] for item in packet["options"]}
+    option_directions = [item["direction"] for item in packet["options"]]
+    directions = set(option_directions)
+    if len(directions) != len(option_directions):
+        raise ValidationError("solution-ladder directions must be unique")
     if packet["recommendation"]["direction"] not in directions:
         raise ValidationError("recommendation direction must appear in options")
+    allowed_directions = set(resolve_ref(schema, "#/$defs/direction")["enum"])
+    if directions != allowed_directions:
+        missing = sorted(allowed_directions - directions)
+        extra = sorted(directions - allowed_directions)
+        raise ValidationError(f"options must cover the complete solution ladder; missing={missing!r}, extra={extra!r}")
+
+    systems = packet["current_state"]["systems"]
+    system_names = {item["name"] for item in systems}
+    if len(system_names) != len(systems):
+        raise ValidationError("current_state system names must be unique")
+    for step in packet["current_state"]["steps"]:
+        if step["system"] is not None and step["system"] not in system_names:
+            raise ValidationError(f"process step references unknown system: {step['system']!r}")
+    for source in packet["current_state"]["information_sources"]:
+        if source["system"] is not None and source["system"] not in system_names:
+            raise ValidationError(f"information source references unknown system: {source['system']!r}")
+    step_sequences = [step["sequence"] for step in packet["current_state"]["steps"]]
+    if step_sequences != list(range(1, len(step_sequences) + 1)):
+        raise ValidationError("current-state process steps must use contiguous sequence numbers starting at 1")
+
+    artifacts = packet["artifacts"]
+    markdown_path = Path(artifacts["markdown_path"])
+    json_path = Path(artifacts["json_path"])
+    if markdown_path.suffix.lower() != ".md" or json_path.suffix.lower() != ".json":
+        raise ValidationError("artifact paths must end in .md and .json")
+    if markdown_path.stem != json_path.stem or artifacts["basename"] != markdown_path.stem:
+        raise ValidationError("artifact paths and basename must share one stem")
+    if Path(artifacts["directory"]).as_posix() != markdown_path.parent.as_posix():
+        raise ValidationError("artifact directory must match the Markdown and JSON parent directory")
+
+    target = packet["handoff"]["target_system"]
+    if target["mapping_status"] == "not-requested":
+        if any(target[key] is not None for key in ("name", "issue_type", "project_or_queue")) or target["field_mappings"]:
+            raise ValidationError("not-requested target mapping must not contain invented target metadata")
+
+
+def validate_example_alignment() -> None:
+    packet = load_json(EXAMPLE_PACKET)
+    markdown = EXAMPLE_MARKDOWN.read_text(encoding="utf-8")
+    required_fragments = [
+        packet["initiative"]["name"],
+        packet["initiative"]["fit"],
+        packet["readiness"],
+        packet["recommendation"]["direction"],
+        packet["recommendation"]["next_decision"],
+        *[system["name"] for system in packet["current_state"]["systems"]],
+        *[knowledge["name"] for knowledge in packet["current_state"]["knowledge_sources"]],
+    ]
+    normalized_markdown = markdown.casefold()
+    missing = [fragment for fragment in required_fragments if fragment.casefold() not in normalized_markdown]
+    if missing:
+        raise ValidationError(f"example Markdown is not aligned with JSON; missing {missing!r}")
+    markdown_path = ROOT / packet["artifacts"]["markdown_path"]
+    json_path = ROOT / packet["artifacts"]["json_path"]
+    if markdown_path.resolve() != EXAMPLE_MARKDOWN.resolve() or json_path.resolve() != EXAMPLE_PACKET.resolve():
+        raise ValidationError("example artifact paths do not resolve to the validated files")
 
 
 def validate_skill() -> None:
@@ -237,11 +302,11 @@ def validate_links() -> None:
 
 def validate_eval_cases() -> None:
     payload = load_json(EVAL_CASES)
-    if payload.get("schema_version") != "1.0.0":
-        raise ValidationError("evals/cases.json must use schema version 1.0.0")
+    if payload.get("schema_version") != "2.0.0":
+        raise ValidationError("evals/cases.json must use schema version 2.0.0")
     cases = payload.get("cases")
-    if not isinstance(cases, list) or len(cases) != 10:
-        raise ValidationError("evals/cases.json must contain the ten approved alpha cases")
+    if not isinstance(cases, list) or len(cases) != 11:
+        raise ValidationError("evals/cases.json must contain the eleven approved alpha cases")
     ids: set[str] = set()
     allowed_directions = set(resolve_ref(load_json(SCHEMA_PATH), "#/$defs/direction")["enum"])
     for case in cases:
@@ -265,18 +330,20 @@ def validate_repository(packet_path: Path | None = None) -> None:
     validate_links()
     validate_eval_cases()
     validate_packet(packet_path or EXAMPLE_PACKET)
+    if packet_path is None:
+        validate_example_alignment()
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--packet", type=Path, help="Validate an additional decision packet against the public contract")
+    parser.add_argument("--packet", type=Path, help="Validate an additional initiative packet against the active contract")
     args = parser.parse_args()
     try:
         validate_repository(args.packet)
     except ValidationError as exc:
         print(f"Validation failed: {exc}", file=sys.stderr)
         return 1
-    print("Validation passed: skill, links, schema contract, example packet, scorecard, and evaluation fixtures.")
+    print("Validation passed: skill, links, v2 initiative schema, aligned example artifacts, scorecard, and evaluation fixtures.")
     return 0
 
 

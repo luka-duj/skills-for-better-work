@@ -58,6 +58,27 @@ class RepositoryValidationTests(unittest.TestCase):
         validator.validate_instance(packet, self.schema, self.schema)
         validator.validate_scorecard(packet)
 
+    def test_solution_ladder_must_be_complete(self):
+        packet = copy.deepcopy(self.packet)
+        packet["options"] = packet["options"][:-1]
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_process_step_cannot_reference_unknown_system(self):
+        packet = copy.deepcopy(self.packet)
+        packet["current_state"]["steps"][0]["system"] = "Unlisted tool"
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_solution_ladder_directions_must_be_unique(self):
+        packet = copy.deepcopy(self.packet)
+        packet["options"][-1] = copy.deepcopy(packet["options"][0])
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_example_markdown_and_json_align(self):
+        validator.validate_example_alignment()
+
 
 if __name__ == "__main__":
     unittest.main()
