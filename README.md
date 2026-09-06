@@ -6,7 +6,7 @@
 
 Practical AI skills for turning complex work into clearer decisions, better systems, and AI that earns its place.
 
-The skills can also be used with Claude and other AI systems that support reusable instructions and referenced files. They are built, tested, and maintained natively for Codex, which is the best-supported environment and recommended for the most reliable results.
+The packages follow the [Agent Skills open format](https://agentskills.io/specification), so they can be installed in compatible clients including Codex and Claude. They are designed, exercised, and maintained in Codex. Codex is the reference environment and the only client covered by this repository's documented behavioral evaluations today.
 
 Built by [Luka Dujmovic](https://lukadujmovic.com/) around a simple principle: understand the work first, then build what helps people do it better.
 
@@ -14,9 +14,14 @@ Built by [Luka Dujmovic](https://lukadujmovic.com/) around a simple principle: u
 
 ## Compatibility
 
-The packages use Markdown instructions, referenced guidance, and machine-readable schemas so their methods can travel across capable AI systems. Each system loads instructions and exposes tools differently, so Claude and other integrations may require different installation paths, invocation syntax, or permissions. Check the behavior before using a skill for consequential work.
+| Client | Support in this repository |
+|---|---|
+| Codex | Native reference environment. Installation, automated validation, and behavioral evaluation guidance are maintained for Codex first. |
+| Claude Code | Compatible with the shared Agent Skills package format. Installation is documented below; equivalent runtime behavior has not yet been claimed or verified here. |
+| Claude.ai | The skill folder can be uploaded as a ZIP through the Skills settings. Tool access and output behavior depend on the Claude environment. |
+| Other Agent Skills clients | The package may be portable when the client supports the open format, referenced files, and required filesystem operations. Check the client's installation and invocation rules. |
 
-Codex is the reference implementation. The documented installation, automated validation, and behavioral evaluation are maintained for Codex first.
+Compatibility describes package format, not identical behavior. Test the skill in your chosen client before using it for consequential work. The Codex-specific `agents/openai.yaml` file provides interface metadata and explicit-invocation policy for Codex; other clients can ignore it.
 
 ## Available skill: Process Before Platform
 
@@ -52,7 +57,9 @@ The artifacts are generated once at the end of the completed questionnaire, not 
 
 See the [synthetic approval-portal walkthrough](skills/process-before-platform/examples/synthetic-approval-portal/README.md) for a complete example.
 
-## Install for Codex
+## Install
+
+### Codex
 
 Copy the skill folder into your Codex skills directory, then restart or reload Codex if needed.
 
@@ -67,6 +74,34 @@ macOS or Linux:
 ```bash
 cp -R ./skills/process-before-platform ~/.codex/skills/process-before-platform
 ```
+
+Invoke it explicitly as `$process-before-platform`.
+
+### Claude Code
+
+Copy the same folder into your personal Claude skills directory.
+
+PowerShell:
+
+```powershell
+Copy-Item -Recurse .\skills\process-before-platform "$env:USERPROFILE\.claude\skills\process-before-platform"
+```
+
+macOS or Linux:
+
+```bash
+cp -R ./skills/process-before-platform ~/.claude/skills/process-before-platform
+```
+
+Invoke it as `/process-before-platform`. Claude Code reads the shared `SKILL.md` and referenced files; the Codex-specific interface metadata is not required.
+
+### Claude.ai
+
+Create a ZIP archive of the `skills/process-before-platform` folder, then upload it under **Settings → Capabilities → Skills**. Confirm the current upload and tool requirements in Anthropic's documentation before relying on it.
+
+### Other compatible clients
+
+Install the `skills/process-before-platform` folder using the client's Agent Skills instructions. Invocation syntax, permissions, and filesystem access vary by client.
 
 ## Repository map
 

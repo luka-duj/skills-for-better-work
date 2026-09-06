@@ -317,8 +317,39 @@ def validate_example_alignment() -> None:
 
 def validate_skill() -> None:
     skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    if not skill_text.startswith("---\n") or "\nname: process-before-platform\n" not in skill_text:
-        raise ValidationError("SKILL.md frontmatter is missing or has the wrong name")
+    if not skill_text.startswith("---\n"):
+        raise ValidationError("SKILL.md must begin with YAML frontmatter")
+    frontmatter_end = skill_text.find("\n---\n", 4)
+    if frontmatter_end == -1:
+        raise ValidationError("SKILL.md frontmatter is not closed")
+    frontmatter = skill_text[4:frontmatter_end]
+
+    def require_scalar(key: str) -> str:
+        match = re.search(rf"(?m)^{re.escape(key)}:\s*(.+)$", frontmatter)
+        if not match:
+            raise ValidationError(f"SKILL.md frontmatter is missing {key!r}")
+        return match.group(1).strip().strip('"\'')
+
+    name = require_scalar("name")
+    description = require_scalar("description")
+    license_id = require_scalar("license")
+    if name != SKILL.name or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
+        raise ValidationError("SKILL.md name must match the skill folder and use lowercase hyphen-case")
+    if not 1 <= len(description) <= 1024 or "<" in description or ">" in description:
+        raise ValidationError("SKILL.md description must be 1-1024 characters and contain no angle brackets")
+    if license_id != "Apache-2.0":
+        raise ValidationError("SKILL.md license must match the repository's Apache-2.0 license")
+    if not re.search(r'(?m)^  author:\s*["\']Luka Dujmovic["\']$', frontmatter):
+        raise ValidationError("SKILL.md metadata must identify Luka Dujmovic as author")
+    if not re.search(r'(?m)^  version:\s*["\']0\.2\.1-alpha["\']$', frontmatter):
+        raise ValidationError("SKILL.md metadata must declare version 0.2.1-alpha")
+    compatibility_match = re.search(r'(?m)^  compatibility:\s*["\'](.+)["\']$', frontmatter)
+    if not compatibility_match or len(compatibility_match.group(1)) > 500:
+        raise ValidationError("SKILL.md metadata must include a compatibility note of at most 500 characters")
+    if len(skill_text.splitlines()) >= 500:
+        raise ValidationError("SKILL.md must remain below 500 lines")
+    if (SKILL / "README.md").exists():
+        raise ValidationError("installable skill folders must not contain a redundant README.md")
     if "$process-before-platform" not in skill_text:
         raise ValidationError("SKILL.md must state the explicit invocation name")
     metadata = (SKILL / "agents" / "openai.yaml").read_text(encoding="utf-8")

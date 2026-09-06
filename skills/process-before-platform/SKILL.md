@@ -1,6 +1,11 @@
 ---
 name: process-before-platform
 description: Guide structured initial discovery for internal process, tooling, automation, and operational-platform requests before they enter an initiative queue. Use only when the user explicitly invokes $process-before-platform to test initiative fit and process necessity, document current work, systems, information and knowledge sources, compare the required solution ladder including buy versus build, expose lifetime ownership, and create portable ticket-ready Markdown and JSON artifacts. Do not use for customer-facing product discovery or as procurement, budget, vendor, architecture, or initiative approval.
+license: Apache-2.0
+metadata:
+  author: "Luka Dujmovic"
+  version: "0.2.1-alpha"
+  compatibility: "Agent Skills format; built and evaluated natively in Codex; requires referenced-file and filesystem access. Invocation, tools, and behavior may vary by client."
 ---
 
 # Process Before Platform

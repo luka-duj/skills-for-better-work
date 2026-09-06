@@ -14,7 +14,9 @@ The reasonable-sounding next step is to show people the tool and define the proc
 
 That can work when the tool enables a genuinely new way of working. More often, it turns disputed rules, unnecessary approvals, unclear ownership and undocumented exceptions into software someone now has to maintain.
 
-So I built **Process Before Platform**, an open-source Codex skill for examining internal tooling and automation requests before a team commits to a solution.
+So I built **Process Before Platform**, an open Agent Skill for examining internal tooling and automation requests before a team commits to a solution.
+
+I build and evaluate it natively in Codex. The package follows the open Agent Skills format, so it can also be installed in Claude Code and other compatible clients; tool access and behavior can vary by environment.
 
 It helps a requester work through five questions:
 
@@ -60,6 +62,7 @@ Credibility and voice should be reassessed after Luka reads the final public rep
 - Repository visibility is public by a separate owner-approved action.
 - The public repository URL replaces the placeholder and opens without authentication.
 - Installation instructions work from a clean environment.
+- The repository distinguishes Codex-native evaluation from cross-client format compatibility and makes no unsupported parity claim.
 - The repository contains no private source, internal case, credentials, or non-public artifacts.
 - GitHub Issues and any Discussions category display the redaction warning.
 - The final pasted copy and link preview are checked in LinkedIn.
