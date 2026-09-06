@@ -4,47 +4,55 @@
 
 ## Final post
 
-A broken process does not improve when you give it a UI.
+“Can we automate onboarding with AI?”
 
-It becomes easier to repeat.
+“We need a portal.”
 
-Internal tooling requests often begin with a specific solution: a new portal, an automation, an AI assistant.
+“Could you add this to the roadmap?”
 
-The reasonable-sounding next step is to show people the tool and define the process around it later.
+If you work in internal product, you know the request. One sentence can contain weeks of missing context.
 
-That can work when the tool enables a genuinely new way of working. More often, it turns disputed rules, unnecessary approvals, unclear ownership and undocumented exceptions into software someone now has to maintain.
+Stakeholders should not need to write a PRD before asking for help. A team still cannot responsibly prioritise, buy, or build from a proposed solution and a deadline.
 
-So I built **Process Before Platform**, an open Agent Skill for examining internal tooling and automation requests before a team commits to a solution.
+Someone has to uncover:
 
-I build and evaluate it natively in Codex. The package follows the open Agent Skills format, so it can also be installed in Claude Code and other compatible clients; tool access and behavior can vary by environment.
+- what outcome is actually needed;
+- how the work happens today;
+- which rules, systems, handoffs, and exceptions shape it;
+- what evidence shows the problem is worth solving;
+- who will own the result after launch.
 
-It helps a requester work through five questions:
+PMs, POs, and BAs often reconstruct that context through meetings, documents, and several rounds of “one more question”. Meanwhile, the original solution starts to acquire the emotional status of a commitment.
 
-1. Is this process or obligation still necessary?
-2. What can be removed, simplified or standardised first?
-3. What evidence shows the problem, frequency and consequence?
-4. Should we use something we already own, buy, configure, integrate, automate, build, or test process and technology together?
-5. Who will own security, infrastructure, quality, support, change, incidents, upgrades and retirement after the first release?
+I built Process Before Platform to make that first discovery more useful for both sides of the request.
 
-The output is a ticket-ready Markdown initiative request and a portable JSON packet. It documents the manual process, existing systems, information sources, and codified or person-held knowledge before completing the solution ladder. Missing answers become evidence tasks. They do not become plausible-sounding assumptions.
+If you are bringing the request, the skill helps you explain the work without pretending you already know the answer.
 
-The first walkthrough uses a completely synthetic request for a custom approval portal. The initial solution changes because the approval rules, exceptions and ownership are not stable enough to encode responsibly.
+If you are receiving it, the skill gives you a structured starting point instead of making you reverse-engineer the problem after it has entered the roadmap.
 
-The alpha is here: [PUBLIC_REPOSITORY_URL]
+It tests whether the process is still necessary, maps the current workflow and knowledge, separates facts from assumptions, compares the full solution ladder, and makes ownership after launch visible. The final output is a readable initiative request plus portable JSON for the next team or system.
 
-Try it on a sanitised internal request and tell me where the questions, direction or handoff fail. Please keep real company and customer information out of public issues.
+Sometimes the answer is automation. Sometimes it is an existing capability, a process change, a bounded experiment, or stopping work that no longer serves a purpose.
+
+The alpha is built and evaluated natively in Codex and follows the open Agent Skills format for use in compatible clients, including Claude Code. Runtime behaviour still depends on the client and its tools.
+
+The public alpha will be here: [PUBLIC_REPOSITORY_URL]
+
+Try it on a sanitised request. If it asks the wrong question, pushes a direction too early, or produces a handoff your team cannot use, tell me exactly where it failed.
+
+#ProductManagement #ProductOwnership #BusinessAnalysis
 
 ## Evaluation
 
 Hard gates:
 
-- Truth and ownership: pass. The post uses Luka's stated point of view and the implemented synthetic example; it makes no private case or performance claim.
+- Truth and ownership: pass. The post uses Luka's stated point of view, the user-supplied intake problem, and implemented skill behaviour; it makes no private case or performance claim.
 - Confidentiality: pass. It contains no employer, customer, system, vendor, or internal-program details.
 - Thesis clarity: pass. The first three lines state the mechanism and the body stays on that idea.
 - Originality: pass. No creator wording, story, or result is borrowed.
 - CTA alignment: pass after publication. It asks for a sanitized real-request test and failure report.
 
-Quality score: 37/40
+Quality score: 38/40
 
 - Hook: 5
 - Relevance: 5
@@ -52,10 +60,10 @@ Quality score: 37/40
 - Credibility: 4
 - Useful payload: 5
 - Structure: 5
-- Voice: 4
+- Voice: 5
 - Close: 4
 
-Credibility and voice should be reassessed after Luka reads the final public repository and adjusts any wording he would not defend in conversation.
+The post earns its authority from the recognizable intake problem, the implemented skill behaviour, and transparent alpha boundary. It does not claim adoption, effectiveness, or cross-client parity.
 
 ## Confirm before publishing
 
@@ -66,3 +74,4 @@ Credibility and voice should be reassessed after Luka reads the final public rep
 - The repository contains no private source, internal case, credentials, or non-public artifacts.
 - GitHub Issues and any Discussions category display the redaction warning.
 - The final pasted copy and link preview are checked in LinkedIn.
+- Luka confirms that the exact opening examples and `one more question` phrasing sound natural in his voice.
