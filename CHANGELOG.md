@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Refreshed the repository positioning around clearer decisions, better systems, and practical AI.
+- Added a direct link to [lukadujmovic.com](https://lukadujmovic.com/) and replaced the active repository header with a 1200 × 320 brand banner.
+- Kept the repository in private alpha; no visibility or skill-package changes were made.
+
 ## 0.2.1-alpha — 2026-09-05
 
 - Added an evidence-gated BPMN-style Mermaid swimlane diagram to the final Markdown artifact, with the exact diagram source and coverage metadata in JSON.

@@ -1,14 +1,16 @@
 <p align="center">
-  <img src="assets/repository-header.svg" alt="Skills for Better Work — practical open-source skills for better decisions" width="100%">
+  <img src="assets/repository-header.png" alt="Skills for Better Work — from complexity to clearer decisions, with lukadujmovic.com" width="100%">
 </p>
 
 # Skills for Better Work
 
-Practical Codex skills that help people make better decisions about work, systems, and AI.
+Practical Codex skills for turning complex work into clearer decisions, better systems, and AI that earns its place.
+
+Built by [Luka Dujmovic](https://lukadujmovic.com/) around a simple principle: understand the work first, then build what helps people do it better.
 
 > **Status:** Private alpha. This repository is being prepared for a later public release. Do not share confidential company, customer, employee, security, or process information in prompts, examples, issues, or discussions.
 
-## First skill: Process Before Platform
+## Available skill: Process Before Platform
 
 `process-before-platform` guides a stakeholder through structured initial discovery so an internal tooling or automation request reaches an initiative queue with enough context to understand, route, and assess it.
 
