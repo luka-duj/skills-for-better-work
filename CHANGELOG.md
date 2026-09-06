@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Clarified that the skills can be used with Claude and other compatible AI systems while Codex remains the native, best-supported reference implementation.
 - Refreshed the repository positioning around clearer decisions, better systems, and practical AI.
 - Added a direct link to [lukadujmovic.com](https://lukadujmovic.com/) and replaced the active repository header with a 1200 × 320 brand banner.
 - Kept the repository in private alpha; no visibility or skill-package changes were made.

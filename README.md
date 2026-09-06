@@ -4,11 +4,19 @@
 
 # Skills for Better Work
 
-Practical Codex skills for turning complex work into clearer decisions, better systems, and AI that earns its place.
+Practical AI skills for turning complex work into clearer decisions, better systems, and AI that earns its place.
+
+The skills can also be used with Claude and other AI systems that support reusable instructions and referenced files. They are built, tested, and maintained natively for Codex, which is the best-supported environment and recommended for the most reliable results.
 
 Built by [Luka Dujmovic](https://lukadujmovic.com/) around a simple principle: understand the work first, then build what helps people do it better.
 
 > **Status:** Private alpha. This repository is being prepared for a later public release. Do not share confidential company, customer, employee, security, or process information in prompts, examples, issues, or discussions.
+
+## Compatibility
+
+The packages use Markdown instructions, referenced guidance, and machine-readable schemas so their methods can travel across capable AI systems. Each system loads instructions and exposes tools differently, so Claude and other integrations may require different installation paths, invocation syntax, or permissions. Check the behavior before using a skill for consequential work.
+
+Codex is the reference implementation. The documented installation, automated validation, and behavioral evaluation are maintained for Codex first.
 
 ## Available skill: Process Before Platform
 
@@ -44,7 +52,7 @@ The artifacts are generated once at the end of the completed questionnaire, not 
 
 See the [synthetic approval-portal walkthrough](skills/process-before-platform/examples/synthetic-approval-portal/README.md) for a complete example.
 
-## Install locally
+## Install for Codex
 
 Copy the skill folder into your Codex skills directory, then restart or reload Codex if needed.
 
