@@ -6,6 +6,7 @@
 - Added client-specific installation guidance for Codex, Claude Code, Claude.ai, and other Agent Skills-compatible clients.
 - Distinguished cross-client package compatibility from behavior tested in the Codex reference environment.
 - Added clean-history, cross-client claim, profile handoff, and post-publication vulnerability-reporting gates to the publishing checklist.
+- Passed a clean-context Codex smoke test for the vague-request first turn: safety warning, no invented facts, one focused discovery question, and no premature JSON or packet.
 - Clarified that the skills can be used with Claude and other compatible AI systems while Codex remains the native, best-supported reference implementation.
 - Refreshed the repository positioning around clearer decisions, better systems, and practical AI.
 - Added a direct link to [lukadujmovic.com](https://lukadujmovic.com/) and replaced the active repository header with a 1200 × 320 brand banner.
