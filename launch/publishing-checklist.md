@@ -19,22 +19,22 @@ Last audited: 7 September 2026. Checked items reflect verified repository state,
 - [x] Test each additional client named as behaviorally supported; otherwise describe it only as format-compatible.
 - [x] Keep GitHub Issues enabled with structured, sanitization-aware templates; defer Discussions until there is a moderation need and owner.
 - [x] Verify the repository description and topics without unsupported claims.
-- [ ] Change visibility to public only through the owner's deliberate switch.
+- [x] Change visibility to public only through the owner's deliberate switch.
 
 ## Immediately after the visibility switch
 
-- [ ] Enable private vulnerability reporting and verify the route linked from `SECURITY.md`.
-- [ ] Verify the repository, README assets, and raw skill files open without authentication.
-- [ ] Confirm the default branch and latest GitHub Actions validation are green.
+- [x] Enable private vulnerability reporting and verify the route linked from `SECURITY.md`.
+- [x] Verify the repository, README assets, and raw skill files open without authentication.
+- [x] Confirm the default branch and latest GitHub Actions validation are green.
 - [ ] Create the first tagged release only after the public state is verified.
 
 ## LinkedIn
 
 - [x] Put the final repository URL in the prepared LinkedIn draft.
-- [ ] Change the GitHub profile README from private alpha to public alpha and link the repository.
-- [ ] Pin the repository when GitHub profile permissions allow it.
-- [ ] Re-run truth, ownership, confidentiality, originality, usefulness, voice, and CTA gates.
-- [ ] Confirm no real internal case can be inferred from the wording.
+- [x] Change the GitHub profile README from private alpha to public alpha and link the repository.
+- [ ] Pin the repository in the GitHub web interface; GitHub's API does not expose the attempted pin mutation.
+- [x] Re-run truth, ownership, confidentiality, originality, usefulness, voice, and CTA gates.
+- [x] Confirm no real internal case can be inferred from the wording.
 - [ ] Check the final post and link preview in the LinkedIn composer.
 - [ ] Publish only after an explicit owner instruction covering the final copy.
 
