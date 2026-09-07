@@ -1,9 +1,9 @@
 interface:
   display_name: "Process Before Platform"
-  short_description: "Turn rough tool requests into ready initiatives"
+  short_description: "Clarify work before choosing tools"
   icon_small: "./assets/icon-small.svg"
   icon_large: "./assets/icon-large.svg"
   brand_color: "#0B2D24"
-  default_prompt: "Use $process-before-platform to turn this sanitized internal tooling request into a decision-ready initiative intake."
+  default_prompt: "Use $process-before-platform to clarify this sanitized internal process or tooling request before choosing a solution."
 policy:
   allow_implicit_invocation: false

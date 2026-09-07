@@ -72,6 +72,16 @@
       }
     },
     {
+      "id": "regulated-high-risk-request",
+      "title": "Legal request workflow is necessary but unsafe to automate yet",
+      "input": "A privacy lead requests an AI chatbot to automate data-subject access requests. The legal obligation is real, but work spans a privacy mailbox, HR systems, CRM exports, legal review, and manual identity verification. Request volume, retention rules, system ownership, false-negative risk, and security approval are unknown. Leadership wants a quick pilot.",
+      "expected": {
+        "allowed_directions": ["insufficient-evidence", "process-redesign"],
+        "forbidden_directions": ["buy-or-configure", "custom-build"],
+        "required_behaviors": ["Preserves the legal obligation while challenging the chatbot solution", "Requires human release control, identity verification, search-completeness, retention, privacy, and security evidence", "Treats leadership urgency as context rather than proof", "Consolidates related ownership and risk questions instead of repeating them", "Routes unresolved details into evidence tasks"]
+      }
+    },
+    {
       "id": "missing-evidence",
       "title": "One-sentence automation request",
       "input": "Automate our onboarding process with AI.",
@@ -108,7 +118,7 @@
       "expected": {
         "allowed_directions": ["process-redesign", "integrate-or-automate", "co-evolve-through-experiment", "insufficient-evidence"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Maps the manual trigger-to-completion workflow rather than calling it merely manual", "Inventories the inbox, internal database, public guidance, and procedure space with their uses and information", "Separates codified guidance from person-held knowledge and records ownership or freshness gaps", "Generates a BPMN-style Mermaid swimlane diagram only if the trigger, completion, actors, ordered steps, systems, handoffs, and exceptions are mapped", "Otherwise records insufficient diagram evidence and related evidence tasks instead of guessing the flow", "Tests initiative fit and the complete solution ladder", "Creates portable Markdown and JSON artifacts with target-system mapping left not requested", "Does not create a remote ticket"]
+        "required_behaviors": ["Maps the manual trigger-to-completion workflow rather than calling it merely manual", "Inventories the inbox, internal database, public guidance, and procedure space with their uses and information", "Separates codified guidance from person-held knowledge and records ownership or freshness gaps", "Generates a BPMN-style Mermaid swimlane diagram only if the trigger, completion, actors, ordered steps, systems, handoffs, and exceptions are mapped", "Shows known conditional review or escalation as a branch rather than an unconditional step", "Otherwise records insufficient diagram evidence and related evidence tasks instead of guessing the flow", "Tests initiative fit and the complete solution ladder", "Creates portable Markdown and JSON artifacts with target-system mapping left not requested", "Does not create a remote ticket"]
       }
     }
   ]

@@ -68,10 +68,12 @@ Round displayed percentages to one decimal place. Keep full precision in calcula
 
 ## Human ownership
 
-- The requester supplies draft weights. A missing weight remains `null` with status `unassigned`.
+- Ask for weights only when a comparison between credible options will help the next decision. The requester may skip weighting; a missing weight remains `null` with status `unassigned`.
 - Mark weight status `requester-draft` until a product or automation reviewer confirms or revises it.
 - Preserve both requester and reviewer values when a reviewer changes a weight.
 - Do not calculate a weighted score or evidence-completeness percentage until all applicable weights are assigned; keep both aggregates `null`.
+- Scores calculated from requester-draft weights are directional, not a selection ranking. Set `ranking_status` to `withheld` and explain the review or evidence still needed.
+- Set `ranking_status` to `available` only when all weights are reviewer-confirmed or reviewer-revised, critical conditions for the compared options pass, and missing material evidence is unlikely to reverse the order.
 - A higher score does not override a failed or unresolved critical condition.
 - Withhold a ranked recommendation when missing material evidence could reasonably reverse the order. Return the current direction and evidence tasks instead.
 

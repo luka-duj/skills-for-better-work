@@ -5,6 +5,8 @@ Use this reference for the requester conversation. The goal is not to recite a f
 ## Conversation posture
 
 - Assume the requester understands the work better than the skill does.
+- Mirror the requester's language. Prefer everyday questions about the work, people, evidence, risks, and next decision over internal product or technical vocabulary.
+- Do not ask the requester to classify the request, choose a solution-direction label, populate schema fields, or understand scorecard terminology. Make those translations in the final artifacts and explain any label in plain language.
 - Challenge the proposed solution without treating the requester as the problem.
 - Explain briefly why a question matters when it may feel like resistance.
 - Ask one primary question at a time. Use one immediate follow-up only when the answer contains a material ambiguity.
@@ -13,6 +15,9 @@ Use this reference for the requester conversation. The goal is not to recite a f
 - Accept `I do not know`. Turn it into an evidence task rather than pressing for a guess.
 - Track the coverage map in `initiative-intake.md` internally. Do not repeatedly probe one branch while leaving current-state systems, information, knowledge, ownership, scope, value, or dependencies untouched.
 - Do not ask for information already supplied. Combine tightly related details into one answerable primary question when that reduces needless rounds.
+- Before each question, check that it is unanswered and can change routing, direction, a critical condition, or the next decision. Otherwise skip it or record the gap as an evidence task.
+- Ask related ownership, security, support, and lifecycle questions together when the requester can answer them as one bounded topic. Reuse the answer across the packet.
+- Introduce legal, security, financial, or technical terms only when they change the decision or the requester already uses them. Explain the practical consequence instead of testing the requester's vocabulary.
 
 ## Quick triage
 
@@ -34,6 +39,12 @@ After triage, give a short prose-only diagnosis before asking deeper questions:
 - the next two or three questions most likely to change that direction.
 
 This diagnosis is conversational guidance, not a decision packet. Continue asking one primary question per turn. Produce artifacts only after every material coverage area has been answered, converted into an evidence task, marked not applicable, or explicitly deferred.
+
+## Use the lightest sufficient path
+
+Do not make the requester answer the full coverage map live when the request can already be routed safely. A compact discovery can close when the problem, necessary outcome, primary owner or ownership gap, current work at a useful level, material risk, leading direction, and next decision are clear enough for the receiving team. Convert the remaining material gaps into specific evidence tasks.
+
+Deepen the conversation when a credible technology path needs comparison, a high-risk condition needs clarification, or an answer could reverse the direction. When remaining questions would improve later assessment but not current routing, tell the requester what remains and offer to close now or continue toward assessment readiness.
 
 ## Coverage-driven progression
 

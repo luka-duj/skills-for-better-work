@@ -45,6 +45,53 @@ class RepositoryValidationTests(unittest.TestCase):
         with self.assertRaises(validator.ValidationError):
             validator.validate_scorecard(packet)
 
+    def test_scorecard_option_must_cover_every_criterion(self):
+        packet = copy.deepcopy(self.packet)
+        packet["scorecard"]["option_scores"][0]["scores"] = packet["scorecard"]["option_scores"][0]["scores"][:-1]
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_scorecard(packet)
+
+    def test_withheld_ranking_requires_caveat(self):
+        packet = copy.deepcopy(self.packet)
+        packet["scorecard"]["ranking_caveat"] = None
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_scorecard(packet)
+
+    def test_requester_weights_cannot_produce_available_ranking(self):
+        packet = copy.deepcopy(self.packet)
+        for criterion in packet["scorecard"]["criteria"]:
+            criterion["requester_weight"] = 3
+            criterion["reviewer_weight"] = None
+            criterion["weight_status"] = "requester-draft"
+        packet["scorecard"]["ranking_status"] = "available"
+        packet["scorecard"]["ranking_caveat"] = None
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_scorecard(packet)
+
+    def test_available_ranking_requires_resolved_critical_conditions(self):
+        packet = copy.deepcopy(self.packet)
+        for criterion in packet["scorecard"]["criteria"]:
+            criterion["requester_weight"] = 3
+            criterion["reviewer_weight"] = 3
+            criterion["weight_status"] = "reviewer-confirmed"
+        for option in packet["scorecard"]["option_scores"]:
+            assessed = [score for score in option["scores"] if score["fit"] is not None]
+            option["evidence_completeness"] = round(len(assessed) / len(packet["scorecard"]["criteria"]) * 100, 1)
+            option["weighted_score"] = round(sum(score["fit"] for score in assessed) / (len(assessed) * 5) * 100, 1)
+        packet["options"][1]["critical_conditions"].append(
+            {
+                "criterion_id": "ownership",
+                "status": "unresolved",
+                "evidence": "Support ownership has not been confirmed.",
+                "owner": None,
+                "consequence": "The option cannot be selected responsibly.",
+            }
+        )
+        packet["scorecard"]["ranking_status"] = "available"
+        packet["scorecard"]["ranking_caveat"] = None
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_scorecard(packet)
+
     def test_unassigned_weights_keep_aggregates_null(self):
         packet = copy.deepcopy(self.packet)
         for criterion in packet["scorecard"]["criteria"]:
@@ -73,6 +120,21 @@ class RepositoryValidationTests(unittest.TestCase):
     def test_solution_ladder_directions_must_be_unique(self):
         packet = copy.deepcopy(self.packet)
         packet["options"][-1] = copy.deepcopy(packet["options"][0])
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_submission_ready_requires_no_missing_fields(self):
+        packet = copy.deepcopy(self.packet)
+        packet["handoff"]["submission_ready"] = True
+        packet["handoff"]["missing_for_submission"] = ["Owner needed before routing"]
+        with self.assertRaises(validator.ValidationError):
+            validator.validate_packet_data(packet)
+
+    def test_do_not_submit_cannot_be_submission_ready(self):
+        packet = copy.deepcopy(self.packet)
+        packet["handoff"]["suggested_request_type"] = "do-not-submit"
+        packet["handoff"]["submission_ready"] = True
+        packet["handoff"]["missing_for_submission"] = []
         with self.assertRaises(validator.ValidationError):
             validator.validate_packet_data(packet)
 

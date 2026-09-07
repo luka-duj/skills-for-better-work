@@ -395,7 +395,7 @@
     "suggested_request_type": "discovery",
     "ticket_title": "Standardize internal approval requests before tooling",
     "ticket_body_markdown": "Investigate and standardize the cross-functional approval-request process before selecting software. Requests currently arrive through email and team chat, a coordinator manually records status in a shared tracker, routes and exceptions vary, policy knowledge is only partly codified, and no end-to-end owner is named. Discovery should confirm mandatory controls, define the minimum request and approval model, identify accountable ownership, and test the owned work-management suite. Do not approve a custom portal until differentiation and full lifecycle ownership are evidenced.",
-    "missing_for_submission": ["Named business owner", "Confirmed strategy linkage", "Budget status", "Approved minimum process", "Existing-capability assessment"],
+    "missing_for_submission": [],
     "next_workflow": "discovery",
     "target_system": { "name": null, "issue_type": null, "project_or_queue": null, "mapping_status": "not-requested", "field_mappings": [] }
   },

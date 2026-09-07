@@ -1,6 +1,6 @@
 # LinkedIn Alpha Release Draft
 
-> **Private draft — do not publish yet.** Replace `[PUBLIC_REPOSITORY_URL]` only after the repository is deliberately made public and the publishing checklist passes.
+> **Prepared draft — do not publish until the repository is public and the publishing checklist passes.**
 
 ## Final post
 
@@ -36,7 +36,7 @@ Sometimes the answer is automation. Sometimes it is an existing capability, a pr
 
 The alpha is built and evaluated natively in Codex and follows the open Agent Skills format for use in compatible clients, including Claude Code. Runtime behaviour still depends on the client and its tools.
 
-The public alpha will be here: [PUBLIC_REPOSITORY_URL]
+The public alpha will be here: https://github.com/luka-duj/skills-for-better-work
 
 Try it on a sanitised request. If it asks the wrong question, pushes a direction too early, or produces a handoff your team cannot use, tell me exactly where it failed.
 

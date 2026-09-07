@@ -10,7 +10,7 @@ The packages follow the [Agent Skills open format](https://agentskills.io/specif
 
 Built by [Luka Dujmovic](https://lukadujmovic.com/) around a simple principle: understand the work first, then build what helps people do it better.
 
-> **Status:** Private alpha. This repository is being prepared for a later public release. Do not share confidential company, customer, employee, security, or process information in prompts, examples, issues, or discussions.
+> **Status:** Public alpha (`0.2.2-alpha`). The method and output contract are usable and tested in Codex, but the collection is still evolving. Use sanitized context, review consequential decisions with the accountable people, and expect behavior to vary in other clients.
 
 ## Compatibility
 
@@ -25,11 +25,17 @@ Compatibility describes package format, not identical behavior. Test the skill i
 
 ## Available skill: Process Before Platform
 
-`process-before-platform` guides a stakeholder through structured initial discovery so an internal tooling or automation request reaches an initiative queue with enough context to understand, route, and assess it.
+`process-before-platform` helps business requesters and PMs turn a rough internal process, tooling, or automation request into a clearer next decision before anyone commits to software.
 
-Its default is simple: stabilize, simplify, and standardize the process before tooling. That default is not absolute. When evidence shows that a tool must enable a new process, the skill can recommend a bounded process-and-tool experiment.
+It uses everyday language and asks only for information that can change the direction, expose an important risk, or improve the handoff. Its default is simple: understand and improve the work before choosing a tool. When the process genuinely cannot be learned without trying a capability, it can instead recommend a small, reversible experiment.
 
-The skill asks whether the process and initiative are necessary, maps the manual workflow, produces a BPMN-style Mermaid swimlane diagram when that map is supported, inventories existing systems and information sources, exposes codified and person-held knowledge, separates evidence from assumptions, compares the required solution ladder, exposes lifetime ownership, and prepares a portable handoff for an initiative, product, automation, or business-analysis team.
+It helps the requester and receiving team:
+
+- understand the outcome, affected people, and evidence;
+- see how the work, systems, handoffs, rules, and exceptions fit together;
+- compare stopping, simplifying, using existing tools, buying, automating, building, or testing on a small scale;
+- make ownership and important unknowns visible;
+- decide whether to route the request now, investigate further, reframe it, or stop it.
 
 It does not approve initiatives, procurement, budgets, vendors, or architecture.
 
@@ -45,7 +51,7 @@ Use $process-before-platform to evaluate this internal tooling request:
 
 The skill runs an adaptive questionnaire first. It asks one primary question per round and does not emit JSON while answers are still being collected. Once the questionnaire is complete—or the requester explicitly closes it with remaining unknowns recorded as evidence tasks—it writes two sibling files under `<current-project>/output/process-before-platform/`:
 
-- a ticket-ready Markdown initiative request;
+- a plain-language Markdown brief that starts with the recommendation, reason, handoff status, next action, and cautions;
 - a vendor-neutral JSON initiative packet conforming to schema version 2.1.0;
 - an evidence-gated BPMN-style Mermaid process diagram embedded in Markdown and preserved as source in JSON;
 - visible facts, assumptions, unknowns, and evidence tasks;
@@ -109,7 +115,7 @@ Install the `skills/process-before-platform` folder using the client's Agent Ski
 - `evals/` — synthetic behavioral cases and the manual forward-test protocol.
 - `scripts/validate.py` — dependency-free structural and contract validation.
 - `tests/` — regression tests for the validator and example packet.
-- `launch/` — private-alpha publication checklist, milestone series, and release-post draft.
+- `launch/` — publication checklist, milestone series, and optional announcement draft.
 
 ## Validate
 

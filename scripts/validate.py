@@ -175,6 +175,12 @@ def validate_scorecard(packet: dict[str, Any]) -> None:
                 numerator += weight * score["fit"]
                 assessed_weight += weight
 
+        missing_criteria = set(criterion_by_id) - seen
+        if missing_criteria:
+            raise ValidationError(
+                f"{option['direction']}: scorecard is missing criteria {sorted(missing_criteria)!r}"
+            )
+
         expected_completeness = (
             round(assessed_weight / total_weight * 100, 1) if all_weights_assigned and total_weight else None
         )
@@ -198,6 +204,25 @@ def validate_scorecard(packet: dict[str, Any]) -> None:
             raise ValidationError(f"{option['direction']}: weighted score must be null while weights are unassigned")
         if expected_score is not None and not math.isclose(option["weighted_score"], expected_score, abs_tol=0.05):
             raise ValidationError(f"{option['direction']}: weighted score {option['weighted_score']} != {expected_score}")
+
+    ranking_status = packet["scorecard"]["ranking_status"]
+    ranking_caveat = packet["scorecard"]["ranking_caveat"]
+    all_weights_reviewed = all(
+        criterion["weight_status"] in {"reviewer-confirmed", "reviewer-revised"}
+        for criterion in criteria
+    )
+    plausible_options = [option for option in packet["options"] if option["status"] == "plausible"]
+    has_blocking_condition = any(
+        condition["status"] != "pass"
+        for option in plausible_options
+        for condition in option["critical_conditions"]
+    )
+    if ranking_status == "withheld" and not (isinstance(ranking_caveat, str) and ranking_caveat.strip()):
+        raise ValidationError("a withheld ranking requires a plain-language ranking caveat")
+    if ranking_status == "available" and not all_weights_reviewed:
+        raise ValidationError("ranking cannot be available until all weights are reviewer-confirmed or reviewer-revised")
+    if ranking_status == "available" and has_blocking_condition:
+        raise ValidationError("ranking cannot be available while a plausible option has a failed or unresolved critical condition")
 
 
 def validate_packet(path: Path) -> None:
@@ -287,11 +312,18 @@ def validate_packet_data(packet: dict[str, Any], schema: dict[str, Any] | None =
         if any(target[key] is not None for key in ("name", "issue_type", "project_or_queue")) or target["field_mappings"]:
             raise ValidationError("not-requested target mapping must not contain invented target metadata")
 
+    handoff = packet["handoff"]
+    if handoff["submission_ready"] and handoff["missing_for_submission"]:
+        raise ValidationError("submission-ready handoff must not list information missing before submission")
+    if handoff["suggested_request_type"] == "do-not-submit" and handoff["submission_ready"]:
+        raise ValidationError("do-not-submit handoff cannot be marked submission-ready")
+
 
 def validate_example_alignment() -> None:
     packet = load_json(EXAMPLE_PACKET)
     markdown = EXAMPLE_MARKDOWN.read_text(encoding="utf-8")
     required_fragments = [
+        "## Decision snapshot",
         packet["initiative"]["name"],
         packet["initiative"]["fit"],
         packet["readiness"],
@@ -341,8 +373,8 @@ def validate_skill() -> None:
         raise ValidationError("SKILL.md license must match the repository's Apache-2.0 license")
     if not re.search(r'(?m)^  author:\s*["\']Luka Dujmovic["\']$', frontmatter):
         raise ValidationError("SKILL.md metadata must identify Luka Dujmovic as author")
-    if not re.search(r'(?m)^  version:\s*["\']0\.2\.1-alpha["\']$', frontmatter):
-        raise ValidationError("SKILL.md metadata must declare version 0.2.1-alpha")
+    if not re.search(r'(?m)^  version:\s*["\']0\.2\.2-alpha["\']$', frontmatter):
+        raise ValidationError("SKILL.md metadata must declare version 0.2.2-alpha")
     compatibility_match = re.search(r'(?m)^  compatibility:\s*["\'](.+)["\']$', frontmatter)
     if not compatibility_match or len(compatibility_match.group(1)) > 500:
         raise ValidationError("SKILL.md metadata must include a compatibility note of at most 500 characters")
@@ -377,8 +409,8 @@ def validate_eval_cases() -> None:
     if payload.get("schema_version") != "2.1.0":
         raise ValidationError("evals/cases.json must use schema version 2.1.0")
     cases = payload.get("cases")
-    if not isinstance(cases, list) or len(cases) != 11:
-        raise ValidationError("evals/cases.json must contain the eleven approved alpha cases")
+    if not isinstance(cases, list) or len(cases) < 11:
+        raise ValidationError("evals/cases.json must retain at least the eleven approved alpha cases")
     ids: set[str] = set()
     allowed_directions = set(resolve_ref(load_json(SCHEMA_PATH), "#/$defs/direction")["enum"])
     for case in cases:

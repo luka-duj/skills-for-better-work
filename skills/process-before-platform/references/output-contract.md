@@ -24,6 +24,16 @@ After the questionnaire completion gate, create a ticket-ready Markdown file and
 
 ## Markdown initiative request
 
+Begin with **Decision snapshot**, a short plain-language section that answers:
+
+- What is recommended now?
+- Why?
+- Is it ready to hand off now, and what prevents that if not?
+- What decision or action comes next?
+- What important cautions should the reader know?
+
+Put the practical meaning first. Controlled values such as `process-redesign` or `assessment-ready` may appear after the explanation for portability, but do not make the reader decode them. Keep this section concise and do not repeat the full detail that follows.
+
 Use these sections when applicable:
 
 1. **Initiative summary and fit** — name, summary, classification, rationale, readiness, requester, business owner, areas, reach, type, and proposed solution.
@@ -34,7 +44,7 @@ Use these sections when applicable:
 6. **Knowledge landscape** — codified, partially codified, tribal, conflicting, stale, inaccessible, and missing knowledge with locations and owners.
 7. **Target state and requirements** — capabilities, supported functional and non-functional needs, human control, rollout, adoption, support, and fallback.
 8. **Value, priority, and success measures** — value hypothesis, baseline, measures, saved-time use, strategy link, urgency, deadline, budget status, and reach without invented numbers.
-9. **Required solution assessment** — all plausible ladder options, scorecard, critical conditions, leading direction, and buy-versus-build implications.
+9. **Required solution assessment** — all plausible ladder options, scorecard, critical conditions, leading direction, and buy-versus-build implications. Label scores based on requester-draft weights as directional and state why ranking remains withheld.
 10. **Dependencies, risks, and lifetime ownership** — named owners and next checks.
 11. **Evidence tasks and pending discovery** — ordered actions that can change readiness or direction.
 12. **Ticket handoff** — ticket title, concise body, target mapping status, submission readiness, missing submission fields, next workflow, and next human decision.
@@ -59,9 +69,13 @@ Do not pad empty sections. During quick triage, keep any direction, necessity, k
 - Keep `facts`, `interpretations`, `assumptions`, `constraints`, `contradictions`, and `unknowns` separate.
 - Preserve requested and reviewed weights separately.
 - Store displayed score and completeness percentages from 0 to 100, rounded to one decimal place. Keep both `null` when any applicable requester weight is unassigned.
+- Use `scorecard.ranking_status = withheld` with a plain-language `ranking_caveat` while weights are unassigned or requester-draft, critical conditions remain unresolved or failed, or missing evidence could reverse the order. Use `available` only after weights are reviewed and the blocking conditions are resolved.
 - Use `research.status = not-applicable` when the buy path is not plausible.
 - Use `research.status = awaiting-confirmation` after preparing a Deep Research brief but before the user confirms it.
-- A handoff may be useful while `submission_ready` is false; in that case it must state the missing evidence and recommended discovery work.
+- Treat `handoff.submission_ready` as “enough information to send or route now,” not as completion of all later work.
+- When `submission_ready` is `true`, `missing_for_submission` must be empty. Keep later discovery or assessment work in evidence tasks or blocking conditions.
+- When `submission_ready` is `false`, use `missing_for_submission` only for information needed before routing. A useful draft can still state the recommended discovery work.
+- A `do-not-submit` request type must have `submission_ready = false`; preserve the decision as a record instead of preparing it for ticket submission.
 - Record the actual output paths and `new-file-only` overwrite policy in `artifacts`.
 
 ## Consistency checks
@@ -71,6 +85,7 @@ Before delivery:
 - the Markdown and JSON use the same initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision;
 - every current-state system, information source, knowledge source, and material process step appears consistently in both artifacts;
 - when `process_diagram.status` is `mapped`, its exact source appears in a Mermaid code block in Markdown, every current-state step has its matching `S<sequence>` node, and the listed actors and mapped sequences cover the process map;
+- known decisions and conditional actions appear as branches rather than as unconditional steps; unknown branch or recovery detail is identified as unmapped rather than invented;
 - when the diagram is not mapped, neither artifact presents an inferred diagram and both explain the material gap or non-applicability;
 - every numeric score has a rationale and confidence;
 - weighted scores and completeness use the formula in `solution-ladder.md`;

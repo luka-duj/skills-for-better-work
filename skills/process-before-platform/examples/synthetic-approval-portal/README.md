@@ -22,7 +22,7 @@ No JSON or draft packet is produced during these rounds.
 
 The request contains evidence of a cross-functional coordination problem, but not evidence that custom software is the right answer. The final direction is `process-redesign`: define a minimum approval model and accountable owner, then test the owned suite before buying or building.
 
-The completed questionnaire creates two aligned artifacts. Because the trigger, completion, actors, ordered steps, systems, handoffs, and material exceptions are mapped, the Markdown also embeds a BPMN-style Mermaid swimlane diagram and the JSON stores its exact source:
+The completed questionnaire creates two aligned artifacts. The readable brief starts with a plain-language decision snapshot so a stakeholder can see the recommendation, reason, handoff status, next action, and caution before the detail. Because the trigger, completion, actors, ordered steps, systems, handoffs, and material exceptions are mapped, the Markdown also embeds a BPMN-style Mermaid swimlane diagram and the JSON stores its exact source:
 
 - [Ticket-ready Markdown initiative request](initiative-request.md)
 - [Vendor-neutral JSON initiative packet](initiative-request.json)

@@ -10,7 +10,7 @@ Publish only when one of these milestones exists. Do not manufacture a cadence o
 
 Evidence required:
 
-- the private alpha has passed structural, contract, and behavioral checks;
+- the public-alpha package has passed structural, contract, and representative behavioral checks;
 - repository visibility has been deliberately changed to public;
 - the public URL and installation instructions work;
 - the synthetic walkthrough remains the only case described in detail.

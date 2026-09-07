@@ -15,6 +15,13 @@ Classify the request as one of:
 
 The classification routes the request; it does not approve or reject organizational work.
 
+When `reframe` and `discovery-needed` both appear applicable, classify the immediate routing need:
+
+- use `reframe` when the proposed solution, scope, or combination of problems must be restated or separated before useful assessment;
+- use `discovery-needed` when the problem and desired outcome are usable, but evidence, ownership, or current-state understanding is insufficient.
+
+Record the secondary concern in the rationale. Do not use initiative fit as a substitute for `readiness`; they answer different questions.
+
 ## Coverage map
 
 ### Request identity and governance
@@ -52,6 +59,8 @@ When the gate passes, create a portable BPMN-style Mermaid swimlane diagram:
 - use `flowchart LR`, start and end events, one labeled `subgraph` per actor, task rectangles, and diamonds for material decisions;
 - give process steps stable node IDs `S1`, `S2`, and so on, matching `current_state.steps[].sequence`;
 - show the normal path and supported material exception or rework loops without inventing undocumented branches;
+- when a known decision or condition changes the next step, show that branch rather than drawing conditional work as if it always happens;
+- when an exception or recovery path is known to exist but its steps are not known, leave it unmapped and state what must be confirmed;
 - include the system or channel in each task label when known;
 - keep confidential record content and sensitive data values out of labels;
 - describe it as BPMN-style, not as standards-compliant BPMN 2.0 XML.
@@ -100,7 +109,9 @@ Complete the solution ladder even when the requester proposes a specific tool. T
 
 The questionnaire is complete when every material coverage area is either supported, explicitly not applicable, or represented by an evidence task. Completion does not imply submission readiness.
 
-Set `handoff.submission_ready` to `true` only when the receiving team can understand:
+`handoff.submission_ready` means there is enough information to send or route the request now. It does not mean every later discovery, assessment, or delivery task is complete.
+
+Set it to `true` only when the receiving team can understand:
 
 - the problem and necessary outcome;
 - current workflow, systems, information, and knowledge landscape;
@@ -109,6 +120,8 @@ Set `handoff.submission_ready` to `true` only when the receiving team can unders
 - dependencies, risks, lifecycle ownership, and the next decision.
 
 When required organizational fields are unknown, the artifact can still be ready for a `discovery` ticket if the gaps and owners are explicit. Do not label it ready for initiative approval or implementation.
+
+When `submission_ready` is `true`, keep `missing_for_submission` empty. Put work that happens after submission in evidence tasks or blocking conditions. When it is `false`, use `missing_for_submission` only for information needed before the request can be sent or routed. A `do-not-submit` disposition always has `submission_ready = false`; record the stop decision instead of preparing a ticket for submission.
 
 ## Portable ticket mapping
 

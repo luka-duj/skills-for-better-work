@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Changed
+
+- Updated `process-before-platform` to `0.2.2-alpha` with a lighter routing-first discovery path that closes safely with explicit evidence tasks instead of forcing every coverage question into the live conversation.
+- Clarified the `reframe` versus `discovery-needed` tie-break and kept initiative fit separate from readiness.
+- Made requester-weighted scorecards explicitly directional and withheld rankings until review and critical conditions are resolved.
+- Strengthened scorecard validation for complete criterion coverage, ranking caveats, reviewed weights, and critical conditions; added regression coverage and a regulated high-risk behavioral fixture.
+- Made stakeholder conversations and the readable handoff default to plain language, with a concise decision snapshot before detailed analysis.
+- Defined submission readiness as “ready to send now,” prevented contradictory missing-field and do-not-submit states, and added regression tests.
+- Required known conditional work to appear as a process branch while leaving unsupported recovery detail explicitly unmapped.
+- Kept generated requests and evaluation runs out of source control by default, and clarified that behavioral tests must run as real turn-by-turn conversations.
 - Declared the Apache-2.0 license, open-format compatibility boundary, author, and alpha version in validator-compatible skill metadata.
 - Added client-specific installation guidance for Codex, Claude Code, Claude.ai, and other Agent Skills-compatible clients.
 - Distinguished cross-client package compatibility from behavior tested in the Codex reference environment.
@@ -10,7 +20,12 @@
 - Clarified that the skills can be used with Claude and other compatible AI systems while Codex remains the native, best-supported reference implementation.
 - Refreshed the repository positioning around clearer decisions, better systems, and practical AI.
 - Added a direct link to [lukadujmovic.com](https://lukadujmovic.com/) and replaced the active repository header with a 1200 × 320 brand banner.
-- Kept the repository in private alpha; no visibility or skill-package changes were made.
+- Prepared the repository copy, package metadata, security route, and announcement draft for a public-alpha visibility switch while keeping publication owner-controlled.
+
+### Fixed
+
+- Prevented ready handoffs from listing information as missing for submission.
+- Prevented `do-not-submit` outcomes from being marked submission-ready.
 
 ## 0.2.1-alpha — 2026-09-05
 
@@ -41,4 +56,4 @@
 - Added redaction-safe contribution and issue guidance.
 - Clarified the no-action disposition and made unassigned scorecard weights schema-valid after independent forward testing.
 
-The repository remains private. No public release or LinkedIn post has been made.
+The first public release and LinkedIn announcement remain owner-controlled actions.

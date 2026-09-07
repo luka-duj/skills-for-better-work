@@ -1,5 +1,13 @@
 # Standardize internal approval requests before tooling
 
+## Decision snapshot
+
+- **Recommendation:** Define one minimum approval process and test the work-management tools the organization already owns before buying or building a portal (`process-redesign`).
+- **Why:** Departments currently use different routes, definitions, and workarounds, so a new portal would automate unresolved process differences.
+- **Ready to hand off:** Yes—as a discovery request, not as approval to implement a system (`ticket-ready`).
+- **Next action:** Assign a process owner and approve a short discovery to define the minimum model and test existing capability.
+- **Important caution:** Do not approve custom development until ownership, rules, genuine capability gaps, ongoing responsibilities, and cost inputs are known.
+
 ## Initiative summary and fit
 
 - Classification: `discovery-needed`

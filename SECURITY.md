@@ -11,6 +11,6 @@ Process Before Platform is a prompt-based decision aid. It does not provide a se
 
 ## Reporting a vulnerability
 
-While the repository is private, report security concerns directly to the repository owner through GitHub. Before public release, enable GitHub private vulnerability reporting and update this section with the verified reporting path.
+Use GitHub's private [Report a vulnerability](https://github.com/luka-duj/skills-for-better-work/security/advisories/new) route when it is available. Do not include exploit details, credentials, or real organizational data in a public issue or discussion.
 
-Do not put sensitive exploit details or real organizational data in a public issue or discussion.
+GitHub allows private vulnerability reporting to be enabled only after this repository is public. Until that route is active, use the contact form at [lukadujmovic.com](https://lukadujmovic.com/) only to request a private reporting channel; do not submit sensitive details through the form.
