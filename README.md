@@ -49,7 +49,24 @@ Import the same folders under `~/.claude/skills`, then invoke `/better-work-loop
 
 See [compatibility and limitations](docs/compatibility.md) for the exact boundary.
 
-## Use it
+## The six skills in detail
+
+Each skill can be invoked directly when you already have the input from the previous phase. Use Better Work Loop when you want the collection to coordinate the complete journey.
+
+### Better Work Loop
+
+Use `better-work-loop` when an internal process, automation, or tooling request should move from an unclear starting point to a responsible next decision.
+
+It helps the requester and receiving team:
+
+- understand the current work before committing to a solution;
+- coordinate the five specialist skills without repeatedly asking for the same context;
+- preserve decisions, accepted scope, evidence, and unresolved questions between phases;
+- stop, adapt, retest, or prepare a pilot review based on what the evidence supports.
+
+It maintains a readable record of the loop and links the decision, shape, build, proof, and review artifacts. It does not approve budgets, architecture, pilot access, deployment, or production use.
+
+Start the complete loop with:
 
 ```text
 Use $better-work-loop to take this sanitized internal-workflow need through the smallest responsible test and evidence loop:
@@ -59,9 +76,20 @@ Use $better-work-loop to take this sanitized internal-workflow need through the 
 
 Start with the problem in your own words; you do not need to choose a technology or prepare structured data. The agent asks focused questions, preserves important unknowns, and presents one concrete slice for acceptance before building or rehearsing it. To resume later, provide the path to the saved `loop-state.json` from the previous handoff.
 
-## Process Before Platform
+### Process Before Platform
 
-Use `process-before-platform` by itself when you need a decision brief rather than the complete loop.
+Use `process-before-platform` when a request arrives with a preferred tool or solution but the underlying work and outcome are not yet clear.
+
+It helps the requester and receiving team:
+
+- understand the outcome, affected people, current work, rules, handoffs, and exceptions;
+- compare stopping, simplifying, using an existing tool, buying, automating, building, or running a bounded experiment;
+- separate known facts from assumptions and important unknowns;
+- decide whether to route the request, investigate further, reframe it, or stop it.
+
+It creates a readable decision brief and a matching structured packet for the next team or phase. It does not approve initiatives, budgets, procurement, vendors, architecture, pilots, or production changes.
+
+Use the decision skill by itself with:
 
 ```text
 Use $process-before-platform to evaluate this sanitized internal tooling or automation request:
@@ -69,14 +97,63 @@ Use $process-before-platform to evaluate this sanitized internal tooling or auto
 [Describe the request, desired outcome, current process, and known constraints.]
 ```
 
+### Shape the Slice
+
+Use `shape-the-slice` after the decision phase supports testing a process change, existing capability, configuration, integration, automation, or custom build.
+
 It helps the requester and receiving team:
 
-- understand the outcome, affected people, current work, rules, handoffs, and exceptions;
-- compare stopping, simplifying, using an existing tool, buying, automating, building, or running a bounded experiment;
-- make ownership, evidence, and important unknowns visible;
-- decide whether to route the request, investigate further, reframe it, or stop it.
+- choose one risky assumption that can change the next decision;
+- select one representative user and one complete job to test;
+- find the earliest useful handoff or decision instead of prototyping an entire workflow;
+- choose the lightest useful format: a rehearsal, clickable prototype, runnable slice, or configuration sandbox;
+- agree on boundaries, non-goals, critical scenarios, and the evidence needed before building.
 
-It creates a readable decision brief and a matching structured packet. It does not approve initiatives, budgets, procurement, vendors, architecture, pilots, or production changes.
+It creates an inspectable shape brief and asks the owner to accept, revise, or reject that exact slice. It does not build the prototype, choose unneeded technology, or turn later possibilities into current scope.
+
+### Build the Slice
+
+Use `build-the-slice` when a Shape the Slice brief has an accepted build gate.
+
+It helps the requester and delivery team:
+
+- build or rehearse only the accepted capabilities and user job;
+- keep a process rehearsal non-technical when code would not improve the learning;
+- include the important exceptions, refusal behavior, fallback, and downstream handoff;
+- verify what works technically and record what remains incomplete;
+- keep live systems, sensitive data, paid services, and deployment outside the ordinary prototype.
+
+It creates the bounded prototype or rehearsal plus a readable build report and matching structured record. It does not expand the scope, deploy the result, or claim that technical success proves user value.
+
+### Prove Before Pilot
+
+Use `prove-before-pilot` after a prototype or rehearsal exists and the team needs to understand what it actually demonstrates.
+
+It helps the requester and review team:
+
+- check the result against the original hypothesis, user job, boundaries, and success criteria;
+- separate technical checks, agent-run scenarios, stakeholder feedback, and observed user behavior;
+- test normal work, exceptions, missing information, contradictions, refusals, fallback, and downstream use;
+- keep failed, disputed, and untested evidence visible;
+- recommend stopping, revising the process, adapting the prototype, retesting, or preparing a pilot review.
+
+It creates a proof report and, when user evidence is missing, a ready-to-run session plan. It does not invent user feedback, treat a working demo as validation, or approve a pilot.
+
+### Prepare Review Handoff
+
+Use `prepare-review-handoff` after proof when business, PM/PO, and delivery reviewers need one decision-ready package rather than a chain of disconnected files.
+
+It helps the review group:
+
+- see the current process, stakeholder-stated ideal, and proposed target process without confusing one for another;
+- understand the selected slice, excluded work, prototype location, and evidence level;
+- review the outcome from business, product, and delivery perspectives;
+- carry unresolved decisions, failed checks, and the next user session forward;
+- resume the loop without reconstructing the previous work.
+
+It creates a readable review handoff and matching structured record, then connects it to the saved loop state. It does not strengthen weak evidence, design an unapproved architecture, or authorize implementation, a pilot, or production use.
+
+In Claude Code, use the same skill names with slash-command syntax—for example, `/shape-the-slice`—after following the [Claude Code installation guidance](docs/installation.md#claude-code).
 
 ## Feedback and maintenance
 

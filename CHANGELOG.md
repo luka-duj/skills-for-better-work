@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Expanded the README with plain-language guidance for all six skills, including when each skill applies, what it helps people do, what it produces, and which decisions remain outside its scope.
+
 ## 0.4.0-alpha — 2026-09-11
 
 - Updated the pack to `0.4.0-alpha` with a sixth explicit-only skill, `prepare-review-handoff`.
