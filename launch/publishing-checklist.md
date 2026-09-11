@@ -2,7 +2,7 @@
 
 Repository visibility and announcement remain separate owner-controlled actions. The public-alpha package can be prepared while private; checks that require unauthenticated access must happen immediately after the visibility switch and before announcement.
 
-Last audited: 7 September 2026. Checked items reflect verified repository state, not authorization to publish.
+Last audited: 11 September 2026. Checked items reflect verified repository state, not authorization to publish.
 
 ## Repository
 
@@ -26,7 +26,7 @@ Last audited: 7 September 2026. Checked items reflect verified repository state,
 - [x] Enable private vulnerability reporting and verify the route linked from `SECURITY.md`.
 - [x] Verify the repository, README assets, and raw skill files open without authentication.
 - [x] Confirm the default branch and latest GitHub Actions validation are green.
-- [ ] Create the first tagged release only after the public state is verified.
+- [x] Create the first tagged release only after the public state is verified.
 
 ## LinkedIn
 
