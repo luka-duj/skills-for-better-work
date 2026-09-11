@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-09-08T10:00:00Z",
+  "loop_id": "2026-09-08-synthetic-approval-portal-a1",
+  "initiative_id": "initiative-synthetic-approval-portal",
+  "iteration": 1,
+  "source_initiative": {
+    "source_type": "initiative-packet",
+    "path": "skills/process-before-platform/examples/synthetic-approval-portal/initiative-request.json",
+    "sha256": "163db4f36ae95873029abbf332a63504b6e08feabeb0ccc97400e28aaf3e620d",
+    "schema_version": "2.3.0"
+  },
+  "source_problem_refs": ["current_state.pain_points[0]", "current_state.handoffs[0]", "target_process_design.node_ids:T1", "target_process_design.node_ids:T3"],
+  "status": "ready-to-build",
+  "decision_to_inform": "Can one structured intake help an operations coordinator prepare a complete, correctly routed review request without deciding the approval?",
+  "hypothesis": "A structured intake that exposes missing information and separates standard from exception review will let a coordinator prepare a usable review summary without email clarification or accidental approval.",
+  "roles": {
+    "business_requester": "Operations requester",
+    "primary_user": "Operations coordinator",
+    "downstream_user": "Approver",
+    "accountable_owner": "Process owner",
+    "primary_user_rationale": "The first bounded uncertainty is whether the coordinator can turn an inconsistent incoming request into a routeable review package; ownership and approval are distinct jobs."
+  },
+  "slice_focus": {
+    "selected_handoff_or_decision": "Requester-to-coordinator intake completeness and route preparation",
+    "why_now": "Missing information enters at the first handoff and causes the earliest rework loop, so learning here prevents a larger prototype from masking the intake problem.",
+    "target_process_node_ids": ["T1", "T2", "T3", "T4"],
+    "excluded_adjacent_jobs": ["Approver decision", "Policy-rule authoring", "Status tracking after handoff", "Audit and production integration"]
+  },
+  "split_assessment": {
+    "source_multiple_primary_user_jobs": true,
+    "source_independent_uncertainties": true,
+    "source_unrelated_failure_modes": true,
+    "source_scope_decision": "must-split",
+    "source_split_reasons": ["The requested portal spans requester intake, coordinator routing, approver decision, status tracking, and audit concerns with different users and failure modes."],
+    "selected_slice_decision": "fits-one-slice",
+    "rationale": "After splitting the source scope, the selected capabilities form one observable coordinator job from incomplete intake to a reviewer-ready handoff."
+  },
+  "target_user": "Operations coordinator",
+  "target_job": "Turn an incoming approval request into a complete summary that the correct human reviewer can use.",
+  "prototype": {
+    "fidelity": "runnable-vertical-slice",
+    "rationale": "The uncertainty concerns field completeness, routing feedback, refusal to approve, and downstream summary usability; these need an exercisable interaction but not accounts, storage, integrations, or production infrastructure.",
+    "capabilities": [
+      "Collect the minimum category, impact, and reason fields",
+      "Show missing information before review",
+      "Separate standard and exception review routes",
+      "Produce a copyable summary while keeping the decision human-owned"
+    ],
+    "non_goals": ["Approve requests", "Send requests", "Store data", "Authenticate users", "Integrate with a ticketing system"],
+    "possible_later": ["Configurable approval rules", "Ticket-system mapping", "Audit history"],
+    "destination_mode": "contained-output",
+    "code_required": true,
+    "code_rationale": "A small interaction is needed to observe field-level feedback, routing behavior, refusal to approve, and a copyable handoff; no backend or production system is needed."
+  },
+  "scenarios": [
+    {"id": "SCN-1", "kind": "normal", "input_or_situation": "Complete standard purchase request", "expected_behavior": "Prepare a standard-review summary and state that the decision is pending human review.", "critical": true},
+    {"id": "SCN-2", "kind": "missing-information", "input_or_situation": "Request with no impact and no reason", "expected_behavior": "List the missing fields and do not produce a review summary.", "critical": true},
+    {"id": "SCN-3", "kind": "exception", "input_or_situation": "Complete request marked urgent or exceptional", "expected_behavior": "Route to human exception review and do not imply approval.", "critical": true},
+    {"id": "SCN-4", "kind": "refusal", "input_or_situation": "User expects the prototype to approve the request", "expected_behavior": "The interface offers no approval action and states that the decision remains with a human reviewer.", "critical": true},
+    {"id": "SCN-5", "kind": "downstream-use", "input_or_situation": "Coordinator needs to hand the complete request to a reviewer", "expected_behavior": "Produce a concise, copyable summary containing category, impact, reason, route, and pending decision.", "critical": true}
+  ],
+  "acceptance_criteria": [
+    {"id": "AC-1", "statement": "A complete standard request produces a review-ready summary.", "observable_evidence": "Summary contains every required field and the standard route.", "critical": true},
+    {"id": "AC-2", "statement": "Incomplete requests show every missing required field before review.", "observable_evidence": "No summary appears and the missing-field list is specific.", "critical": true},
+    {"id": "AC-3", "statement": "The prototype never approves a request.", "observable_evidence": "There is no approval action and every complete summary states that the decision is pending a human.", "critical": true},
+    {"id": "AC-4", "statement": "A representative coordinator can complete the target job without coaching.", "observable_evidence": "Observed user prepares the correct summary and route from the supplied request.", "critical": true},
+    {"id": "AC-5", "statement": "The next reviewer can use the output without reconstructing the request.", "observable_evidence": "Reviewer confirms the summary contains the information needed to begin review.", "critical": true}
+  ],
+  "boundaries": {
+    "data": ["Use fictional request content only"],
+    "privacy": ["Do not collect names or personal data"],
+    "security": ["No authentication or storage is included"],
+    "human_control": ["All approval decisions remain with a human reviewer"],
+    "fallback": ["Coordinator can return to the existing manual intake"],
+    "external_effects": ["No network calls, persistence, ticket creation, or messages"],
+    "cost": ["Use dependency-free local files"]
+  },
+  "evidence_plan": {
+    "representative_role": "Operations coordinator",
+    "real_user_required": true,
+    "observations": ["Completion without coaching", "Correct route", "Missing-field comprehension", "Trust in human-decision boundary", "Reviewer usability"],
+    "decision_rule": "Proceed to pilot review only if a representative coordinator completes the job, a reviewer can use the summary, and all critical refusal and completeness criteria pass.",
+    "evidence_owner": "Synthetic example owner"
+  },
+  "build_gate": {
+    "status": "accepted",
+    "owner": "Synthetic example owner",
+    "decided_at": "2026-09-08T10:15:00Z",
+    "notes": "Fictional acceptance included only to demonstrate the artifact contract."
+  },
+  "assumptions": ["The minimum fields are sufficient for this fictional example"],
+  "unknowns": ["Whether a real coordinator and reviewer would find the summary sufficient"],
+  "artifacts": {
+    "directory": "examples/better-work-loop/synthetic-approval-portal",
+    "markdown_path": "examples/better-work-loop/synthetic-approval-portal/shape.md",
+    "json_path": "examples/better-work-loop/synthetic-approval-portal/shape.json",
+    "overwrite_policy": "new-file-only"
+  }
+}

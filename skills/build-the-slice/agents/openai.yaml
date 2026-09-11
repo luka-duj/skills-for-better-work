@@ -1,0 +1,7 @@
+interface:
+  display_name: "Build the Slice"
+  short_description: "Build one accepted workflow prototype slice"
+  brand_color: "#0B2D24"
+  default_prompt: "Use $build-the-slice to build and technically verify the explicitly accepted prototype brief."
+policy:
+  allow_implicit_invocation: false

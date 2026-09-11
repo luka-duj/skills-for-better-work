@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-09-08T12:10:00Z",
+  "loop_id": "2026-09-08-synthetic-approval-portal-a1",
+  "initiative_id": "initiative-synthetic-approval-portal",
+  "iteration": 1,
+  "status": "waiting-for-human",
+  "sources": {
+    "initiative": {"path": "skills/process-before-platform/examples/synthetic-approval-portal/initiative-request.json", "sha256": "163db4f36ae95873029abbf332a63504b6e08feabeb0ccc97400e28aaf3e620d", "schema_version": "2.3.0"},
+    "shape": {"path": "examples/better-work-loop/synthetic-approval-portal/shape.json", "sha256": "a6f5fb1346e0d495288faa213762e4abc77f307e53eeb2fbb5849d018535f10d", "schema_version": "1.1.0"},
+    "build": {"path": "examples/better-work-loop/synthetic-approval-portal/build.json", "sha256": "fe7456b44d17e18d801a774381d2ecb07cf7007020d7e8001dba4b36aa4a746b", "schema_version": "1.1.0"},
+    "proof": {"path": "examples/better-work-loop/synthetic-approval-portal/proof.json", "sha256": "a4ab23e913c0af7416fadb8d881fc2eb684e5c09b5c4638f2f3a3ad9a670ef29", "schema_version": "1.1.0"}
+  },
+  "process_views": {
+    "current_state": {
+      "status": "mapped",
+      "basis": "observed-current",
+      "source": "flowchart LR\n  start((Start))\n  subgraph requester_lane[\"Requester\"]\n    S1[\"1. Submit approval request<br/>Email or team chat\"]\n  end\n  subgraph coordinator_lane[\"Approval coordinator\"]\n    S2[\"2. Interpret, route, and record status<br/>Shared tracker\"]\n    G1{\"Required information complete?\"}\n    S4[\"4. Record outcome and close<br/>Shared tracker\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    S3[\"3. Review and decide<br/>Email or team chat\"]\n  end\n  finish((End))\n  start --> S1 --> S2 --> G1\n  G1 -- Yes --> S3 --> S4 --> finish\n  G1 -- No --> S1\n  S3 -- More information needed --> S1"
+    },
+    "stated_ideal": {
+      "status": "mapped",
+      "basis": "stakeholder-stated",
+      "source": "flowchart LR\n  ideal_start((Start))\n  subgraph requester_lane[\"Requester\"]\n    I1[\"I1. Submit one complete request\"]\n  end\n  subgraph system_lane[\"Shared workflow\"]\n    I2[\"I2. Route and show status\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    I3[\"I3. Review and decide\"]\n  end\n  ideal_end((End))\n  ideal_start --> I1 --> I2 --> I3 --> ideal_end"
+    },
+    "proposed_target": {
+      "status": "proposed",
+      "basis": "agent-proposed",
+      "source": "flowchart LR\n  target_start((Start))\n  subgraph requester_lane[\"Requester\"]\n    T1[\"T1. Enter minimum request details\"]\n    T2[\"T2. Complete flagged gaps\"]\n  end\n  subgraph coordinator_lane[\"Approval coordinator\"]\n    T3{\"T3. Complete and routeable?\"}\n    T4[\"T4. Prepare reviewer summary\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    T5[\"T5. Review and decide\"]\n  end\n  target_end((End))\n  target_start --> T1 --> T3\n  T3 -- No --> T2 --> T3\n  T3 -- Yes --> T4 --> T5 --> target_end"
+    }
+  },
+  "slice_summary": {
+    "source_problem_refs": ["current_state.pain_points[0]", "current_state.handoffs[0]", "target_process_design.node_ids:T1", "target_process_design.node_ids:T3"],
+    "roles": {
+      "business_requester": "Operations requester",
+      "primary_user": "Operations coordinator",
+      "downstream_user": "Approver",
+      "accountable_owner": "Process owner",
+      "primary_user_rationale": "The first bounded uncertainty is whether the coordinator can turn an inconsistent incoming request into a routeable review package; ownership and approval are distinct jobs."
+    },
+    "split_assessment": {
+      "source_multiple_primary_user_jobs": true,
+      "source_independent_uncertainties": true,
+      "source_unrelated_failure_modes": true,
+      "source_scope_decision": "must-split",
+      "source_split_reasons": ["The requested portal spans requester intake, coordinator routing, approver decision, status tracking, and audit concerns with different users and failure modes."],
+      "selected_slice_decision": "fits-one-slice",
+      "rationale": "After splitting the source scope, the selected capabilities form one observable coordinator job from incomplete intake to a reviewer-ready handoff."
+    },
+    "primary_user": "Operations coordinator",
+    "selected_handoff_or_decision": "Requester-to-coordinator intake completeness and route preparation",
+    "target_job": "Turn an incoming approval request into a complete summary that the correct human reviewer can use.",
+    "hypothesis": "A structured intake that exposes missing information and separates standard from exception review will let a coordinator prepare a usable review summary without email clarification or accidental approval.",
+    "target_process_node_ids": ["T1", "T2", "T3", "T4"],
+    "explicitly_excluded": ["Approver decision", "Policy-rule authoring", "Status tracking after handoff", "Audit and production integration"]
+  },
+  "prototype_summary": {
+    "fidelity": "runnable-vertical-slice",
+    "delivered_format": "runnable-code",
+    "code_used": true,
+    "location": "examples/better-work-loop/synthetic-approval-portal/prototype/index.html",
+    "how_to_review": ["Open the local HTML file", "Attempt SCN-1 and SCN-2 without explanation", "Confirm the interface never makes an approval decision", "Review the generated handoff as an approver"],
+    "known_gaps": ["No representative-user session", "No business-result evidence", "No live-system behavior"]
+  },
+  "evidence_summary": {
+    "validation_status": "agent-verified",
+    "recommendation": "retest",
+    "representative_user_observed": false,
+    "what_is_proven": ["The contained prototype implements the accepted completeness, routing, refusal, and summary behaviors under technical and synthetic checks."],
+    "what_is_not_proven": ["A representative coordinator can complete the job without coaching", "A representative approver can use the summary", "The design improves business outcomes in a live environment"]
+  },
+  "review_tracks": {
+    "business": {"purpose": "Confirm that the selected handoff, role separation, and proposed process address the real work.", "questions": ["Is requester-to-coordinator intake the earliest material failure?", "Are the target-process controls and exceptions appropriate?", "Who can provide representative coordinator and approver participants?"], "approval_owner": "Process owner"},
+    "pm_po": {"purpose": "Review problem traceability, slice boundaries, evidence gaps, and the next decision.", "questions": ["Does the slice answer one decision without swallowing adjacent jobs?", "Are current, stated-ideal, and proposed-target views clearly distinguished?", "Is representative-user evidence sufficient before any pilot review?"], "approval_owner": null},
+    "delivery": {"purpose": "Assess feasibility and dependencies only after the process and slice are accepted.", "questions": ["Which existing capability can support T1 through T4?", "What policy, access, data, and system-of-record decisions block implementation?", "Which prototype behavior must be preserved if the direction advances?"], "approval_owner": null}
+  },
+  "user_session_plan": {
+    "status": "ready",
+    "participant_roles": ["Operations coordinator", "Approver"],
+    "tasks": ["Prepare a reviewer-ready summary from a complete standard request without coaching", "Identify and resolve the missing information in an incomplete request", "Use the prepared summary to begin an approval review"],
+    "scenario_ids": ["SCN-1", "SCN-2", "SCN-5"],
+    "facilitator_limits": ["Do not explain the form fields or route before the participant attempts the task", "Do not treat opinions about appearance as evidence of target-job completion"],
+    "observation_fields": ["Completion without coaching", "Incorrect or missing route", "Fields that cause hesitation", "Whether the reviewer needs to reconstruct source context"],
+    "critical_stop_conditions": ["The prototype appears to approve a request", "A participant enters real sensitive data", "The summary omits information the reviewer needs to begin"],
+    "timebox_minutes": 30,
+    "resume_instruction": "Append sanitized observations as representative user-observation sessions, rerun proof validation, and choose stop, adapt-prototype, retest, or prepare-pilot-review from the resulting evidence."
+  },
+  "recommendation": "retest",
+  "open_decisions": [
+    {"question": "Does a representative coordinator complete the intake-to-handoff job without coaching?", "owner": "Synthetic example owner", "needed_by": null, "blocking": true},
+    {"question": "Can the owned work-management suite support the accepted target nodes and human controls?", "owner": null, "needed_by": null, "blocking": false}
+  ],
+  "artifacts": {
+    "directory": "examples/better-work-loop/synthetic-approval-portal",
+    "markdown_path": "examples/better-work-loop/synthetic-approval-portal/review-handoff.md",
+    "json_path": "examples/better-work-loop/synthetic-approval-portal/review-handoff.json",
+    "overwrite_policy": "new-file-only"
+  }
+}

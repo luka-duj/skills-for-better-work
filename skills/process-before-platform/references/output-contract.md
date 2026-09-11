@@ -39,7 +39,7 @@ Use these sections when applicable:
 1. **Initiative summary and fit** — name, summary, classification, rationale, readiness, requester, business owner, areas, reach, type, and proposed solution.
 2. **Problem, necessity, and desired outcome** — keep the problem separate from the solution and show supporting evidence.
 3. **Scope** — in scope, out of scope, adjacent work, and target capabilities.
-4. **Current manual process** — trigger, completion, actors, ordered steps, decisions, information and knowledge used, handoffs, exceptions, rework, recovery, ownership, and pain points. When the process diagram evidence gate passes, embed the exact BPMN-style Mermaid source stored in the JSON packet. Otherwise state why no diagram was generated.
+4. **Process views** — show three distinctly labelled views: the evidence-gated current process, the stakeholder-stated ideal when one was supplied, and the agent-proposed target-process design when the direction is prototype-capable. Never merge their evidence status. Embed each exact Mermaid source stored in JSON; explain absent or partial views.
 5. **Existing systems and information sources** — purpose, users, inputs, outputs, information collected or retrieved, source-of-truth role, transfers, integrations, access, ownership, and limitations.
 6. **Knowledge landscape** — codified, partially codified, tribal, conflicting, stale, inaccessible, and missing knowledge with locations and owners.
 7. **Target state and requirements** — capabilities, supported functional and non-functional needs, human control, rollout, adoption, support, and fallback.
@@ -54,7 +54,7 @@ Do not pad empty sections. During quick triage, keep any direction, necessity, k
 
 ## JSON initiative packet
 
-- Set `schema_version` to `2.1.0`.
+- Set `schema_version` to `2.3.0` and create a stable, collision-safe `initiative_id` that downstream Better Work Loop artifacts can reuse. The validator continues to accept unmodified 2.1 and 2.2 packets as legacy inputs.
 - Use an ISO 8601 UTC timestamp in `generated_at`.
 - Use `readiness` to show how far the request has progressed:
   - `discovery-needed`
@@ -63,8 +63,11 @@ Do not pad empty sections. During quick triage, keep any direction, necessity, k
 - Use one allowed initiative-fit classification and one allowed direction in `recommendation.direction`.
 - Populate `current_state.steps`, `current_state.systems`, `current_state.information_sources`, `current_state.knowledge_sources`, and `current_state.data_flows` at the depth supported by discovery. Use empty arrays only when nothing is known and create an evidence task when the gap is material.
 - Populate `process_diagram` for every packet and record each evidence-gate check explicitly. Use `status = mapped` only when every check in `evidence_gate` passes; then store the exact Mermaid block body in `source`, all mapped actor names in `actors`, and every mapped process-step sequence in `mapped_step_sequences`. For `insufficient-evidence` or `not-applicable`, keep `source` null and `mapped_step_sequences` empty, and explain the failed check, gap, or rationale in `unmapped_elements` and `caveats`.
+- Populate `stated_ideal_process` separately. It records only what stakeholders describe as the ideal experience, uses stable `I*` node IDs, and must retain assumptions, unresolved elements, and caveats. A partial view must visibly say `PARTIAL / UNCONFIRMED` inside the Mermaid source. Use `not-provided` rather than inventing an ideal.
+- Populate `target_process_design` separately. It is an agent-proposed, reviewable design hypothesis with stable `T*` node IDs, human control points, automation candidates, assumptions, unresolved elements, and caveats. Prototype-capable recommendations require a proposed target design; this is not approved policy, architecture, or implementation scope.
 - Keep `target_state` separate from `current_state` and from the requester-proposed solution.
 - Keep the portable packet independent of any ticket vendor. Populate `handoff.target_system.field_mappings` only from known destination metadata.
+- Use `handoff.next_workflow = prototype-shaping` only when a bounded prototype can change the next decision. The route does not authorize prototype creation; `$shape-the-slice` owns the build gate.
 - Use `null` for an unassigned requester weight, unassessed fit, reviewer weight, aggregate score, completeness, currency, horizon, amount, owner, or source. Do not use zero as a substitute for unknown.
 - Keep `facts`, `interpretations`, `assumptions`, `constraints`, `contradictions`, and `unknowns` separate.
 - Preserve requested and reviewed weights separately.
@@ -87,6 +90,7 @@ Before delivery:
 - when `process_diagram.status` is `mapped`, its exact source appears in a Mermaid code block in Markdown, every current-state step has its matching `S<sequence>` node, and the listed actors and mapped sequences cover the process map;
 - known decisions and conditional actions appear as branches rather than as unconditional steps; unknown branch or recovery detail is identified as unmapped rather than invented;
 - when the diagram is not mapped, neither artifact presents an inferred diagram and both explain the material gap or non-applicability;
+- every available stated-ideal and target-process Mermaid source appears exactly in Markdown and retains its distinct evidence basis;
 - every numeric score has a rationale and confidence;
 - weighted scores and completeness use the formula in `solution-ladder.md`;
 - cost ranges contain only supplied or cited inputs;

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-09-08T12:00:00Z",
+  "loop_id": "2026-09-08-synthetic-approval-portal-a1",
+  "initiative_id": "initiative-synthetic-approval-portal",
+  "iteration": 1,
+  "source_shape": {"path": "examples/better-work-loop/synthetic-approval-portal/shape.json", "sha256": "a6f5fb1346e0d495288faa213762e4abc77f307e53eeb2fbb5849d018535f10d", "schema_version": "1.1.0"},
+  "source_build": {"path": "examples/better-work-loop/synthetic-approval-portal/build.json", "sha256": "fe7456b44d17e18d801a774381d2ecb07cf7007020d7e8001dba4b36aa4a746b", "schema_version": "1.1.0"},
+  "validation_status": "agent-verified",
+  "evidence_types": ["technical", "synthetic"],
+  "sessions": [
+    {"id": "SYN-1", "evidence_type": "synthetic", "participant_role": null, "representative": false, "target_job_attempted": true, "target_job_completed": true, "observations": ["Predefined inputs exercised the normal, missing-information, exception, and refusal behaviors."], "participant_feedback": [], "evaluator_interpretation": ["The prototype is ready for a real representative-user session but is not validated."]}
+  ],
+  "criteria_results": [
+    {"criterion_id": "AC-1", "critical": true, "status": "passed", "evidence_type": "synthetic", "evidence": "Complete input generated the expected standard-review summary."},
+    {"criterion_id": "AC-2", "critical": true, "status": "passed", "evidence_type": "synthetic", "evidence": "Missing values produced a specific list and suppressed the summary."},
+    {"criterion_id": "AC-3", "critical": true, "status": "passed", "evidence_type": "technical", "evidence": "No approval control exists and the summary keeps the decision pending human review."},
+    {"criterion_id": "AC-4", "critical": true, "status": "not-assessed", "evidence_type": "user-observation", "evidence": "No representative coordinator has attempted the job."},
+    {"criterion_id": "AC-5", "critical": true, "status": "not-assessed", "evidence_type": "user-observation", "evidence": "No representative reviewer has assessed the summary."}
+  ],
+  "scenario_results": [
+    {"scenario_id": "SCN-1", "critical": true, "status": "passed", "evidence_type": "synthetic", "evidence": "Normal route passed."},
+    {"scenario_id": "SCN-2", "critical": true, "status": "passed", "evidence_type": "synthetic", "evidence": "Missing-information route passed."},
+    {"scenario_id": "SCN-3", "critical": true, "status": "passed", "evidence_type": "synthetic", "evidence": "Exception route passed."},
+    {"scenario_id": "SCN-4", "critical": true, "status": "passed", "evidence_type": "technical", "evidence": "Approval refusal boundary passed."},
+    {"scenario_id": "SCN-5", "critical": true, "status": "not-assessed", "evidence_type": "user-observation", "evidence": "Reviewer usability has not been observed."}
+  ],
+  "critical_failures": [],
+  "downstream_usability": {"status": "not-assessed", "evidence": "The output structure exists, but no representative reviewer has used it."},
+  "privacy": {"data_class": "synthetic", "identity_recorded": false, "raw_transcript_stored": false, "notes": "The example contains fictional roles and request content only."},
+  "recommendation": "retest",
+  "rationale": "Technical and synthetic evidence supports a representative-user test, but the two critical user criteria and downstream usability remain unassessed.",
+  "human_owner": "Synthetic example owner",
+  "evidence_limits": ["No representative user", "No business-result evidence", "No production reliability, adoption, support, or value evidence"],
+  "session_plan": {
+    "status": "ready",
+    "participant_roles": ["Operations coordinator", "Approver"],
+    "tasks": ["Prepare a reviewer-ready summary from a complete standard request without coaching", "Identify and resolve the missing information in an incomplete request", "Use the prepared summary to begin an approval review"],
+    "scenario_ids": ["SCN-1", "SCN-2", "SCN-5"],
+    "facilitator_limits": ["Do not explain the form fields or route before the participant attempts the task", "Do not treat opinions about appearance as evidence of target-job completion"],
+    "observation_fields": ["Completion without coaching", "Incorrect or missing route", "Fields that cause hesitation", "Whether the reviewer needs to reconstruct source context"],
+    "critical_stop_conditions": ["The prototype appears to approve a request", "A participant enters real sensitive data", "The summary omits information the reviewer needs to begin"],
+    "timebox_minutes": 30,
+    "resume_instruction": "Append sanitized observations as representative user-observation sessions, rerun proof validation, and choose stop, adapt-prototype, retest, or prepare-pilot-review from the resulting evidence."
+  },
+  "artifacts": {"directory": "examples/better-work-loop/synthetic-approval-portal", "markdown_path": "examples/better-work-loop/synthetic-approval-portal/proof.md", "json_path": "examples/better-work-loop/synthetic-approval-portal/proof.json", "overwrite_policy": "new-file-only"}
+}

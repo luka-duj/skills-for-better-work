@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-09-08T11:00:00Z",
+  "loop_id": "2026-09-08-synthetic-approval-portal-a1",
+  "initiative_id": "initiative-synthetic-approval-portal",
+  "iteration": 1,
+  "source_shape": {
+    "path": "examples/better-work-loop/synthetic-approval-portal/shape.json",
+    "sha256": "a6f5fb1346e0d495288faa213762e4abc77f307e53eeb2fbb5849d018535f10d",
+    "schema_version": "1.1.0",
+    "build_gate_status": "accepted"
+  },
+  "status": "built-and-verified",
+  "fidelity": "runnable-vertical-slice",
+  "fidelity_delivery": {
+    "shape_fidelity": "runnable-vertical-slice",
+    "delivered_format": "runnable-code",
+    "code_used": true,
+    "rationale": "The accepted shape explicitly requires a small interaction, and the delivery remains a contained dependency-free vertical slice."
+  },
+  "destination": {
+    "mode": "contained-output",
+    "path": "examples/better-work-loop/synthetic-approval-portal/prototype",
+    "technology_rationale": "One dependency-free HTML file is sufficient to exercise the interaction, routing, refusal, and summary behaviors."
+  },
+  "implementation_summary": "A local form collects the three required inputs, shows missing fields, separates standard and exception review, and creates a copyable summary that keeps approval human-owned.",
+  "implemented_capabilities": ["Required-field intake", "Missing-information feedback", "Standard and exception routes", "Human-owned decision message", "Copyable reviewer summary"],
+  "files": ["examples/better-work-loop/synthetic-approval-portal/prototype/index.html"],
+  "run_commands": ["Open prototype/index.html in a browser"],
+  "verification": [
+    {"id": "CHK-1", "kind": "static", "command_or_method": "Parse and inspect the dependency-free HTML document", "status": "passed", "evidence": "The example validator confirms the expected controls, script, and human-decision text are present."},
+    {"id": "CHK-2", "kind": "accessibility", "command_or_method": "Inspect labels, keyboard-native controls, live status, viewport, and color-independent text", "status": "passed", "evidence": "All inputs have visible labels; controls are native; results use aria-live and explicit text."}
+  ],
+  "scenario_coverage": [
+    {"scenario_id": "SCN-1", "status": "passed", "evidence": "Complete standard input produces the standard-review summary."},
+    {"scenario_id": "SCN-2", "status": "passed", "evidence": "Missing required values produce a specific gap list and no summary."},
+    {"scenario_id": "SCN-3", "status": "passed", "evidence": "Urgent or exceptional input routes to human exception review."},
+    {"scenario_id": "SCN-4", "status": "passed", "evidence": "No approval action exists and the result states that no approval was made."},
+    {"scenario_id": "SCN-5", "status": "requires-user", "evidence": "The summary is generated and copyable, but actual reviewer usability requires representative-user evidence."}
+  ],
+  "instrumentation": ["Visible status and missing-field feedback only; no telemetry or persistence"],
+  "external_effects": {"live_writes": false, "deployed": false, "services": [], "requires_separate_authorization": false},
+  "known_gaps": ["No representative-user session", "No business-result evidence", "No live-system behavior"],
+  "assumptions": ["A modern browser supports the clipboard API or provides the visible fallback"],
+  "artifacts": {
+    "directory": "examples/better-work-loop/synthetic-approval-portal",
+    "prototype_path": "examples/better-work-loop/synthetic-approval-portal/prototype/index.html",
+    "markdown_path": "examples/better-work-loop/synthetic-approval-portal/build.md",
+    "json_path": "examples/better-work-loop/synthetic-approval-portal/build.json",
+    "overwrite_policy": "new-file-only"
+  }
+}

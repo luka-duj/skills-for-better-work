@@ -1,5 +1,6 @@
 {
-  "schema_version": "2.1.0",
+  "schema_version": "2.3.0",
+  "initiative_id": "initiative-synthetic-approval-portal",
   "generated_at": "2026-09-05T10:00:00Z",
   "readiness": "ticket-ready",
   "initiative": {
@@ -229,6 +230,30 @@
     "unmapped_elements": ["Department-specific approval routes and alternate-approver branches are summarized because their rules are not yet confirmed."],
     "caveats": ["This is a BPMN-style Mermaid view, not BPMN 2.0 XML.", "Only the supported normal flow and material rework loops are shown."]
   },
+  "stated_ideal_process": {
+    "status": "mapped",
+    "notation": "mermaid-bpmn-style",
+    "basis": "stakeholder-stated",
+    "source": "flowchart LR\n  ideal_start((Start))\n  subgraph requester_lane[\"Requester\"]\n    I1[\"I1. Submit one complete request\"]\n  end\n  subgraph system_lane[\"Shared workflow\"]\n    I2[\"I2. Route and show status\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    I3[\"I3. Review and decide\"]\n  end\n  ideal_end((End))\n  ideal_start --> I1 --> I2 --> I3 --> ideal_end",
+    "actors": ["Requester", "Shared workflow", "Approver"],
+    "node_ids": ["I1", "I2", "I3"],
+    "assumptions": ["The requester description of one submission path and visible status represents the desired experience, not a confirmed control design."],
+    "unresolved_elements": ["Required fields by category", "Exception routes", "Recovery and escalation"],
+    "caveats": ["This view records the stakeholder-stated ideal and is not an implementation recommendation."]
+  },
+  "target_process_design": {
+    "status": "proposed",
+    "notation": "mermaid-bpmn-style",
+    "basis": "agent-proposed",
+    "source": "flowchart LR\n  target_start((Start))\n  subgraph requester_lane[\"Requester\"]\n    T1[\"T1. Enter minimum request details\"]\n    T2[\"T2. Complete flagged gaps\"]\n  end\n  subgraph coordinator_lane[\"Approval coordinator\"]\n    T3{\"T3. Complete and routeable?\"}\n    T4[\"T4. Prepare reviewer summary\"]\n  end\n  subgraph approver_lane[\"Approver\"]\n    T5[\"T5. Review and decide\"]\n  end\n  target_end((End))\n  target_start --> T1 --> T3\n  T3 -- No --> T2 --> T3\n  T3 -- Yes --> T4 --> T5 --> target_end",
+    "actors": ["Requester", "Approval coordinator", "Approver"],
+    "node_ids": ["T1", "T2", "T3", "T4", "T5"],
+    "human_control_points": ["T3: coordinator confirms completeness and route", "T5: approver owns the decision"],
+    "automation_candidates": ["Flag missing required information", "Prepare a consistent reviewer summary"],
+    "assumptions": ["A coordinator-mediated review is a safer first design than automating policy or approval decisions."],
+    "unresolved_elements": ["Final category rules", "Exception escalation", "System of record"],
+    "caveats": ["This proposal is a design hypothesis for slicing and testing, not approved policy or architecture."]
+  },
   "target_state": {
     "desired_outcome": "A traceable, consistently defined request-to-decision process that uses the simplest sustainable capability.",
     "capabilities": ["Structured intake", "Rule-based routing", "Status visibility", "Exception handling", "Decision audit trail"],
@@ -396,7 +421,7 @@
     "ticket_title": "Standardize internal approval requests before tooling",
     "ticket_body_markdown": "Investigate and standardize the cross-functional approval-request process before selecting software. Requests currently arrive through email and team chat, a coordinator manually records status in a shared tracker, routes and exceptions vary, policy knowledge is only partly codified, and no end-to-end owner is named. Discovery should confirm mandatory controls, define the minimum request and approval model, identify accountable ownership, and test the owned work-management suite. Do not approve a custom portal until differentiation and full lifecycle ownership are evidenced.",
     "missing_for_submission": [],
-    "next_workflow": "discovery",
+    "next_workflow": "prototype-shaping",
     "target_system": { "name": null, "issue_type": null, "project_or_queue": null, "mapping_status": "not-requested", "field_mappings": [] }
   },
   "artifacts": {

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luka-duj/skills-for-better-work/blob/main/skills/better-work-loop/schemas/loop-state.schema.json",
+  "title": "Better Work Loop State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack_version", "updated_at", "loop_id", "initiative_id", "phase", "status", "source_initiative", "iterations", "gates", "decision_history", "current_decision", "next_action", "artifacts"],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "pack_version": { "const": "0.4.0-alpha" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "loop_id": { "type": "string", "minLength": 1 },
+    "initiative_id": { "type": "string", "minLength": 1 },
+    "phase": { "type": "string", "enum": ["decide", "shape", "build", "prove", "handoff", "complete"] },
+    "status": { "type": "string", "enum": ["active", "waiting-for-human", "blocked", "completed", "stopped"] },
+    "source_initiative": { "$ref": "#/$defs/artifactRef" },
+    "iterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["iteration", "hypothesis", "shape", "build", "proof", "handoff"],
+        "properties": {
+          "iteration": { "type": "integer", "minimum": 1 },
+          "hypothesis": { "type": "string", "minLength": 1 },
+          "shape": { "anyOf": [{ "$ref": "#/$defs/artifactRef" }, { "type": "null" }] },
+          "build": { "anyOf": [{ "$ref": "#/$defs/artifactRef" }, { "type": "null" }] },
+          "proof": { "anyOf": [{ "$ref": "#/$defs/artifactRef" }, { "type": "null" }] },
+          "handoff": { "anyOf": [{ "$ref": "#/$defs/artifactRef" }, { "type": "null" }] }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "owner", "decided_at", "notes"],
+        "properties": {
+          "name": { "type": "string", "enum": ["build", "external-consequence"] },
+          "status": { "type": "string", "enum": ["pending", "accepted", "rejected", "not-required"] },
+          "owner": { "type": ["string", "null"] },
+          "decided_at": { "type": ["string", "null"], "format": "date-time" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "decision_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "decision", "owner", "basis"],
+        "properties": {
+          "at": { "type": "string", "format": "date-time" },
+          "decision": { "$ref": "#/$defs/decision" },
+          "owner": { "type": ["string", "null"] },
+          "basis": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "current_decision": { "anyOf": [{ "$ref": "#/$defs/decision" }, { "type": "null" }] },
+    "next_action": { "type": "string", "minLength": 1 },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directory", "markdown_path", "json_path"],
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "markdown_path": { "type": "string", "minLength": 1 },
+        "json_path": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "decision": { "type": "string", "enum": ["continue-decision-discovery", "shape-slice", "decide-build-gate", "build-accepted-slice", "seek-user-evidence", "prepare-review-handoff", "stop", "revise-process", "adapt-prototype", "retest", "prepare-pilot-review"] },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" }
+      }
+    }
+  }
+}

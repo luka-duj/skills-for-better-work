@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luka-duj/skills-for-better-work/blob/main/skills/prove-before-pilot/schemas/prototype-evidence.schema.json",
+  "title": "Prove Before Pilot Evidence Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "loop_id", "initiative_id", "iteration", "source_shape", "source_build", "validation_status", "evidence_types", "sessions", "criteria_results", "scenario_results", "critical_failures", "downstream_usability", "privacy", "recommendation", "rationale", "human_owner", "evidence_limits", "session_plan", "artifacts"],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "loop_id": { "type": "string", "minLength": 1 },
+    "initiative_id": { "type": "string", "minLength": 1 },
+    "iteration": { "type": "integer", "minimum": 1 },
+    "source_shape": { "$ref": "#/$defs/artifactRef" },
+    "source_build": { "$ref": "#/$defs/artifactRef" },
+    "validation_status": { "type": "string", "enum": ["technically-verified", "agent-verified", "user-observed", "validated", "invalidated", "inconclusive"] },
+    "evidence_types": { "type": "array", "items": { "type": "string", "enum": ["technical", "synthetic", "stakeholder-feedback", "user-observation", "business-result"] }, "uniqueItems": true },
+    "sessions": { "type": "array", "items": { "$ref": "#/$defs/session" } },
+    "criteria_results": { "type": "array", "items": { "$ref": "#/$defs/result" } },
+    "scenario_results": { "type": "array", "items": { "$ref": "#/$defs/scenarioResult" } },
+    "critical_failures": { "type": "array", "items": { "type": "string" } },
+    "downstream_usability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": { "type": "string", "enum": ["passed", "failed", "not-assessed"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data_class", "identity_recorded", "raw_transcript_stored", "notes"],
+      "properties": {
+        "data_class": { "type": "string", "enum": ["synthetic", "sanitized", "approved-non-sensitive"] },
+        "identity_recorded": { "const": false },
+        "raw_transcript_stored": { "const": false },
+        "notes": { "type": "string" }
+      }
+    },
+    "recommendation": { "type": "string", "enum": ["stop", "revise-process", "adapt-prototype", "retest", "prepare-pilot-review"] },
+    "rationale": { "type": "string", "minLength": 1 },
+    "human_owner": { "type": ["string", "null"] },
+    "evidence_limits": { "type": "array", "items": { "type": "string" } },
+    "session_plan": { "$ref": "#/$defs/sessionPlan" },
+    "artifacts": { "$ref": "#/$defs/artifacts" }
+  },
+  "$defs": {
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "schema_version"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "schema_version": { "const": "1.1.0" }
+      }
+    },
+    "session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "evidence_type", "participant_role", "representative", "target_job_attempted", "target_job_completed", "observations", "participant_feedback", "evaluator_interpretation"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "evidence_type": { "type": "string", "enum": ["synthetic", "stakeholder-feedback", "user-observation", "business-result"] },
+        "participant_role": { "type": ["string", "null"] },
+        "representative": { "type": "boolean" },
+        "target_job_attempted": { "type": "boolean" },
+        "target_job_completed": { "type": "boolean" },
+        "observations": { "type": "array", "items": { "type": "string" } },
+        "participant_feedback": { "type": "array", "items": { "type": "string" } },
+        "evaluator_interpretation": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criterion_id", "critical", "status", "evidence_type", "evidence"],
+      "properties": {
+        "criterion_id": { "type": "string", "minLength": 1 },
+        "critical": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["passed", "failed", "not-assessed"] },
+        "evidence_type": { "type": "string", "enum": ["technical", "synthetic", "stakeholder-feedback", "user-observation", "business-result"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "scenarioResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_id", "critical", "status", "evidence_type", "evidence"],
+      "properties": {
+        "scenario_id": { "type": "string", "minLength": 1 },
+        "critical": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["passed", "failed", "not-assessed"] },
+        "evidence_type": { "type": "string", "enum": ["technical", "synthetic", "stakeholder-feedback", "user-observation", "business-result"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "sessionPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "participant_roles", "tasks", "scenario_ids", "facilitator_limits", "observation_fields", "critical_stop_conditions", "timebox_minutes", "resume_instruction"],
+      "properties": {
+        "status": { "type": "string", "enum": ["ready", "not-required", "blocked"] },
+        "participant_roles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "tasks": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "scenario_ids": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "facilitator_limits": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "observation_fields": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "critical_stop_conditions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "timebox_minutes": { "type": ["integer", "null"], "minimum": 1 },
+        "resume_instruction": { "type": "string", "minLength": 1 }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directory", "markdown_path", "json_path", "overwrite_policy"],
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "markdown_path": { "type": "string", "minLength": 1 },
+        "json_path": { "type": "string", "minLength": 1 },
+        "overwrite_policy": { "const": "new-file-only" }
+      }
+    }
+  }
+}

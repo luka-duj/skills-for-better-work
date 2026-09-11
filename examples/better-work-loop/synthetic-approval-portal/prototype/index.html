@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Synthetic approval intake prototype</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; background: #f4f1e8; color: #14231f; }
+    body { margin: 0; }
+    main { max-width: 760px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .card { background: #fffdf7; border: 1px solid #c9d2cc; border-radius: 16px; padding: 1.25rem; box-shadow: 0 8px 28px rgba(11,45,36,.08); }
+    h1 { margin-top: 0; color: #0b2d24; }
+    .notice { border-left: 4px solid #b78d36; padding: .75rem 1rem; background: #fff7df; }
+    label { display: grid; gap: .35rem; margin: 1rem 0; font-weight: 650; }
+    input, select, textarea, button { font: inherit; }
+    input, select, textarea { padding: .7rem; border: 1px solid #82958d; border-radius: 8px; background: white; }
+    textarea { min-height: 7rem; resize: vertical; }
+    .check { display: flex; align-items: center; gap: .6rem; font-weight: 500; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+    button { border: 0; border-radius: 999px; padding: .7rem 1rem; cursor: pointer; }
+    button[type="submit"] { background: #0b2d24; color: white; }
+    button[type="reset"], #copy { background: #e2e9e5; color: #14231f; }
+    #result { margin-top: 1.5rem; }
+    .status { font-weight: 750; }
+    .ready { color: #17603f; }
+    .review { color: #8a5b00; }
+    .blocked { color: #9b2c2c; }
+    pre { white-space: pre-wrap; background: #eef3f0; border-radius: 8px; padding: 1rem; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card" aria-labelledby="title">
+      <h1 id="title">Prepare an approval request</h1>
+      <p class="notice">Prototype only. It prepares a review summary; it never approves a request or sends data anywhere.</p>
+      <form id="request-form" novalidate>
+        <label>Request category
+          <select id="category" name="category">
+            <option value="">Choose one</option>
+            <option>Purchase</option>
+            <option>Access</option>
+            <option>Policy exception</option>
+          </select>
+        </label>
+        <label>Estimated amount or impact
+          <input id="impact" name="impact" autocomplete="off" placeholder="For example: EUR 2,000 or affects 3 people">
+        </label>
+        <label>Reason and expected outcome
+          <textarea id="reason" name="reason" placeholder="Explain what is needed and why"></textarea>
+        </label>
+        <label class="check"><input id="urgent" name="urgent" type="checkbox"> This request is marked urgent or exceptional</label>
+        <div class="actions">
+          <button type="submit">Prepare review summary</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+      <section id="result" aria-live="polite" hidden>
+        <p id="status" class="status"></p>
+        <ul id="missing"></ul>
+        <pre id="summary"></pre>
+        <button id="copy" type="button">Copy summary</button>
+      </section>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#request-form');
+    const result = document.querySelector('#result');
+    const status = document.querySelector('#status');
+    const missing = document.querySelector('#missing');
+    const summary = document.querySelector('#summary');
+    const copy = document.querySelector('#copy');
+
+    function values() {
+      return {
+        category: document.querySelector('#category').value.trim(),
+        impact: document.querySelector('#impact').value.trim(),
+        reason: document.querySelector('#reason').value.trim(),
+        urgent: document.querySelector('#urgent').checked
+      };
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = values();
+      const gaps = [
+        ['Request category', data.category],
+        ['Estimated amount or impact', data.impact],
+        ['Reason and expected outcome', data.reason]
+      ].filter(([, value]) => !value).map(([label]) => label);
+
+      result.hidden = false;
+      missing.replaceChildren();
+      summary.textContent = '';
+      copy.hidden = true;
+
+      if (gaps.length) {
+        status.className = 'status blocked';
+        status.textContent = 'More information is needed before review.';
+        for (const gap of gaps) {
+          const item = document.createElement('li');
+          item.textContent = gap;
+          missing.append(item);
+        }
+        return;
+      }
+
+      status.className = data.urgent ? 'status review' : 'status ready';
+      status.textContent = data.urgent
+        ? 'Human exception review is required. No approval was made.'
+        : 'Ready for human review. No approval was made.';
+      summary.textContent = [
+        `Category: ${data.category}`,
+        `Impact: ${data.impact}`,
+        `Reason: ${data.reason}`,
+        `Route: ${data.urgent ? 'Exception review' : 'Standard review'}`,
+        'Decision: Pending human reviewer'
+      ].join('\n');
+      copy.hidden = false;
+    });
+
+    form.addEventListener('reset', () => {
+      result.hidden = true;
+      missing.replaceChildren();
+      summary.textContent = '';
+    });
+
+    copy.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(summary.textContent);
+        copy.textContent = 'Copied';
+      } catch {
+        copy.textContent = 'Select the summary to copy';
+      }
+    });
+  </script>
+</body>
+</html>

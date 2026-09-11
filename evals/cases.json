@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.1.0",
+  "schema_version": "3.0.0",
   "cases": [
     {
       "id": "unnecessary-process",
@@ -108,7 +108,7 @@
       "expected": {
         "allowed_directions": ["process-redesign"],
         "forbidden_directions": ["custom-build"],
-        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Writes sibling Markdown and JSON artifacts only once in the final delivery", "Uses schema version 2.1.0", "Embeds the exact BPMN-style Mermaid source in Markdown and JSON when the process map passes the evidence gate", "Keeps initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the active schema"]
+        "required_behaviors": ["Does not emit JSON before the adaptive questionnaire is complete", "Writes sibling Markdown and JSON artifacts only once in the final delivery", "Uses schema version 2.3.0 and a stable initiative ID", "Keeps the current, stakeholder-stated ideal, and agent-proposed target process views explicitly separate and embeds each available exact Mermaid source", "Keeps initiative name, fit, direction, confidence, readiness, research status, submission status, and next decision aligned", "Uses null rather than zero for unassessed values", "Produces JSON that validates against the active schema"]
       }
     },
     {

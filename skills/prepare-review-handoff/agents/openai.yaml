@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prepare Review Handoff"
+  short_description: "Package loop evidence for accountable review"
+  brand_color: "#0B2D24"
+  default_prompt: "Use $prepare-review-handoff to package these Better Work Loop artifacts for business, PM/PO, and delivery review."
+policy:
+  allow_implicit_invocation: false

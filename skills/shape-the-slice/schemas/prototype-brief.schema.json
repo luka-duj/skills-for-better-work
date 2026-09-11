@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luka-duj/skills-for-better-work/blob/main/skills/shape-the-slice/schemas/prototype-brief.schema.json",
+  "title": "Shape the Slice Prototype Brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "loop_id", "initiative_id", "iteration", "source_initiative", "source_problem_refs", "status", "decision_to_inform", "hypothesis", "roles", "slice_focus", "split_assessment", "target_user", "target_job", "prototype", "scenarios", "acceptance_criteria", "boundaries", "evidence_plan", "build_gate", "assumptions", "unknowns", "artifacts"],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "loop_id": { "type": "string", "minLength": 1 },
+    "initiative_id": { "type": "string", "minLength": 1 },
+    "iteration": { "type": "integer", "minimum": 1 },
+    "source_initiative": { "$ref": "#/$defs/artifactRef" },
+    "source_problem_refs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "status": { "type": "string", "enum": ["ready-to-build", "needs-evidence", "stopped"] },
+    "decision_to_inform": { "type": "string", "minLength": 1 },
+    "hypothesis": { "type": "string", "minLength": 1 },
+    "roles": { "$ref": "#/$defs/roles" },
+    "slice_focus": { "$ref": "#/$defs/sliceFocus" },
+    "split_assessment": { "$ref": "#/$defs/splitAssessment" },
+    "target_user": { "type": "string", "minLength": 1 },
+    "target_job": { "type": "string", "minLength": 1 },
+    "prototype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fidelity", "rationale", "capabilities", "non_goals", "possible_later", "destination_mode", "code_required", "code_rationale"],
+      "properties": {
+        "fidelity": { "type": "string", "enum": ["workflow-simulation", "clickable-prototype", "runnable-vertical-slice", "configuration-sandbox"] },
+        "rationale": { "type": "string", "minLength": 1 },
+        "capabilities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "non_goals": { "type": "array", "items": { "type": "string" } },
+        "possible_later": { "type": "array", "items": { "type": "string" } },
+        "destination_mode": { "type": "string", "enum": ["contained-output", "nominated-existing-repository", "external-sandbox"] },
+        "code_required": { "type": "boolean" },
+        "code_rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "scenarios": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scenario" } },
+    "acceptance_criteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/criterion" } },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data", "privacy", "security", "human_control", "fallback", "external_effects", "cost"],
+      "properties": {
+        "data": { "type": "array", "items": { "type": "string" } },
+        "privacy": { "type": "array", "items": { "type": "string" } },
+        "security": { "type": "array", "items": { "type": "string" } },
+        "human_control": { "type": "array", "items": { "type": "string" } },
+        "fallback": { "type": "array", "items": { "type": "string" } },
+        "external_effects": { "type": "array", "items": { "type": "string" } },
+        "cost": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "evidence_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["representative_role", "real_user_required", "observations", "decision_rule", "evidence_owner"],
+      "properties": {
+        "representative_role": { "type": "string", "minLength": 1 },
+        "real_user_required": { "const": true },
+        "observations": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "decision_rule": { "type": "string", "minLength": 1 },
+        "evidence_owner": { "type": ["string", "null"] }
+      }
+    },
+    "build_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "owner", "decided_at", "notes"],
+      "properties": {
+        "status": { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "owner": { "type": ["string", "null"] },
+        "decided_at": { "type": ["string", "null"], "format": "date-time" },
+        "notes": { "type": "string" }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "unknowns": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "$ref": "#/$defs/artifacts" }
+  },
+  "$defs": {
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type", "path", "sha256", "schema_version"],
+      "properties": {
+        "source_type": { "type": "string", "enum": ["initiative-packet", "plain-language"] },
+        "path": { "type": ["string", "null"], "minLength": 1 },
+        "sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "schema_version": { "type": ["string", "null"], "enum": ["2.1.0", "2.2.0", "2.3.0", null] }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["business_requester", "primary_user", "downstream_user", "accountable_owner", "primary_user_rationale"],
+      "properties": {
+        "business_requester": { "type": ["string", "null"] },
+        "primary_user": { "type": "string", "minLength": 1 },
+        "downstream_user": { "type": ["string", "null"] },
+        "accountable_owner": { "type": ["string", "null"] },
+        "primary_user_rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sliceFocus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_handoff_or_decision", "why_now", "target_process_node_ids", "excluded_adjacent_jobs"],
+      "properties": {
+        "selected_handoff_or_decision": { "type": "string", "minLength": 1 },
+        "why_now": { "type": "string", "minLength": 1 },
+        "target_process_node_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "excluded_adjacent_jobs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "splitAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_multiple_primary_user_jobs", "source_independent_uncertainties", "source_unrelated_failure_modes", "source_scope_decision", "source_split_reasons", "selected_slice_decision", "rationale"],
+      "properties": {
+        "source_multiple_primary_user_jobs": { "type": "boolean" },
+        "source_independent_uncertainties": { "type": "boolean" },
+        "source_unrelated_failure_modes": { "type": "boolean" },
+        "source_scope_decision": { "type": "string", "enum": ["fits-one-slice", "must-split"] },
+        "source_split_reasons": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "selected_slice_decision": { "type": "string", "enum": ["fits-one-slice", "must-split"] },
+        "rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "input_or_situation", "expected_behavior", "critical"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["normal", "exception", "missing-information", "contradiction", "refusal", "downstream-use"] },
+        "input_or_situation": { "type": "string", "minLength": 1 },
+        "expected_behavior": { "type": "string", "minLength": 1 },
+        "critical": { "type": "boolean" }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "observable_evidence", "critical"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "statement": { "type": "string", "minLength": 1 },
+        "observable_evidence": { "type": "string", "minLength": 1 },
+        "critical": { "type": "boolean" }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directory", "markdown_path", "json_path", "overwrite_policy"],
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "markdown_path": { "type": "string", "minLength": 1 },
+        "json_path": { "type": "string", "minLength": 1 },
+        "overwrite_policy": { "const": "new-file-only" }
+      }
+    }
+  }
+}

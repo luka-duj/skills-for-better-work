@@ -1,0 +1,7 @@
+interface:
+  display_name: "Shape the Slice"
+  short_description: "Define the smallest useful prototype test"
+  brand_color: "#0B2D24"
+  default_prompt: "Use $shape-the-slice to turn this supported internal-workflow direction into the smallest useful prototype and evidence plan."
+policy:
+  allow_implicit_invocation: false

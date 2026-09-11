@@ -23,6 +23,8 @@ For a behavior defect, explain:
 4. the decision principle or safety issue involved;
 5. which evaluation fixture should prevent regression.
 
+For Better Work Loop changes, also identify the affected phase and predecessor artifact. Preserve stable IDs, hashes, the single ordinary build gate, the distinct current/stated-ideal/proposed-target process views, source-problem and target-node traceability, slice boundaries, evidence-type labels, the review handoff, and the distinction between `agent-verified` and representative-user `validated`.
+
 For a method proposal, explain the problem it solves, where it should apply, where it should not apply, and what evidence would show that the change is better.
 
 ## Validate
@@ -34,8 +36,8 @@ python scripts/validate.py
 python -m unittest discover -s tests
 ```
 
-Then forward-test the affected cases in `evals/cases.json`. Record behavior rather than matching exact prose.
+Then forward-test the affected cases in `evals/cases.json` and `evals/loop-cases.json`. Record behavior rather than matching exact prose. A fixture-based walkthrough can validate structure and routing but cannot satisfy a representative-user evidence gate.
 
 ## Pull requests
 
-Keep changes focused. Preserve explicit invocation, evidence labeling, human decision ownership, and the boundary between process discovery and solution commitment.
+Keep changes focused. Preserve explicit invocation, evidence labeling, human decision ownership, the boundary between process discovery and solution commitment, and the boundary between a bounded local prototype and pilot or production work.

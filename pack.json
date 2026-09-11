@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.1.0",
+  "name": "better-work-loop",
+  "display_name": "Better Work Loop",
+  "version": "0.4.0-alpha",
+  "reference_environment": "Codex",
+  "behavioral_support": "Built and tested natively in Codex; importable into Claude Code with small setup changes, without a claim of equivalent behavior",
+  "skills": [
+    {
+      "name": "better-work-loop",
+      "role": "router",
+      "schema": "skills/better-work-loop/schemas/loop-state.schema.json"
+    },
+    {
+      "name": "process-before-platform",
+      "role": "decide",
+      "schema": "skills/process-before-platform/schemas/initiative-request.schema.json"
+    },
+    {
+      "name": "shape-the-slice",
+      "role": "shape",
+      "schema": "skills/shape-the-slice/schemas/prototype-brief.schema.json"
+    },
+    {
+      "name": "build-the-slice",
+      "role": "build",
+      "schema": "skills/build-the-slice/schemas/prototype-build.schema.json"
+    },
+    {
+      "name": "prove-before-pilot",
+      "role": "prove",
+      "schema": "skills/prove-before-pilot/schemas/prototype-evidence.schema.json"
+    },
+    {
+      "name": "prepare-review-handoff",
+      "role": "handoff",
+      "schema": "skills/prepare-review-handoff/schemas/review-handoff.schema.json"
+    }
+  ],
+  "example": "examples/better-work-loop/synthetic-approval-portal"
+}

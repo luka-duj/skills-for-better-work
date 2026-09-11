@@ -1,0 +1,4 @@
+# The synthetic artifact chain stores SHA-256 digests of these JSON files.
+# Keep their bytes stable across Windows, macOS, and Linux checkouts.
+/examples/better-work-loop/**/*.json text eol=lf
+/skills/process-before-platform/examples/**/*.json text eol=lf

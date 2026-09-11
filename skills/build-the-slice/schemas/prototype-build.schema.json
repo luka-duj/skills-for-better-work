@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luka-duj/skills-for-better-work/blob/main/skills/build-the-slice/schemas/prototype-build.schema.json",
+  "title": "Build the Slice Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "loop_id", "initiative_id", "iteration", "source_shape", "status", "fidelity", "fidelity_delivery", "destination", "implementation_summary", "implemented_capabilities", "files", "run_commands", "verification", "scenario_coverage", "instrumentation", "external_effects", "known_gaps", "assumptions", "artifacts"],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "loop_id": { "type": "string", "minLength": 1 },
+    "initiative_id": { "type": "string", "minLength": 1 },
+    "iteration": { "type": "integer", "minimum": 1 },
+    "source_shape": { "$ref": "#/$defs/artifactRef" },
+    "status": { "type": "string", "enum": ["built-and-verified", "built-with-gaps", "blocked", "not-built"] },
+    "fidelity": { "type": "string", "enum": ["workflow-simulation", "clickable-prototype", "runnable-vertical-slice", "configuration-sandbox"] },
+    "fidelity_delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape_fidelity", "delivered_format", "code_used", "rationale"],
+      "properties": {
+        "shape_fidelity": { "type": "string", "enum": ["workflow-simulation", "clickable-prototype", "runnable-vertical-slice", "configuration-sandbox"] },
+        "delivered_format": { "type": "string", "enum": ["facilitated-rehearsal", "documented-simulation", "static-clickable", "runnable-code", "configuration-sandbox"] },
+        "code_used": { "type": "boolean" },
+        "rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "path", "technology_rationale"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["contained-output", "nominated-existing-repository", "external-sandbox"] },
+        "path": { "type": "string", "minLength": 1 },
+        "technology_rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "implementation_summary": { "type": "string", "minLength": 1 },
+    "implemented_capabilities": { "type": "array", "items": { "type": "string" } },
+    "files": { "type": "array", "items": { "type": "string" } },
+    "run_commands": { "type": "array", "items": { "type": "string" } },
+    "verification": { "type": "array", "items": { "$ref": "#/$defs/check" } },
+    "scenario_coverage": { "type": "array", "items": { "$ref": "#/$defs/coverage" } },
+    "instrumentation": { "type": "array", "items": { "type": "string" } },
+    "external_effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["live_writes", "deployed", "services", "requires_separate_authorization"],
+      "properties": {
+        "live_writes": { "type": "boolean" },
+        "deployed": { "type": "boolean" },
+        "services": { "type": "array", "items": { "type": "string" } },
+        "requires_separate_authorization": { "type": "boolean" }
+      }
+    },
+    "known_gaps": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "$ref": "#/$defs/artifacts" }
+  },
+  "$defs": {
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "schema_version", "build_gate_status"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "schema_version": { "const": "1.1.0" },
+        "build_gate_status": { "const": "accepted" }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "command_or_method", "status", "evidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["static", "unit", "integration", "browser", "accessibility", "manual-technical"] },
+        "command_or_method": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["passed", "failed", "not-run"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_id", "status", "evidence"],
+      "properties": {
+        "scenario_id": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["passed", "failed", "not-run", "requires-user"] },
+        "evidence": { "type": "string" }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directory", "prototype_path", "markdown_path", "json_path", "overwrite_policy"],
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "prototype_path": { "type": "string", "minLength": 1 },
+        "markdown_path": { "type": "string", "minLength": 1 },
+        "json_path": { "type": "string", "minLength": 1 },
+        "overwrite_policy": { "const": "new-file-only" }
+      }
+    }
+  }
+}

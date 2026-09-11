@@ -67,6 +67,17 @@ When the gate passes, create a portable BPMN-style Mermaid swimlane diagram:
 
 When the gate does not pass, do not infer the missing flow. Set the diagram status to `insufficient-evidence`, leave the source empty, list the unmapped elements, and create evidence tasks for material gaps. Use `not-applicable` only when there is no current process to map, such as a supported eliminate-or-stop case.
 
+### Stated ideal and proposed target process
+
+The current-state evidence gate does not prohibit design work; it prohibits presenting inference as observation. Maintain three explicit views:
+
+- `process_diagram`: what the evidence supports about current work;
+- `stated_ideal_process`: what stakeholders say they want, clearly labelled as stakeholder-stated and allowed to be partial;
+- `target_process_design`: the agent's proposed process hypothesis, clearly labelled as proposed and linked to human controls, automation candidates, assumptions, and unresolved elements.
+
+Use stable `I*` node IDs in the stated ideal and `T*` node IDs in the target design. The shaping skill uses the target IDs to select one earliest handoff or decision boundary. A missing current exception path stays missing in the current view; it may appear as an explicit assumption or unresolved branch in the target design, never as an observed fact.
+When the stated ideal is partial, put a visible `PARTIAL / UNCONFIRMED` note inside the Mermaid diagram as well as in surrounding caveats so an exported diagram cannot imply verified completeness or ordering.
+
 ### Existing systems and information
 
 For every material system, tool, spreadsheet, inbox, document store, database, or shadow tool, record:

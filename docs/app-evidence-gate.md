@@ -1,6 +1,8 @@
 # Application Evidence Gate
 
-The future application is not an active implementation scope. It requires evidence that a conversational skill cannot handle a recurring job well enough.
+The future companion application for managing this skill collection is not an active implementation scope. It requires evidence that the skill pack cannot handle a recurring coordination or saved-state job well enough.
+
+This gate does not prevent `$build-the-slice` from creating a bounded local prototype for a requester's own internal workflow after the Better Work Loop build gate is accepted. Such prototypes remain requester artifacts, not implementation of this repository's companion application, and they do not satisfy this app evidence gate.
 
 ## Start app discovery only when
 

@@ -4,12 +4,13 @@
 
 - **Recommendation:** Define one minimum approval process and test the work-management tools the organization already owns before buying or building a portal (`process-redesign`).
 - **Why:** Departments currently use different routes, definitions, and workarounds, so a new portal would automate unresolved process differences.
-- **Ready to hand off:** Yes—as a discovery request, not as approval to implement a system (`ticket-ready`).
-- **Next action:** Assign a process owner and approve a short discovery to define the minimum model and test existing capability.
+- **Ready to hand off:** Yes—as a bounded discovery and prototype-shaping request, not as approval to implement a system (`ticket-ready`).
+- **Next action:** Assign a process owner, define the minimum model, then shape one contained test of the intake and routing assumptions.
 - **Important caution:** Do not approve custom development until ownership, rules, genuine capability gaps, ongoing responsibilities, and cost inputs are known.
 
 ## Initiative summary and fit
 
+- Initiative ID: `initiative-synthetic-approval-portal`
 - Classification: `discovery-needed`
 - Readiness: `ticket-ready` for a discovery request
 - Suggested request type: `discovery`
@@ -72,6 +73,50 @@ flowchart LR
 ```
 
 This is a BPMN-style Mermaid view, not BPMN 2.0 XML. It shows the supported normal flow and material rework loops. Department-specific approval routes and alternate-approver branches remain summarized because their rules are not yet confirmed.
+
+### Stakeholder-stated ideal process
+
+```mermaid
+flowchart LR
+  ideal_start((Start))
+  subgraph requester_lane["Requester"]
+    I1["I1. Submit one complete request"]
+  end
+  subgraph system_lane["Shared workflow"]
+    I2["I2. Route and show status"]
+  end
+  subgraph approver_lane["Approver"]
+    I3["I3. Review and decide"]
+  end
+  ideal_end((End))
+  ideal_start --> I1 --> I2 --> I3 --> ideal_end
+```
+
+This records the requested experience, not confirmed policy or an implementation recommendation. Required fields, exception routes, recovery, and escalation remain unresolved.
+
+### Proposed target-process design
+
+```mermaid
+flowchart LR
+  target_start((Start))
+  subgraph requester_lane["Requester"]
+    T1["T1. Enter minimum request details"]
+    T2["T2. Complete flagged gaps"]
+  end
+  subgraph coordinator_lane["Approval coordinator"]
+    T3{"T3. Complete and routeable?"}
+    T4["T4. Prepare reviewer summary"]
+  end
+  subgraph approver_lane["Approver"]
+    T5["T5. Review and decide"]
+  end
+  target_end((End))
+  target_start --> T1 --> T3
+  T3 -- No --> T2 --> T3
+  T3 -- Yes --> T4 --> T5 --> target_end
+```
+
+This is a design hypothesis for slicing and testing. It deliberately keeps completeness/routing confirmation and the approval decision under human control; final category rules, exception escalation, and the system of record are unresolved.
 
 ## Existing systems and information sources
 
@@ -137,9 +182,9 @@ Ticket title: **Standardize internal approval requests before tooling**
 
 Investigate and standardize the cross-functional approval-request process before selecting software. Requests currently arrive through email and team chat, a coordinator manually records status in a shared tracker, routes and exceptions vary, policy knowledge is only partly codified, and no end-to-end owner is named. Discovery should confirm mandatory controls, define the minimum request and approval model, identify accountable ownership, and test the owned work-management suite. Do not approve a custom portal until differentiation and full lifecycle ownership are evidenced.
 
-The packet is ready for a discovery queue, not initiative approval or implementation. No target ticket system or field mapping was requested.
+The packet is ready for a discovery and `prototype-shaping` workflow, not initiative approval or full implementation. No target ticket system or field mapping was requested.
 
-Next human decision: assign the process owner and approve a short discovery to define the minimum model and test existing capability.
+Next human decision: Assign the process owner and approve a short discovery to define the minimum model and test existing capability. That discovery may then shape one contained intake test through the Better Work Loop.
 
 ## What may be missing or uncertain
 

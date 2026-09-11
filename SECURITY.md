@@ -1,6 +1,6 @@
 # Security and Data Safety
 
-Process Before Platform is a prompt-based decision aid. It does not provide a secure storage boundary for internal information.
+Skills for Better Work contains prompt-based decision aids and local prototype workflows. The pack does not provide a secure storage, execution, deployment, or access-control boundary for internal information.
 
 ## Safe use
 
@@ -8,6 +8,10 @@ Process Before Platform is a prompt-based decision aid. It does not provide a se
 - Remove confidential business context, personal data, credentials, security details, private architecture, and protected vendor material before using the skill.
 - Treat generated recommendations, vendor comparisons, effort ranges, and scores as decision support requiring human review.
 - Verify current vendor, legal, compliance, pricing, and security claims from authoritative sources.
+- Build with synthetic or sanitized data by default. Inspect generated prototype source and dependencies before running it.
+- Keep live writes, external services, deployment, credentials, paid resources, and sensitive-data tests outside the ordinary Better Work Loop. They require a separate explicit request and the relevant organizational approvals.
+- Treat `agent-verified` and `validated` as bounded evidence labels, not security review, pilot approval, production readiness, or assurance that every failure mode was found.
+- Do not store participant identity, raw user-test transcripts, screenshots, or sensitive inputs in proof artifacts by default.
 
 ## Reporting a vulnerability
 

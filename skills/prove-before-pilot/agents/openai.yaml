@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prove Before Pilot"
+  short_description: "Test a prototype before pilot review"
+  brand_color: "#0B2D24"
+  default_prompt: "Use $prove-before-pilot to evaluate this prototype against its approved brief and representative-user evidence."
+policy:
+  allow_implicit_invocation: false

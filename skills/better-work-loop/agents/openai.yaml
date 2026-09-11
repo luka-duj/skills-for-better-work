@@ -1,0 +1,7 @@
+interface:
+  display_name: "Better Work Loop"
+  short_description: "Move a business need through prototype proof"
+  brand_color: "#0B2D24"
+  default_prompt: "Use $better-work-loop to take this sanitized internal-workflow need through the smallest responsible prototype and evidence loop."
+policy:
+  allow_implicit_invocation: false

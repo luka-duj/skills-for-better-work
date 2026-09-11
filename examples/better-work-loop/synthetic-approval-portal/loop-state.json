@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.1.0",
+  "pack_version": "0.4.0-alpha",
+  "updated_at": "2026-09-08T12:10:00Z",
+  "loop_id": "2026-09-08-synthetic-approval-portal-a1",
+  "initiative_id": "initiative-synthetic-approval-portal",
+  "phase": "handoff",
+  "status": "waiting-for-human",
+  "source_initiative": {"path": "skills/process-before-platform/examples/synthetic-approval-portal/initiative-request.json", "sha256": "163db4f36ae95873029abbf332a63504b6e08feabeb0ccc97400e28aaf3e620d"},
+  "iterations": [
+    {
+      "iteration": 1,
+      "hypothesis": "A structured intake can prepare a usable, correctly routed review request without making the approval decision.",
+      "shape": {"path": "examples/better-work-loop/synthetic-approval-portal/shape.json", "sha256": "a6f5fb1346e0d495288faa213762e4abc77f307e53eeb2fbb5849d018535f10d"},
+      "build": {"path": "examples/better-work-loop/synthetic-approval-portal/build.json", "sha256": "fe7456b44d17e18d801a774381d2ecb07cf7007020d7e8001dba4b36aa4a746b"},
+      "proof": {"path": "examples/better-work-loop/synthetic-approval-portal/proof.json", "sha256": "a4ab23e913c0af7416fadb8d881fc2eb684e5c09b5c4638f2f3a3ad9a670ef29"},
+      "handoff": {"path": "examples/better-work-loop/synthetic-approval-portal/review-handoff.json", "sha256": "df3c2af2df8f9394b99b38e0acdd0b9fa2ade3e4474034b5f573daf68b0179ba"}
+    }
+  ],
+  "gates": [
+    {"name": "build", "status": "accepted", "owner": "Synthetic example owner", "decided_at": "2026-09-08T10:15:00Z", "notes": "Fictional example gate."},
+    {"name": "external-consequence", "status": "not-required", "owner": null, "decided_at": null, "notes": "The contained prototype has no external effects."}
+  ],
+  "decision_history": [
+    {"at": "2026-09-08T10:15:00Z", "decision": "build-accepted-slice", "owner": "Synthetic example owner", "basis": "The fictional shape and evidence plan were accepted."},
+    {"at": "2026-09-08T12:05:00Z", "decision": "prepare-review-handoff", "owner": "Synthetic example owner", "basis": "A review-ready package preserves the process basis, slice boundaries, evidence limits, and executable user session."},
+    {"at": "2026-09-08T12:10:00Z", "decision": "seek-user-evidence", "owner": "Synthetic example owner", "basis": "Technical and synthetic checks passed, but representative-user evidence is missing."}
+  ],
+  "current_decision": "seek-user-evidence",
+  "next_action": "Observe a representative operations coordinator completing the target job and ask a representative reviewer to use the summary.",
+  "artifacts": {"directory": "examples/better-work-loop/synthetic-approval-portal", "markdown_path": "examples/better-work-loop/synthetic-approval-portal/loop-state.md", "json_path": "examples/better-work-loop/synthetic-approval-portal/loop-state.json"}
+}

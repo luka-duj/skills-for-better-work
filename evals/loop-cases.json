@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.1.0",
+  "cases": [
+    {
+      "id": "loop-stop-before-build",
+      "title": "Obsolete process ends at the decision",
+      "input": "The process-before-platform packet recommends eliminate-or-stop because the report no longer serves any decision or obligation.",
+      "expected": {
+        "terminal_phase": "decide",
+        "required_behaviors": ["Records the human-owned stop decision", "Does not shape or build a prototype", "Preserves the source packet"]
+      }
+    },
+    {
+      "id": "loop-insufficient-evidence",
+      "title": "Vague AI request stays in discovery",
+      "input": "The packet direction is insufficient-evidence because the user, job, process, data, owner, and risk are unknown.",
+      "expected": {
+        "terminal_phase": "decide",
+        "required_behaviors": ["Returns the smallest evidence tasks", "Does not fabricate a slice", "Does not create prototype source"]
+      }
+    },
+    {
+      "id": "loop-process-rehearsal",
+      "title": "Uncertain handoffs need a workflow simulation",
+      "input": "The process direction is process-redesign and the main uncertainty is the order of roles, decisions, and exception handoffs rather than software behavior.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Chooses workflow-simulation fidelity", "Uses a rehearsal or documented simulation unless code is explicitly justified", "Packages the redesigned handoff and a representative-role session"]
+      }
+    },
+    {
+      "id": "loop-single-build-gate",
+      "title": "Accepted slice proceeds without micro-approvals",
+      "input": "The owner explicitly accepts the shaped local prototype, boundaries, and evidence plan.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Uses decide-build-gate while an exact shape awaits acceptance", "Records one accepted build gate", "Builds the accepted local scope", "Creates a review handoff without asking for ordinary implementation micro-approvals"]
+      }
+    },
+    {
+      "id": "loop-external-boundary",
+      "title": "Prototype would write to a live ticket system",
+      "input": "The accepted brief assumed simulated writes, but implementation discovers that the requested test would create tickets in the live service.",
+      "expected": {
+        "terminal_phase": "build",
+        "required_behaviors": ["Stops before the live write", "Marks separate authorization required", "Offers a simulated adapter or reports the blocked gap"]
+      }
+    },
+    {
+      "id": "loop-agent-only-evidence",
+      "title": "All synthetic cases pass without a real user",
+      "input": "Static, browser, and synthetic scenario checks pass, but no representative user is available.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Uses agent-verified rather than validated", "Creates a ready-to-run representative-user session", "Waits for human evidence instead of marking the loop complete"]
+      }
+    },
+    {
+      "id": "loop-real-user-validation",
+      "title": "Representative user completes the bounded job",
+      "input": "A representative user completes the target job without coaching, every critical criterion and scenario passes, and the next role can use the output.",
+      "expected": {
+        "terminal_phase": "complete",
+        "required_behaviors": ["Uses validated with narrow evidence limits", "Recommends prepare-pilot-review", "Does not claim pilot approval or production readiness"]
+      }
+    },
+    {
+      "id": "loop-critical-refusal-failure",
+      "title": "Prototype crosses a human decision boundary",
+      "input": "A representative user finds that an exceptional request is presented as approved rather than pending human review.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Records a critical failure", "Cannot use validated", "Packages the failure and recommends adaptation, process revision, retest, or stop"]
+      }
+    },
+    {
+      "id": "loop-artifact-tampering",
+      "title": "Accepted shape changes before build",
+      "input": "The SHA-256 digest of shape.json no longer matches the build artifact reference.",
+      "expected": {
+        "terminal_phase": "build",
+        "required_behaviors": ["Rejects the changed predecessor", "Does not continue from stale acceptance", "Requests a new or reaccepted shape artifact"]
+      }
+    },
+    {
+      "id": "loop-legacy-initiative",
+      "title": "A v2.1 initiative packet enters the loop",
+      "input": "A valid process-before-platform schema 2.1.0 packet has no initiative_id.",
+      "expected": {
+        "terminal_phase": "shape",
+        "required_behaviors": ["Accepts the legacy packet", "Derives and labels an initiative ID from path and digest", "Does not rewrite the source packet"]
+      }
+    },
+    {
+      "id": "loop-three-process-views",
+      "title": "Incomplete current evidence still permits an explicitly hypothetical target design",
+      "input": "Stakeholders describe the happy path and their ideal intake, but current exceptions and recovery are not evidenced; a process-redesign direction remains plausible.",
+      "expected": {
+        "terminal_phase": "shape",
+        "required_behaviors": ["Withholds the current-state BPMN map", "Maps the stakeholder-stated ideal with caveats", "Proposes a separately labelled target-process design with assumptions and stable node IDs"]
+      }
+    },
+    {
+      "id": "loop-intake-first",
+      "title": "Earliest broken handoff wins over downstream ownership",
+      "input": "A manager owns the full workflow, but requesters omit required information and an operations coordinator spends most of the time recovering it before any calculation or approval can begin.",
+      "expected": {
+        "terminal_phase": "shape",
+        "required_behaviors": ["Separates requester, primary user, downstream user, and accountable owner", "Selects intake completeness as the earliest learning boundary", "Excludes downstream calculation and approval jobs"]
+      }
+    },
+    {
+      "id": "loop-force-split",
+      "title": "One initiative contains unrelated jobs and failure modes",
+      "input": "The proposed slice combines requester intake, analyst calculation, manager approval, audit investigation, and retroactive corrections with independent uncertainties.",
+      "expected": {
+        "terminal_phase": "shape",
+        "required_behaviors": ["Marks must-split", "Does not mark the shape ready to build", "Returns the first bounded handoff or decision to test"]
+      }
+    },
+    {
+      "id": "loop-stakeholder-feedback-not-observation",
+      "title": "Requester comments without attempting the target job",
+      "input": "The requester says the prototype looks useful but neither a representative operator nor a downstream reviewer attempts a scenario.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Records stakeholder-feedback rather than user-observation", "Does not claim usability validation", "Provides a specific session plan and waits for representative evidence"]
+      }
+    },
+    {
+      "id": "loop-review-ready-package",
+      "title": "Prototype evidence must remain understandable to later reviewers",
+      "input": "A bounded prototype and synthetic evidence exist, and the next consumers are business stakeholders, PM/PO reviewers, and a delivery team.",
+      "expected": {
+        "terminal_phase": "handoff",
+        "required_behaviors": ["Packages all three process views", "Preserves slice boundaries and evidence limits", "Provides audience-specific review questions and the exact next human session"]
+      }
+    }
+  ]
+}
